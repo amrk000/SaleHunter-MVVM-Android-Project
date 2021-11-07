@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable-night/splashdesign.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable-v24/snackbar.xml" value="0.30045045045045043" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/_0c8a88e73f056d76fb5a8ca_checklist.xml" value="0.3046875" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/borderless_ripple.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/button.xml" value="0.3046875" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/button_back.xml" value="0.3828125" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/clickable_text.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/empty_code.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/facebook_auth.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/google_auth.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/input.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/intro2.xml" value="0.2743243243243243" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/intro_indicator.xml" value="0.3828125" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/sale_hunter.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/sale_hunter_semi_horizontal_dark.xml" value="0.30885416666666665" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/scope.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/splashdesign.xml" value="0.30885416666666665" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/drawable/twitter_auth.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/font/raleway.xml" value="0.396875" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/activity_account_sign.xml" value="0.5" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/activity_app_intro.xml" value="0.42835365853658536" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/app_intro_page.xml" value="0.5" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/app_intro_page1.xml" value="0.5" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_disconnected.xml" value="0.5" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_forgot_password.xml" value="0.33" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_loading_dialog.xml" value="0.67" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_reset_password.xml" value="0.33" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_sign_in.xml" value="0.5" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_sign_up.xml" value="0.5" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_verification_code.xml" value="0.5" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

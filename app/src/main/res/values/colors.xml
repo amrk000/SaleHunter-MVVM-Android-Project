@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lightModeprimary">#8342FE</color>
+    <color name="lightModesecondary">#7619FE</color>
+
+    <color name="darkModeprimary">#9654FF</color>
+    <color name="darkModesecondary">#8342FE</color>
+
+    <color name="accent">#FF4F04</color>
+
+    <color name="lightModeText">#4A4A4A</color>
+    <color name="lightModeBackground">#FFFFFF</color>
+
+    <color name="darkModeText">#C6C6C6</color>
+    <color name="darkModeBackground">#1B1A1F</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

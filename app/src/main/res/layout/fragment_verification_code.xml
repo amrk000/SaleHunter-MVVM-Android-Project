@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+    android:clipToPadding="false"
+    android:padding="24dp"
+    tools:context=".VerificationCodeFragment">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/verification_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Please enter the code which is sent to your e-mail inbox"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <EditText
+            android:id="@+id/verification_code_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0"
+            android:background="@drawable/empty_code"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#FFFFFF"
+            android:textSize="42sp" />
+
+        <EditText
+            android:id="@+id/verification_code_num1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0"
+            android:background="@drawable/empty_code"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#FFFFFF"
+            android:textSize="42sp" />
+
+        <EditText
+            android:id="@+id/verification_code_num2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0"
+            android:background="@drawable/empty_code"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#FFFFFF"
+            android:textSize="42sp" />
+
+        <EditText
+            android:id="@+id/verification_code_num3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0"
+            android:background="@drawable/empty_code"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#FFFFFF"
+            android:textSize="42sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/verification_code_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="Verify"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="Didn't get the code?"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verification_code_button" />
+
+    <TextView
+        android:id="@+id/verification_code_resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/clickable_text"
+        android:clickable="true"
+        android:fontFamily="@font/raleway_semibold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:text="Resend"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/verification_code_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/verification_code_snackbar_colayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/verification_code_button"
+        app:layout_constraintStart_toStartOf="@+id/verification_code_button"
+        app:layout_constraintTop_toTopOf="@+id/verification_code_resend" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

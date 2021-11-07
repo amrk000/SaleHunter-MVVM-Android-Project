@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sale Hunter</string>
+    <string name="facebook_app_id">1050752855727748</string>
+    <string name="fb_login_protocol_scheme">fb1050752855727748</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
