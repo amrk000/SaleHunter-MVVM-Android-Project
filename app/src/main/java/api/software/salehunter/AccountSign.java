@@ -40,6 +40,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -57,6 +59,8 @@ public class AccountSign extends AppCompatActivity {
 
     GoogleSignInClient googleSignInClient;
 
+    boolean googleServices;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,8 @@ public class AccountSign extends AppCompatActivity {
         setContentView(R.layout.activity_account_sign);
 
         overridePendingTransition(R.anim.lay_on,R.anim.null_anim);
+
+        googleServices = googleServicesAvailable();
 
         //FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(getApplication());
@@ -76,6 +82,7 @@ public class AccountSign extends AppCompatActivity {
 
         //check last sign in
         //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
 
         title = findViewById(R.id.account_sign_title);
         back = findViewById(R.id.account_sign_back);
@@ -215,6 +222,12 @@ public class AccountSign extends AppCompatActivity {
                     onBackPressed();
                     },2000);
 
+    }
+
+    boolean googleServicesAvailable(){
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(this);
+        return status == ConnectionResult.SUCCESS;
     }
 
 }

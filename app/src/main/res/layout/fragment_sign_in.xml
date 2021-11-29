@@ -128,66 +128,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_rememberMe" />
 
-    <View
-        android:id="@+id/divider"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sign_in_social_auth"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="@+id/sign_in_signInWith"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sign_in_signInWith" />
-
-    <TextView
-        android:id="@+id/sign_in_signInWith"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
-        android:background="?attr/background"
-        android:includeFontPadding="false"
-        android:paddingLeft="8dp"
-        android:paddingEnd="8dp"
-        android:text="Sign In With"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button">
 
-    <ImageButton
-        android:id="@+id/sign_in_facebook"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:background="@drawable/facebook_auth"
-        android:foreground="@drawable/borderless_ripple"
-        app:layout_constraintBottom_toBottomOf="@+id/sign_in_google"
-        app:layout_constraintEnd_toEndOf="@+id/sign_in_signInWith"
-        app:layout_constraintStart_toStartOf="@+id/divider"
-        app:layout_constraintTop_toTopOf="@+id/sign_in_google" />
 
-    <ImageButton
-        android:id="@+id/sign_in_twitter"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:background="@drawable/twitter_auth"
-        android:foreground="@drawable/borderless_ripple"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/sign_in_google"
-        app:layout_constraintEnd_toEndOf="@+id/divider"
-        app:layout_constraintStart_toEndOf="@+id/sign_in_google"
-        app:layout_constraintTop_toTopOf="@+id/sign_in_google" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="@+id/sign_in_signInWith"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sign_in_signInWith" />
 
-    <ImageButton
-        android:id="@+id/sign_in_google"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/google_auth"
-        android:foreground="@drawable/borderless_ripple"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/divider"
-        app:layout_constraintStart_toStartOf="@+id/sign_in_signInWith"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_signInWith" />
+        <TextView
+            android:id="@+id/sign_in_signInWith"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:background="?attr/background"
+            android:includeFontPadding="false"
+            android:paddingLeft="8dp"
+            android:paddingEnd="8dp"
+            android:text="Sign In With"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+
+        <ImageButton
+            android:id="@+id/sign_in_facebook"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:background="@drawable/facebook_auth"
+            android:foreground="@drawable/borderless_ripple"
+            app:layout_constraintBottom_toBottomOf="@+id/sign_in_google"
+            app:layout_constraintEnd_toEndOf="@+id/sign_in_signInWith"
+            app:layout_constraintStart_toStartOf="@+id/divider"
+            app:layout_constraintTop_toTopOf="@+id/sign_in_google" />
+
+        <ImageButton
+            android:id="@+id/sign_in_twitter"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:background="@drawable/twitter_auth"
+            android:foreground="@drawable/borderless_ripple"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/sign_in_google"
+            app:layout_constraintEnd_toEndOf="@+id/divider"
+            app:layout_constraintStart_toEndOf="@+id/sign_in_google"
+            app:layout_constraintTop_toTopOf="@+id/sign_in_google" />
+
+        <ImageButton
+            android:id="@+id/sign_in_google"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/google_auth"
+            android:foreground="@drawable/borderless_ripple"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/divider"
+            app:layout_constraintStart_toStartOf="@+id/sign_in_signInWith"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_signInWith" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/sign_in_dontHaveAccount"
@@ -201,7 +213,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_google" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_social_auth" />
 
     <TextView
         android:id="@+id/sign_in_signUp"

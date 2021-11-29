@@ -168,6 +168,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_password_confirm" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sign_up_social_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_button">
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -227,5 +237,6 @@
         app:layout_constraintEnd_toEndOf="@+id/divider"
         app:layout_constraintStart_toStartOf="@+id/sign_up_signUpWith"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_signUpWith" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

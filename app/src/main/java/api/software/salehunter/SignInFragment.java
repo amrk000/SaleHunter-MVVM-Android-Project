@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -31,6 +32,7 @@ public class SignInFragment extends Fragment {
     TextView forgotPassword, signUp;
     Button signIn;
     ImageButton facebook, google, twitter;
+    ConstraintLayout socialAuthLayout;
 
     public SignInFragment() { }
 
@@ -51,9 +53,11 @@ public class SignInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((AccountSign)getActivity()).title.setText("Sign In");
-        ((AccountSign)getActivity()).back.setVisibility(View.GONE);
-        ((AccountSign)getActivity()).back.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.back_button_out));
+        if(((AccountSign)getActivity()).back.getVisibility() == View.VISIBLE) {
+            ((AccountSign) getActivity()).title.setText("Sign In");
+            ((AccountSign) getActivity()).back.setVisibility(View.GONE);
+            ((AccountSign) getActivity()).back.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.back_button_out));
+        }
 
     }
 
@@ -70,6 +74,9 @@ public class SignInFragment extends Fragment {
         facebook = view.findViewById(R.id.sign_in_facebook);
         google = view.findViewById(R.id.sign_in_google);
         twitter = view.findViewById(R.id.sign_in_twitter);
+        socialAuthLayout = view.findViewById(R.id.sign_in_social_auth);
+
+        if(!((AccountSign)getActivity()).googleServices) socialAuthLayout.setVisibility(View.GONE);
 
         email.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
