@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
+
+import api.software.salehunter.accountSign.SignInFragment;
 
 public class NetworkBroadcastReceiver extends BroadcastReceiver {
 

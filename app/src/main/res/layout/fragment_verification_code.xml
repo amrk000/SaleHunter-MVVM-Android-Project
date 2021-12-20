@@ -7,7 +7,7 @@
     android:background="?attr/background"
     android:clipToPadding="false"
     android:padding="24dp"
-    tools:context=".VerificationCodeFragment">
+    tools:context=".accountSign.VerificationCodeFragment">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -103,7 +103,7 @@
 
     </LinearLayout>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/verification_code_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

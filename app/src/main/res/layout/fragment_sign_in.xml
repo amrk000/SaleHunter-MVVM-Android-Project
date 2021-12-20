@@ -7,7 +7,7 @@
     android:background="?attr/background"
     android:clipToPadding="false"
     android:padding="24dp"
-    tools:context=".SignInFragment">
+    tools:context=".accountSign.SignInFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sign_in_email"
@@ -113,7 +113,7 @@
         app:layout_constraintStart_toEndOf="@+id/sign_in_rememberMe"
         app:layout_constraintTop_toTopOf="@+id/sign_in_rememberMe" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/sign_in_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -162,8 +162,7 @@
             android:paddingEnd="8dp"
             android:text="Sign In With"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/sign_in_facebook"

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+    tools:context=".mainFragments.home.HomeFragment" >
+
+    <FrameLayout
+        android:id="@+id/home_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/home_BottomAppBar"
+            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            app:backgroundTint="?attr/background"
+            app:fabAlignmentMode="center"
+            app:fabCradleMargin="5dp"
+            app:fabCradleRoundedCornerRadius="25dp"
+            app:fabCradleVerticalOffset="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="3dp">
+
+                <Button
+                    android:id="@+id/home_BarSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:fontFamily="@font/raleway_semibold"
+                    android:foreground="@drawable/search_icon"
+                    android:foregroundGravity="top|center"
+                    android:gravity="bottom|center"
+                    android:text="Search"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/home_BarOnsale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:fontFamily="@font/raleway_semibold"
+                    android:foreground="@drawable/on_sale_icon"
+                    android:foregroundGravity="top|center"
+                    android:gravity="bottom|center"
+                    android:text="On Sale"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/home_BarFavourite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:fontFamily="@font/raleway_semibold"
+                    android:foreground="@drawable/favourite_icon"
+                    android:foregroundGravity="top|center"
+                    android:gravity="bottom|center"
+                    android:text="Favourite"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/home_BarNotifs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:fontFamily="@font/raleway_semibold"
+                    android:foreground="@drawable/notification_icon"
+                    android:foregroundGravity="top|center"
+                    android:gravity="bottom|center"
+                    android:text="Notifs"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/home_BottomAppBarFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:backgroundTint="?attr/colorPrimaryDark"
+            app:fabCustomSize="55dp"
+            app:layout_anchor="@id/home_BottomAppBar"
+            app:tint="#FFFFFF" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

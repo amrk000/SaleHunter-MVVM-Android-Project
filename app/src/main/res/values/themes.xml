@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="SaleHunter" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SaleHunter" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <item name="colorPrimary">@color/lightModeprimary</item>
         <item name="colorPrimaryDark">@color/lightModesecondary</item>
@@ -18,7 +18,7 @@
 
     </style>
 
-    <style name="Splash" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <item name="colorPrimary">@color/lightModeprimary</item>
         <item name="colorPrimaryDark">@color/lightModesecondary</item>

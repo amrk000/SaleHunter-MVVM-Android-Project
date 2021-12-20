@@ -4,34 +4,263 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/background"
+    android:background="@color/menu"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/reset"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menu_backView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:padding="10dp"
-        android:text="Reset"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
+        android:layout_marginEnd="170dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.828" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="32dp"
-        android:background="?attr/colorPrimaryDark"
-        android:padding="80dp"
-        app:layout_constraintBottom_toTopOf="@+id/reset"
+        <ImageView
+            android:id="@+id/menu_profile_pic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="@+id/menu_username"
+            app:layout_constraintStart_toStartOf="@+id/menu_username"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/profile_placeholder" />
+
+        <TextView
+            android:id="@+id/menu_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/raleway_semibold"
+            android:gravity="center"
+            android:text="User Name"
+            android:textColor="#FFF"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/menu"
+            app:layout_constraintTop_toBottomOf="@+id/menu_profile_pic" />
+
+        <RadioGroup
+            android:id="@+id/menu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menu_username"
+            app:layout_constraintVertical_bias="0.25">
+
+            <RadioButton
+                android:id="@+id/menu_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="true"
+                android:drawableLeft="@drawable/menu_icon_home"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="Home"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_dashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_dashboard"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="Dashboard"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_star"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="Reviews"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_history"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="History"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_mystore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_store"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="My Store"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_profile"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="Profile"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_setting"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="Settings"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_help"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="Help"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_signout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="@color/accent"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_signout"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/accent"
+                android:fontFamily="@font/raleway_regular"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="Sign out"
+                android:textColor="@color/accent"
+                android:textSize="20sp" />
+        </RadioGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menu_frontView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="?attr/background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sale_hunter_semi_horizontal_dark" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/main_FrameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/current_fragment_title">
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/current_fragment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_bold"
+            android:includeFontPadding="false"
+            android:text="Home"
+            android:textAlignment="center"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageButton" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menu_default"
+            app:tint="?attr/textFillColor" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

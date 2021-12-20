@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+    tools:context=".mainFragments.home.SearchFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:id="@+id/search_searchbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/searchbar"
+        android:drawableStart="@drawable/search_icon"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:fadingEdge="horizontal"
+        android:fadingEdgeLength="5dp"
+        android:hint="Search For Product ..."
+        android:imeOptions="actionSearch"
+        android:includeFontPadding="false"
+        android:inputType="textPersonName"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="35dp"
+        android:paddingBottom="10dp"
+        android:requiresFadingEdge="horizontal"
+        android:textColorHint="?attr/textFillColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/search_barcodeScan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/search_barcodeScan"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button_round"
+        android:cropToPadding="false"
+        android:foregroundGravity="center"
+        android:scaleType="centerInside"
+        android:src="@drawable/barcode_scan"
+        app:layout_constraintBottom_toBottomOf="@+id/search_searchbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_searchbar" />
+
+    <ImageButton
+        android:id="@+id/search_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/borderless_ripple"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@drawable/voice_search"
+        app:layout_constraintBottom_toBottomOf="@+id/search_searchbar"
+        app:layout_constraintEnd_toEndOf="@+id/search_searchbar"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="@+id/search_searchbar"
+        app:layout_constraintTop_toTopOf="@+id/search_searchbar" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="Recommended"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_searchbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_products_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
+        android:clipToPadding="false"
+        android:fadingEdge="vertical"
+        android:paddingBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

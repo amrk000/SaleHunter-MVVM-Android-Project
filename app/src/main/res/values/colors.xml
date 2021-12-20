@@ -8,7 +8,7 @@
 
     <color name="accent">#FF4F04</color>
 
-    <color name="lightModeText">#4A4A4A</color>
+    <color name="lightModeText">#8C8C8C</color>
     <color name="lightModeBackground">#FFFFFF</color>
 
     <color name="darkModeText">#C6C6C6</color>
@@ -16,4 +16,6 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="menu">#4C00BC</color>
 </resources>

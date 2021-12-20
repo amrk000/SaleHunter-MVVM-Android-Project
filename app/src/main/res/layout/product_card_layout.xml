@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <ImageView
+        android:id="@+id/product_card_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/product_card" />
+
+    <ImageView
+        android:id="@+id/product_card_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="7dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="@+id/product_card_background"
+        app:layout_constraintStart_toStartOf="@+id/product_card_background"
+        app:layout_constraintTop_toTopOf="@+id/product_card_background"
+        app:srcCompat="@drawable/zz_havit_stereo_speakers_175" />
+
+    <CheckBox
+        android:id="@+id/product_card_favourite"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:button="@drawable/add_favourite_selector"
+        android:checked="false"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/product_card_image"
+        app:layout_constraintTop_toTopOf="@+id/product_card_image" />
+
+    <TextView
+        android:id="@+id/product_card_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Brand"
+        android:textColor="?attr/colorAccent"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/product_card_image"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <TextView
+        android:id="@+id/product_card_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:ems="10"
+        android:fontFamily="@font/raleway_semibold"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="Product Name On Website"
+        app:layout_constraintEnd_toStartOf="@+id/product_card_price"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/product_card_image"
+        app:layout_constraintTop_toBottomOf="@+id/product_card_brand" />
+
+    <TextView
+        android:id="@+id/product_card_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="0000LE"
+        android:textColor="?attr/colorAccent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/product_card_Name"
+        app:layout_constraintEnd_toEndOf="@+id/product_card_image"
+        app:layout_constraintTop_toTopOf="@+id/product_card_Name" />
+
+    <ImageView
+        android:id="@+id/product_card_store"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/product_card_image"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/product_card_price"
+        app:layout_constraintTop_toBottomOf="@+id/product_card_price"
+        app:layout_constraintVertical_bias="0.39"
+        app:srcCompat="@drawable/jumia_seeklogo_com_" />
+
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/product_card_store"
+        app:layout_constraintStart_toStartOf="@+id/product_card_image"
+        app:layout_constraintTop_toTopOf="@+id/product_card_store">
+
+        <ImageView
+            android:id="@+id/product_card_star1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/rate_star_highlighted" />
+
+        <ImageView
+            android:id="@+id/product_card_star2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/rate_star_highlighted" />
+
+        <ImageView
+            android:id="@+id/product_card_star3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/rate_star_highlighted_half" />
+
+        <ImageView
+            android:id="@+id/product_card_star4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/rate_star" />
+
+        <ImageView
+            android:id="@+id/product_card_star5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/rate_star" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

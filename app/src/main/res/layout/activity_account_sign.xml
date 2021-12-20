@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".AccountSign">
+    tools:context=".accountSign.AccountSign">
 
     <ImageButton
         android:id="@+id/account_sign_back"
