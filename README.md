@@ -32,7 +32,7 @@
       </ul>
     </ul>
 
-    <li><b>v0.4.2 Pre-Alpha</b></li>
+  <li><b>v0.4.2 Pre-Alpha</b></li>
     <ul>
       <li>Performance improved & animation lag fixed</li>
       <li>network disconnected screen changed to skippable dialog</li>
@@ -50,7 +50,7 @@
        <li>Social Media Auth</li>
        <li>Password Reset</li>
       </ul>
-    </ul>
+  </ul>
   
   </ol>
 </br>
