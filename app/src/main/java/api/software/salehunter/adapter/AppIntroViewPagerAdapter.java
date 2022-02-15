@@ -1,4 +1,4 @@
-package api.software.salehunter.intro;
+package api.software.salehunter.adapter;
 
 import android.app.Activity;
 import android.view.View;
@@ -28,7 +28,7 @@ public class AppIntroViewPagerAdapter extends PagerAdapter {
             R.drawable.intro3,
             R.drawable.intro4};
 
-    AppIntroViewPagerAdapter(Activity context){
+    public AppIntroViewPagerAdapter(Activity context){
         this.context=context;
     }
 

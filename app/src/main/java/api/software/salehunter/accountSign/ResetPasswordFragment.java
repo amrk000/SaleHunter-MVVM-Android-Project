@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.regex.Pattern;
 
 import api.software.salehunter.R;
+import api.software.salehunter.model.ResetPasswordModel;
 
 public class ResetPasswordFragment extends Fragment {
     TextInputLayout password,confirmPassword;
@@ -45,7 +46,7 @@ public class ResetPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AccountSign)getActivity()).title.setText("Reset Password");
+        ((AccountSign)getActivity()).setTitle("Reset Password");
 
         password = view.findViewById(R.id.reset_password_password);
         confirmPassword = view.findViewById(R.id.reset_password_password_confirm);
@@ -121,7 +122,13 @@ public class ResetPasswordFragment extends Fragment {
                     resetPassword = false;
                 }
 
-                if(resetPassword) resetPassword();
+                if(resetPassword) {
+                    ResetPasswordModel resetPasswordModel = new ResetPasswordModel();
+                    resetPasswordModel.setPassword(password.getEditText().getText().toString());
+                    resetPasswordModel.setPasswordConfirm(confirmPassword.getEditText().getText().toString());
+
+                    ((AccountSign)getActivity()).resetPassword(resetPasswordModel);
+                }
 
             }
         });
@@ -131,18 +138,6 @@ public class ResetPasswordFragment extends Fragment {
     boolean validPassword(String password){
         Pattern emailRegex = Pattern.compile("(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}");
         return emailRegex.matcher(password).matches();
-    }
-
-    void resetPassword(){
-        //request
-
-        getActivity().getSupportFragmentManager().popBackStack();
-
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_from_right,R.anim.slide_to_left,R.anim.slide_from_left,R.anim.slide_to_right)
-                .replace(((AccountSign)getActivity()).frameLayout.getId(),new SignInFragment())
-                .commit();
     }
 
 }

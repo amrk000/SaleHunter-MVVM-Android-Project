@@ -43,9 +43,9 @@ public class UnderlayNavigationDrawer {
         this.menuButton = menuButton;
         this.activity = activity;
 
-        this.scaleFactor = 0.15f;
+        this.scaleFactor = 0.08f;
         this.cornersRadius = 150f;
-        this.animationSpeed = 450;
+        this.animationSpeed = 400;
         this.threshHold = 0.35f;
 
         overLayView.post(()->{
@@ -184,5 +184,7 @@ public class UnderlayNavigationDrawer {
     public void setMenuOpenCloseListener(MenuOpenCloseListener menuOpenCloseListener){
         this.menuOpenCloseListener = menuOpenCloseListener;
     }
+
+    public int getAnimationDuration() {return animationSpeed;}
 
 }

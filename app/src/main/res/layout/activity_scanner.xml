@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/search_icon"
+        android:drawableLeft="@drawable/navbar_icon_search"
         android:drawablePadding="3dp"
         android:drawableTint="#80FFFFFF"
         android:text="Product Barcode"

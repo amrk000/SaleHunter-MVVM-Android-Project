@@ -34,6 +34,7 @@ public class LoadingDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        setCancelable(false);
 
     }
 

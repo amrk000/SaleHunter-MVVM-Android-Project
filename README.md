@@ -19,5 +19,38 @@
       <li>Fixed back button visual bug</li>
     </ul>
   
+  <li><b>v0.3.1 Pre-Alpha</b></li>
+    <ul>
+      <li>Side Menu Implementation</li>
+      <li>Home Implementation:</li>
+      <ul>
+       <li>Search Bar</li>
+       <li>Voice Search</li>
+       <li>Barcode Search</li>
+       <li>Recommended Products</li>
+       <li>Bottom Navbar</li>
+      </ul>
+    </ul>
+
+    <li><b>v0.4.2 Pre-Alpha</b></li>
+    <ul>
+      <li>Performance improved & animation lag fixed</li>
+      <li>network disconnected screen changed to skippable dialog</li>
+      <li>new loading screen design</li>
+      <li>navbar width adjustment for smaller screens</li>
+      <li>side menu size improved for smaller screens</li>
+      <li>social media signout bug fixed</li>
+      <li>added vibration & sound effect to scanner on capture</li>
+      <li>product card view layout improved</li>
+      <li>Verification pin increased from 4 to 6 digits</li>
+      <li>RestApi Implementation:</li>
+      <ul>
+       <li>Sign In</li>
+       <li>Sign Up</li>
+       <li>Social Media Auth</li>
+       <li>Password Reset</li>
+      </ul>
+    </ul>
+  
   </ol>
 </br>

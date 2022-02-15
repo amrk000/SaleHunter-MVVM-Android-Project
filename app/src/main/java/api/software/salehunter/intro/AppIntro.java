@@ -15,6 +15,8 @@ import java.lang.reflect.Field;
 
 import api.software.salehunter.MainActivity;
 import api.software.salehunter.R;
+import api.software.salehunter.adapter.AppIntroViewPagerAdapter;
+import api.software.salehunter.util.SharedPrefManager;
 
 public class AppIntro extends AppCompatActivity {
     Button next, skip;
@@ -95,11 +97,7 @@ public class AppIntro extends AppCompatActivity {
     }
 
     void endIntro(){
-
-        getSharedPreferences(MainActivity.APP_STATUS, MODE_PRIVATE).edit()
-                .putBoolean(MainActivity.FIRST_LAUNCH,false)
-                .apply();
-
+        SharedPrefManager.get(this).setFirstLaunch(false);
         startActivity(new Intent(this,MainActivity.class));
         finish();
     }

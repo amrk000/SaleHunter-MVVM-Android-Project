@@ -9,8 +9,8 @@ android {
         applicationId "api.software.salehunter"
         minSdk 23
         targetSdk 31
-        versionCode 3
-        versionName "0.3.1 Pre-Alpha"
+        versionCode 4
+        versionName "0.4.2 Pre-Alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,6 +35,10 @@ android {
 
     }
 
+    viewBinding {
+        enabled = true
+    }
+
 }
 
 apply plugin: 'com.android.application' //for google auth
@@ -54,10 +58,18 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
-//ML Kit Barcode scanner:
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0' //Json Factory Converter GSON
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //ML Kit Barcode scanner:
     implementation 'com.google.mlkit:barcode-scanning:17.0.0'
 
-//CameraX dependencies:
+    //CameraX dependencies:
     // CameraX core library
     def camerax_version = "+"
     implementation "androidx.camera:camera-core:${camerax_version}"
@@ -69,7 +81,4 @@ dependencies {
     // If you want to additionally use the CameraX Extensions library
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
-    //Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 }

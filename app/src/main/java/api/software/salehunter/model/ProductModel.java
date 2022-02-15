@@ -1,4 +1,4 @@
-package api.software.salehunter;
+package api.software.salehunter.model;
 
 public class ProductModel {
     private String name;

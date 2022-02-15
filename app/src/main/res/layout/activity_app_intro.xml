@@ -41,7 +41,7 @@
         app:tabRippleColor="@android:color/transparent"
         app:tabUnboundedRipple="true" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/appIntro_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

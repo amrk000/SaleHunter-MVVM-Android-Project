@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Sale Hunter</string>
+
+    <!-- Facebook Auth-->
     <string name="facebook_app_id">1050752855727748</string>
     <string name="fb_login_protocol_scheme">fb1050752855727748</string>
+
+    <!-- Google Auth-->
+    <string name="google_backend_id">15802696304-g4u0a3nm6ih53um1s2pm0qesl6lpjdkr.apps.googleusercontent.com</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

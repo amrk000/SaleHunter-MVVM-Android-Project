@@ -27,11 +27,13 @@ import java.util.regex.Pattern;
 import api.software.salehunter.LoadingDialog;
 import api.software.salehunter.MainActivity;
 import api.software.salehunter.R;
+import api.software.salehunter.model.SignInModel;
+import api.software.salehunter.model.SignUpModel;
 
 public class SignUpFragment extends Fragment {
     TextInputLayout username,email,password,confirmPassword;
     Button signUp;
-    ImageButton facebook, google, twitter;
+    ImageButton facebook, google;
     ConstraintLayout socialAuthLayout;
 
     public SignUpFragment() {
@@ -54,10 +56,9 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(((AccountSign)getActivity()).back.getVisibility() != View.VISIBLE) {
-            ((AccountSign) getActivity()).title.setText("Sign Up");
-            ((AccountSign) getActivity()).back.setVisibility(View.VISIBLE);
-            ((AccountSign) getActivity()).back.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.back_button_in));
+        if(!((AccountSign) getActivity()).isBackButtonVisible()) {
+            ((AccountSign) getActivity()).setTitle("Sign Up");
+            ((AccountSign) getActivity()).setBackButton(true);
         }
     }
 
@@ -72,7 +73,6 @@ public class SignUpFragment extends Fragment {
         signUp = view.findViewById(R.id.sign_up_button);
         facebook = view.findViewById(R.id.sign_up_facebook);
         google = view.findViewById(R.id.sign_up_google);
-        twitter = view.findViewById(R.id.sign_up_twitter);
         socialAuthLayout = view.findViewById(R.id.sign_up_social_auth);
 
         if(!((AccountSign)getActivity()).googleServices) socialAuthLayout.setVisibility(View.GONE);
@@ -209,7 +209,16 @@ public class SignUpFragment extends Fragment {
                     signUp = false;
                 }
 
-                if(signUp) signUp();
+                if(signUp){
+                    SignUpModel signUpModel = new SignUpModel();
+                    signUpModel.setFullName(username.getEditText().getText().toString());
+                    signUpModel.setEmail(email.getEditText().getText().toString());
+                    signUpModel.setPassword(password.getEditText().getText().toString());
+                    signUpModel.setPasswordConfirm(confirmPassword.getEditText().getText().toString());
+                    signUpModel.setProfileImage("test");
+
+                    ((AccountSign)getActivity()).signUp(signUpModel);
+                }
 
             }
         });
@@ -228,12 +237,6 @@ public class SignUpFragment extends Fragment {
             }
         });
 
-        twitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((AccountSign)getActivity()).twitterAuth();
-            }
-        });
 
     }
 
@@ -253,35 +256,4 @@ public class SignUpFragment extends Fragment {
         return emailRegex.matcher(password).matches();
     }
 
-    void signIn(){
-        //Server Request
-
-            getActivity().getSharedPreferences(MainActivity.APP_STATUS, MODE_PRIVATE)
-                    .edit()
-                    .putBoolean(MainActivity.SIGNED_IN,true)
-                    .apply();
-
-            Intent intent = new Intent(getContext(), MainActivity.class);
-            intent.putExtra(MainActivity.REMEMBER_ME,true);
-
-            startActivity(intent);
-            getActivity().onBackPressed();
-
-    }
-
-    void signUp(){
-
-        LoadingDialog loadingDialog = new LoadingDialog();
-        loadingDialog.setCancelable(false);
-        loadingDialog.show(getActivity().getSupportFragmentManager(),loadingDialog.getTag());
-        new Handler().postDelayed(()->{
-            loadingDialog.dismiss();
-
-            //Server Request
-
-            signIn();
-
-        },5000);
-
-    }
 }

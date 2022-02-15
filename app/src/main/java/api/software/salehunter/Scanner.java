@@ -12,11 +12,16 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.media.Image;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Rational;
 import android.util.Size;
 import android.view.View;
@@ -43,6 +48,9 @@ public class Scanner extends AppCompatActivity {
     PreviewView previewView;
     ProcessCameraProvider cameraProvider;
     ImageView lazer;
+    Vibrator vibrator;
+    MediaPlayer sfx;
+    boolean scanned = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,10 @@ public class Scanner extends AppCompatActivity {
 
         previewView = findViewById(R.id.cameraPreview);
         lazer = findViewById(R.id.lazer);
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        sfx = MediaPlayer.create(this, R.raw.scanner_sound);
+        sfx.setVolume(0.25f,0.25f);
 
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
 
@@ -113,15 +125,17 @@ public class Scanner extends AppCompatActivity {
                                     //list of all detected barcodes/qr codes
                                     for (Barcode barcode : task.getResult()) {
 
-                                            String rawValue = barcode.getRawValue();
+                                        String rawValue = barcode.getRawValue();
 
-                                            Intent returnIntent = new Intent();
-                                            returnIntent.putExtra("result", rawValue);
-                                            setResult(Activity.RESULT_OK, returnIntent);
-                                            finish();
+                                        Intent returnIntent = new Intent();
+                                        returnIntent.putExtra("result", rawValue);
+                                        setResult(Activity.RESULT_OK, returnIntent);
+
+                                        scanned = true;
+                                        sfx.start();
+                                        finish();
 
                                     }
-
                                     image.close();
                                 }
                             });
@@ -134,7 +148,12 @@ public class Scanner extends AppCompatActivity {
 
         cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis,preview);
 
-
         lazer.startAnimation(AnimationUtils.loadAnimation(this,R.anim.scanner_lazer_effect));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(scanned) vibrator.vibrate(80);
     }
 }

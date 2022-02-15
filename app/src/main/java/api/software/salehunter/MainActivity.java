@@ -2,10 +2,15 @@ package api.software.salehunter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,20 +20,22 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import api.software.salehunter.accountSign.AccountSign;
 import api.software.salehunter.intro.AppIntro;
 import api.software.salehunter.mainFragments.home.HomeFragment;
+import api.software.salehunter.util.NetworkBroadcastReceiver;
+import api.software.salehunter.util.SharedPrefManager;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String APP_STATUS = "0";
-    public static final String APP_SETTINGS = "1";
-
-    public static final String FIRST_LAUNCH = "firstLaunch";
     boolean firstLaunch;
-
-    public static final String SIGNED_IN = "signedIn";
-    public static final String REMEMBER_ME = "rememberMe";
     boolean signedIn;
+    boolean rememberMe;
+
+    public static final String REMEMBER_ME = "rememberMe";
 
     View view,backView;
     ImageButton menuIcon;
@@ -36,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup menu;
     FrameLayout frameLayout;
     TextView fragmentTitle;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
         overridePendingTransition(R.anim.lay_on,R.anim.lay_off);
 
-        firstLaunch = getSharedPreferences(MainActivity.APP_STATUS, MODE_PRIVATE).getBoolean(MainActivity.FIRST_LAUNCH,true);
-        signedIn = getSharedPreferences(MainActivity.APP_STATUS, MODE_PRIVATE).getBoolean(MainActivity.SIGNED_IN,false);
+        firstLaunch = SharedPrefManager.get(this).isFirstLaunch();
+        signedIn = SharedPrefManager.get(this).isSignedIn();
+        rememberMe = getIntent().getBooleanExtra(REMEMBER_ME,true);
 
         if(firstLaunch){
             startActivity(new Intent(this, AppIntro.class));
             finish();
         }
-        else if(!signedIn && getIntent().getBooleanExtra(REMEMBER_ME,true)){
+        else if(!signedIn){
             startActivity(new Intent(this, AccountSign.class));
             finish();
         }
@@ -64,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.main_FrameLayout);
         fragmentTitle = findViewById(R.id.current_fragment_title);
 
-
         underlayNavigationDrawer = new UnderlayNavigationDrawer(this,view,frameLayout,backView,menuIcon);
+        fragmentManager = getSupportFragmentManager();
+
+        registerReceiver( new NetworkBroadcastReceiver(getSupportFragmentManager()), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         menu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -96,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(),new HomeFragment())
                 .commit();
 
-
     }
 
     @Override
@@ -112,23 +122,44 @@ public class MainActivity extends AppCompatActivity {
         else super.onBackPressed();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!rememberMe) SharedPrefManager.get(this).setSignedIn(false);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!rememberMe) SharedPrefManager.get(this).setSignedIn(true);
+    }
 
     void switchFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_in,R.anim.fragment_out)
-                .replace(frameLayout.getId(),fragment)
-                .commit();
 
         underlayNavigationDrawer.closeMenu();
+
+        new Handler().postDelayed(()->{
+            fragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_in,0)
+                    .replace(frameLayout.getId(),fragment)
+                    .commit();
+        },underlayNavigationDrawer.getAnimationDuration());
     }
 
     void signOut(){
+        LoadingDialog loadingDialog = new LoadingDialog();
+        loadingDialog.show(getSupportFragmentManager(),loadingDialog.getTag());
 
-        getSharedPreferences(MainActivity.APP_STATUS, MODE_PRIVATE)
-                .edit()
-                .putBoolean(MainActivity.SIGNED_IN,false)
-                .apply();
+        //signout from facebook
+        LoginManager.getInstance().logOut();
 
+        //signout from google
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        GoogleSignIn.getClient(this, googleSignInOptions).signOut();
+
+        SharedPrefManager.get(this).setSignedIn(false);
+        
         startActivity(new Intent(getApplicationContext(), AccountSign.class));
         finish();
 

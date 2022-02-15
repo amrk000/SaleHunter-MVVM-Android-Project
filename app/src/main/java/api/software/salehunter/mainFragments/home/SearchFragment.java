@@ -1,7 +1,5 @@
 package api.software.salehunter.mainFragments.home;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,8 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +32,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import api.software.salehunter.MainActivity;
-import api.software.salehunter.ProductModel;
+import api.software.salehunter.adapter.HomeProductsAdapter;
+import api.software.salehunter.model.ProductModel;
 import api.software.salehunter.R;
 import api.software.salehunter.Scanner;
 
@@ -144,19 +142,19 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
-        for(int i=0; i<10; i++)
-        products.add(new ProductModel().setName("RGB PC Speakers").setImageUrl("").setBrand("Havit").setPrice("177LE").setStore("amazon").setRate(3.5f).setFavourite(false));
-
         HomeProductsAdapter recyclerAdapter = new HomeProductsAdapter(getContext(),products);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(recyclerAdapter);
 
+        new Handler().postDelayed(()->{
+            for(int i=0; i<8; i++)
+                products.add(new ProductModel().setName("pc purple led small speakers - usb cable").setImageUrl("").setBrand("Havit").setPrice("179.99LE").setStore("amazon").setRate(4.2f).setFavourite(false));
+                recyclerAdapter.notifyItemRangeInserted(0,8);
+        },500);
     }
 
     void searchRequest(){
         if(searchBox.getText().toString().isEmpty()) return;
-
         Toast.makeText(getContext(), "Search Request:\n"+searchBox.getText().toString(), Toast.LENGTH_SHORT).show();
     }
 

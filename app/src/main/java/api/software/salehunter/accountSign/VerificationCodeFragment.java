@@ -1,5 +1,6 @@
 package api.software.salehunter.accountSign;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import api.software.salehunter.R;
+import api.software.salehunter.model.ForgotPasswordModel;
 
 public class VerificationCodeFragment extends Fragment {
     EditText[] code;
@@ -50,16 +52,18 @@ public class VerificationCodeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AccountSign)getActivity()).title.setText("Verification Code");
+        ((AccountSign)getActivity()).setTitle("Verification Code");
 
         verify = view.findViewById(R.id.verification_code_button);
         resend = view.findViewById(R.id.verification_code_resend);
 
-        code = new EditText[4];
+        code = new EditText[6];
         code[0]=view.findViewById(R.id.verification_code_num);
         code[1]=view.findViewById(R.id.verification_code_num1);
         code[2]=view.findViewById(R.id.verification_code_num2);
         code[3]=view.findViewById(R.id.verification_code_num3);
+        code[4]=view.findViewById(R.id.verification_code_num4);
+        code[5]=view.findViewById(R.id.verification_code_num5);
 
         code[0].requestFocus();
         code[0].clearFocus();
@@ -148,33 +152,25 @@ public class VerificationCodeFragment extends Fragment {
                     }
                 }
 
-               if(verify) verifyCode();
+               if(verify) {
+
+                   StringBuilder pin = new StringBuilder();
+                   for(EditText digit : code) pin.append(digit.getText().toString());
+
+                   ((AccountSign)getActivity()).verifyPin(pin.toString());
+               }
             }
         });
 
     }
 
     void resendCode(){
-        //request
+        ForgotPasswordModel forgotPAsswordModel = new ForgotPasswordModel();
+        forgotPAsswordModel.setEmail(((AccountSign)getActivity()).getEmail());
 
-       Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.verification_code_snackbar_colayout),"Code is sent again. Check your inbox.",5000);
-        snackbar.getView().setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.snackbar,getActivity().getTheme()));
-        snackbar.setBackgroundTint(getResources().getColor(R.color.lightModesecondary,getActivity().getTheme()));
-        snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
-        snackbar.show();
-    }
-
-    void verifyCode(){
-        //request
-
-
-        getActivity().getSupportFragmentManager().popBackStack("forgotPassword",FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_from_right,R.anim.slide_to_left,R.anim.slide_from_left,R.anim.slide_to_right)
-                .replace(((AccountSign)getActivity()).frameLayout.getId(),new ResetPasswordFragment())
-                .commit();
+        ((AccountSign)getActivity()).resendPinToEmail(forgotPAsswordModel);
 
     }
+
+
 }

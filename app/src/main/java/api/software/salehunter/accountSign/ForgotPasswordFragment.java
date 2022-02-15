@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.regex.Pattern;
 
 import api.software.salehunter.R;
+import api.software.salehunter.model.ForgotPasswordModel;
 
 public class ForgotPasswordFragment extends Fragment {
     TextInputLayout email;
@@ -43,10 +44,9 @@ public class ForgotPasswordFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(((AccountSign)getActivity()).back.getVisibility() != View.VISIBLE) {
-            ((AccountSign) getActivity()).title.setText("Forgot Password");
-            ((AccountSign) getActivity()).back.setVisibility(View.VISIBLE);
-            ((AccountSign) getActivity()).back.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.back_button_in));
+        if(!((AccountSign)getActivity()).isBackButtonVisible()) {
+            ((AccountSign) getActivity()).setTitle("Forgot Password");
+            ((AccountSign) getActivity()).setBackButton(true);
         }
 
         email = view.findViewById(R.id.forgot_password_email);
@@ -91,7 +91,12 @@ public class ForgotPasswordFragment extends Fragment {
                     sendCode = false;
                 }
 
-                if(sendCode) sendCode();
+                if(sendCode) {
+                    ForgotPasswordModel forgotPAsswordModel = new ForgotPasswordModel();
+                    forgotPAsswordModel.setEmail(email.getEditText().getText().toString());
+
+                    ((AccountSign)getActivity()).sendPinToEmail(forgotPAsswordModel);
+                }
 
             }
         });
@@ -100,17 +105,6 @@ public class ForgotPasswordFragment extends Fragment {
     boolean validEmail(String email){
         Pattern emailRegex = Pattern.compile("(\\.*\\w+)+@([a-z]+|[A-Z]+)(\\.com|\\.sa)(\\.([a-z]+|[A-Z]+)+)?");
         return emailRegex.matcher(email).matches();
-    }
-
-    void sendCode(){
-        //request
-
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_from_right,R.anim.slide_to_left,R.anim.slide_from_left,R.anim.slide_to_right)
-                .replace(((AccountSign)getActivity()).frameLayout.getId(),new VerificationCodeFragment())
-                .addToBackStack("forgotPassword")
-                .commit();
     }
 
 }

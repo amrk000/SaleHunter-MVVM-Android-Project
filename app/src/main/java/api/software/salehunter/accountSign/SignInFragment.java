@@ -29,13 +29,16 @@ import java.util.regex.Pattern;
 import api.software.salehunter.LoadingDialog;
 import api.software.salehunter.MainActivity;
 import api.software.salehunter.R;
+import api.software.salehunter.data.AccountRepository;
+import api.software.salehunter.model.SignInModel;
+import api.software.salehunter.util.SharedPrefManager;
 
 public class SignInFragment extends Fragment {
     TextInputLayout email,password;
     CheckBox rememberMe;
     TextView forgotPassword, signUp;
     Button signIn;
-    ImageButton facebook, google, twitter;
+    ImageButton facebook, google;
     ConstraintLayout socialAuthLayout;
 
     public SignInFragment() { }
@@ -57,10 +60,9 @@ public class SignInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(((AccountSign)getActivity()).back.getVisibility() == View.VISIBLE) {
-            ((AccountSign) getActivity()).title.setText("Sign In");
-            ((AccountSign) getActivity()).back.setVisibility(View.GONE);
-            ((AccountSign) getActivity()).back.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.back_button_out));
+        if(((AccountSign)getActivity()).isBackButtonVisible()) {
+            ((AccountSign) getActivity()).setTitle("Sign In");
+            ((AccountSign) getActivity()).setBackButton(false);
         }
 
     }
@@ -77,7 +79,6 @@ public class SignInFragment extends Fragment {
         signIn = view.findViewById(R.id.sign_in_button);
         facebook = view.findViewById(R.id.sign_in_facebook);
         google = view.findViewById(R.id.sign_in_google);
-        twitter = view.findViewById(R.id.sign_in_twitter);
         socialAuthLayout = view.findViewById(R.id.sign_in_social_auth);
 
         if(!((AccountSign)getActivity()).googleServices) socialAuthLayout.setVisibility(View.GONE);
@@ -148,7 +149,12 @@ public class SignInFragment extends Fragment {
                     signIn = false;
                 }
 
-                if(signIn) signIn(rememberMe.isChecked());
+                if(signIn){
+                    SignInModel signInModel = new SignInModel();
+                    signInModel.setEmail(email.getEditText().getText().toString());
+                    signInModel.setPassword(password.getEditText().getText().toString());
+                    ((AccountSign)getActivity()).signIn(rememberMe.isChecked(), signInModel);
+                }
 
             }
         });
@@ -157,24 +163,14 @@ public class SignInFragment extends Fragment {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.slide_from_bottom,R.anim.slide_to_top,R.anim.slide_from_top,R.anim.slide_to_bottom)
-                        .replace(((AccountSign)getActivity()).frameLayout.getId(),new SignUpFragment())
-                        .addToBackStack("home")
-                        .commit();
+                ((AccountSign)getActivity()).changeFragment(AccountSign.SIGN_UP_FRAGMENT);
             }
         });
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.slide_from_right,R.anim.slide_to_left,R.anim.slide_from_left,R.anim.slide_to_right)
-                        .replace(((AccountSign)getActivity()).frameLayout.getId(),new ForgotPasswordFragment())
-                        .addToBackStack("home")
-                        .commit();
+                ((AccountSign)getActivity()).changeFragment(AccountSign.FORGOT_PASSWORD_FRAGMENT);
             }
         });
 
@@ -192,13 +188,6 @@ public class SignInFragment extends Fragment {
             }
         });
 
-        twitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((AccountSign)getActivity()).twitterAuth();
-            }
-        });
-
     }
 
     boolean validEmail(String email){
@@ -211,26 +200,5 @@ public class SignInFragment extends Fragment {
         return emailRegex.matcher(password).matches();
     }
 
-    void signIn(boolean rememberMe){
-        //Server Request
-        LoadingDialog loadingDialog = new LoadingDialog();
-        loadingDialog.setCancelable(false);
-        loadingDialog.show(getActivity().getSupportFragmentManager(),loadingDialog.getTag());
-        new Handler().postDelayed(()->{
-            loadingDialog.dismiss();
-
-        getActivity().getSharedPreferences(MainActivity.APP_STATUS, MODE_PRIVATE)
-                .edit()
-                .putBoolean(MainActivity.SIGNED_IN,rememberMe)
-                .apply();
-
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra(MainActivity.REMEMBER_ME,rememberMe);
-
-        startActivity(intent);
-        getActivity().onBackPressed();
-
-        },5000);
-    }
 
 }
