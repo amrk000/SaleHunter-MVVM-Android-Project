@@ -50,6 +50,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import api.software.MessageDialog;
+import api.software.salehunter.DisconnectedDialog;
 import api.software.salehunter.LoadingDialog;
 import api.software.salehunter.MainActivity;
 import api.software.salehunter.data.AccountRepository;
@@ -71,6 +72,8 @@ public class AccountSign extends AppCompatActivity {
     private ActivityAccountSignBinding binding;
     private LoadingDialog loadingDialog;
     private MessageDialog messageDialog;
+
+    NetworkBroadcastReceiver networkBroadcastReceiver;
 
     private CallbackManager facebookCallbackManager;
     private GoogleSignInClient googleSignInClient;
@@ -123,7 +126,8 @@ public class AccountSign extends AppCompatActivity {
                 .replace(binding.accountSignFrameLayout.getId(),new SignInFragment())
                 .commit();
 
-        registerReceiver( new NetworkBroadcastReceiver(getSupportFragmentManager()), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        networkBroadcastReceiver = new NetworkBroadcastReceiver(getSupportFragmentManager());
+        registerReceiver(networkBroadcastReceiver , new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
     }
 
@@ -131,6 +135,12 @@ public class AccountSign extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkBroadcastReceiver);
     }
 
     @Override
@@ -184,7 +194,7 @@ public class AccountSign extends AppCompatActivity {
         loadingDialog.show(getSupportFragmentManager(),loadingDialog.getTag());
 
         if(GoogleSignIn.getLastSignedInAccount(this) != null) googleSignInClient.signOut();
-        
+
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, 1);
     }

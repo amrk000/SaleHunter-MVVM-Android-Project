@@ -1,5 +1,6 @@
 package api.software.salehunter.util;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +12,13 @@ import api.software.salehunter.DisconnectedDialog;
 import api.software.salehunter.accountSign.SignInFragment;
 
 public class NetworkBroadcastReceiver extends BroadcastReceiver {
-
     DisconnectedDialog disconnectedDialog;
-    FragmentManager supportFragmentManager;
+    FragmentManager fragmentManager;
 
     public NetworkBroadcastReceiver(){}
 
-    public NetworkBroadcastReceiver(FragmentManager supportFragmentManager){
-        this.supportFragmentManager = supportFragmentManager;
+    public NetworkBroadcastReceiver(FragmentManager fragmentManager){
+        this.fragmentManager = fragmentManager;
         disconnectedDialog = new DisconnectedDialog();
     }
 
@@ -32,7 +32,9 @@ public class NetworkBroadcastReceiver extends BroadcastReceiver {
         if(connected){
             if(disconnectedDialog.isVisible()) disconnectedDialog.dismiss();
         }
-        else disconnectedDialog.show(supportFragmentManager,disconnectedDialog.getTag());
+        else disconnectedDialog.show(fragmentManager,disconnectedDialog.getTag());
 
     }
+
+
 }

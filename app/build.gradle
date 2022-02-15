@@ -9,7 +9,7 @@ android {
         applicationId "api.software.salehunter"
         minSdk 23
         targetSdk 31
-        versionCode 4
+        versionCode 5
         versionName "0.4.2 Pre-Alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

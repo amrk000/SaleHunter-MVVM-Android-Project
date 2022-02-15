@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     TextView fragmentTitle;
     FragmentManager fragmentManager;
 
+    NetworkBroadcastReceiver networkBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
         underlayNavigationDrawer = new UnderlayNavigationDrawer(this,view,frameLayout,backView,menuIcon);
         fragmentManager = getSupportFragmentManager();
 
-        registerReceiver( new NetworkBroadcastReceiver(getSupportFragmentManager()), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        networkBroadcastReceiver = new NetworkBroadcastReceiver(getSupportFragmentManager());
+        registerReceiver(networkBroadcastReceiver , new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         menu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -132,6 +135,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(!rememberMe) SharedPrefManager.get(this).setSignedIn(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkBroadcastReceiver);
     }
 
     void switchFragment(Fragment fragment){
