@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".accountSign.AccountSign">
+    tools:context=".view.activity.AccountSign">
 
     <ImageButton
         android:id="@+id/account_sign_back"
@@ -59,14 +59,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/account_sign_frameLayout"
+            <fragment
+                android:id="@+id/account_sign_fragmentsContainer"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/account_sign_nav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fadingEdgeLength="20dp"
-                android:requiresFadingEdge="horizontal|vertical">
+                android:requiresFadingEdge="horizontal|vertical" />
 
-            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 

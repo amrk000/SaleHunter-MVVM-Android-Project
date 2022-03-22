@@ -7,7 +7,7 @@
     android:background="?attr/background"
     android:clipToPadding="false"
     android:padding="24dp"
-    tools:context=".accountSign.SignInFragment">
+    tools:context=".view.fragment.accountSign.SignInFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sign_in_email"

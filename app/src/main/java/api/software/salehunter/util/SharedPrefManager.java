@@ -5,6 +5,10 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
+import api.software.salehunter.model.UserModel;
+
 public class SharedPrefManager {
     private static SharedPrefManager instance;
     private static SharedPreferences sharedPreferences;
@@ -12,15 +16,15 @@ public class SharedPrefManager {
     // Keys
     private static final String FIRST_LAUNCH = "firstLaunch";
     private static final String SIGNED_IN = "signedIn";
+    private static final String TOKEN = "token";
+    private static final String USER = "user";
 
     public SharedPrefManager(Context context) {
-        sharedPreferences = context.getSharedPreferences("settings",MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("prefs",MODE_PRIVATE);
     }
 
     public static SharedPrefManager get(Context context){
-        if(instance == null){
-            instance = new SharedPrefManager(context);
-        }
+        if(instance == null) instance = new SharedPrefManager(context);
         return instance;
     }
 
@@ -38,9 +42,31 @@ public class SharedPrefManager {
         return sharedPreferences.getBoolean(SIGNED_IN,false);
     }
 
-    public void setSignedIn(boolean value){
+    public void setSignedIn(boolean signedIn){
         sharedPreferences.edit()
-                .putBoolean(SIGNED_IN,value)
+                .putBoolean(SIGNED_IN,signedIn)
+                .apply();
+
+    }
+
+    public String getToken() {
+        return sharedPreferences.getString(TOKEN,"");
+    }
+
+    public void setToken(String token){
+        sharedPreferences.edit()
+                .putString(TOKEN,token)
+                .apply();
+    }
+
+    public UserModel getUser() {
+        String userJson = sharedPreferences.getString(USER,"");
+        return new Gson().fromJson(userJson, UserModel.class);
+    }
+
+    public void setUser(UserModel user){
+        sharedPreferences.edit()
+                .putString(USER,new Gson().toJson(user))
                 .apply();
     }
 

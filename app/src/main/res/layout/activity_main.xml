@@ -5,65 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/menu"
-    tools:context=".MainActivity">
+    tools:context=".view.activity.MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/abstract_bg"
+        android:alpha="0.15"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/menu_backView"
+        app:layout_constraintTop_toTopOf="@+id/menu_frontView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/menu_backView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="170dp"
+        android:layout_marginEnd="165dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/menu_profile_pic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:layout_constraintEnd_toEndOf="@+id/menu_username"
-            app:layout_constraintStart_toStartOf="@+id/menu_username"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile_placeholder" />
-
-        <TextView
-            android:id="@+id/menu_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/raleway_semibold"
-            android:gravity="center"
-            android:text="User Name"
-            android:textColor="#FFF"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="@+id/menu"
-            app:layout_constraintTop_toBottomOf="@+id/menu_profile_pic" />
 
         <RadioGroup
             android:id="@+id/menu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menu_username"
-            app:layout_constraintVertical_bias="0.25">
+            app:layout_constraintStart_toStartOf="parent">
 
             <RadioButton
                 android:id="@+id/menu_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="true"
                 android:drawableLeft="@drawable/menu_icon_home"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Home"
@@ -72,15 +58,17 @@
 
             <RadioButton
                 android:id="@+id/menu_dashboard"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="false"
                 android:drawableLeft="@drawable/menu_icon_dashboard"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Dashboard"
@@ -89,15 +77,17 @@
 
             <RadioButton
                 android:id="@+id/menu_reviews"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="false"
                 android:drawableLeft="@drawable/menu_icon_star"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Reviews"
@@ -106,15 +96,17 @@
 
             <RadioButton
                 android:id="@+id/menu_history"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="false"
                 android:drawableLeft="@drawable/menu_icon_history"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="History"
@@ -123,15 +115,17 @@
 
             <RadioButton
                 android:id="@+id/menu_mystore"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="false"
                 android:drawableLeft="@drawable/menu_icon_store"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="My Store"
@@ -140,15 +134,17 @@
 
             <RadioButton
                 android:id="@+id/menu_profile"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="false"
                 android:drawableLeft="@drawable/menu_icon_profile"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Profile"
@@ -157,15 +153,17 @@
 
             <RadioButton
                 android:id="@+id/menu_settings"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="false"
                 android:drawableLeft="@drawable/menu_icon_setting"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Settings"
@@ -174,15 +172,17 @@
 
             <RadioButton
                 android:id="@+id/menu_help"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="#FFFFFF"
                 android:checked="false"
                 android:drawableLeft="@drawable/menu_icon_help"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Help"
@@ -191,9 +191,10 @@
 
             <RadioButton
                 android:id="@+id/menu_signout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
                 android:button="@drawable/menu_item_selector"
                 android:buttonTint="@color/accent"
                 android:checked="false"
@@ -201,12 +202,45 @@
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/accent"
                 android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Sign out"
                 android:textColor="@color/accent"
                 android:textSize="20sp" />
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/menu_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway_semibold"
+            android:gravity="center"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="User Name"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toTopOf="@+id/menu"
+            app:layout_constraintEnd_toEndOf="@+id/menu"
+            app:layout_constraintStart_toStartOf="@+id/menu" />
+
+        <ImageView
+            android:id="@+id/menu_profile_pic"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/menu_username"
+            app:layout_constraintEnd_toEndOf="@+id/menu"
+            app:layout_constraintStart_toStartOf="@+id/menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/profile_placeholder" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,17 +254,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/main_FrameLayout"
+        <fragment
+            android:id="@+id/main_FragmentContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/current_fragment_title">
-
-        </FrameLayout>
+            app:layout_constraintTop_toBottomOf="@+id/current_fragment_title"
+            app:navGraph="@navigation/main_activity_nav"
+            tools:viewBindingIgnore="false" />
 
         <TextView
             android:id="@+id/current_fragment_title"
@@ -242,13 +278,13 @@
             android:textAlignment="center"
             android:textColor="?attr/colorPrimary"
             android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+            app:layout_constraintBottom_toBottomOf="@+id/menuButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageButton" />
+            app:layout_constraintTop_toTopOf="@+id/menuButton" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/menuButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginStart="24dp"

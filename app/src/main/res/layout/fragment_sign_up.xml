@@ -7,7 +7,7 @@
     android:background="?attr/background"
     android:clipToPadding="false"
     android:padding="24dp"
-    tools:context=".accountSign.SignUpFragment">
+    tools:context=".view.fragment.accountSign.SignUpFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sign_up_username"

@@ -5,10 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".mainFragments.home.HomeFragment" >
+    tools:context=".view.fragment.main.home.HomeFragment" >
 
-    <FrameLayout
-        android:id="@+id/home_frameLayout"
+    <fragment
+        android:id="@+id/home_framgmentContainer"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="false"
+        app:navGraph="@navigation/homepage_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+    </fragment>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -141,7 +144,8 @@
             app:backgroundTint="?attr/colorPrimaryDark"
             app:fabCustomSize="55dp"
             app:layout_anchor="@id/home_BottomAppBar"
-            app:tint="#FFFFFF" />
+            app:tint="#FFFFFF"
+            android:src="@drawable/navbar_icon_search"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

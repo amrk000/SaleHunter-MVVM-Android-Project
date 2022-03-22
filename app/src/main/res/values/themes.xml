@@ -17,6 +17,7 @@
 
         <item name="android:fontFamily">@font/raleway_regular</item>
 
+        <item name="bottomSheetDialogTheme">@style/BottomSheetStyle</item>
 
     </style>
 
@@ -41,6 +42,14 @@
     <style name="DialogLayOnAnimation">
         <item name="android:windowEnterAnimation">@anim/lay_on</item>
         <item name="android:windowExitAnimation">@anim/lay_off</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 </resources>

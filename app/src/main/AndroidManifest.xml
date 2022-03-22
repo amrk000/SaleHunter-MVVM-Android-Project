@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Splash">
         <activity
-            android:name=".Scanner"
+            android:name=".view.activity.Scanner"
             android:exported="true" />
 
         <receiver
@@ -24,19 +24,20 @@
             android:exported="true" />
 
         <activity
-            android:name=".accountSign.AccountSign"
+            android:name=".view.activity.AccountSign"
             android:configChanges="orientation|screenLayout|fontScale|screenSize|density"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".intro.AppIntro"
+            android:name=".view.activity.AppIntro"
             android:configChanges="orientation|screenLayout|fontScale|screenSize|density"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.activity.MainActivity"
             android:configChanges="orientation|screenLayout|fontScale|screenSize|density"
             android:exported="true"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

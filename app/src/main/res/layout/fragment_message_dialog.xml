@@ -2,15 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/background"
-    tools:context="api.software.MessageDialog">
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/bottom_sheet_dialog_background"
+    tools:context=".view.fragment.dialogs.MessageDialog">
 
     <TextView
         android:id="@+id/messageDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/raleway_semibold"
         android:text="Dialog Message"
         android:textColor="?attr/colorPrimary"
@@ -23,7 +24,7 @@
         android:id="@+id/messageDialogSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Dialog Sub Title"
         android:textAlignment="center"
         android:textColor="?attr/textFillColor"
@@ -32,14 +33,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageDialogTitle" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/messageDialogClose"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_simple"
         android:text="Close"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageDialogSubtitle" />

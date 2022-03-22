@@ -3,10 +3,6 @@ package api.software.salehunter.model;
 import com.google.gson.annotations.SerializedName;
 
 public class SocialAuthModel {
-    public static final int STATUS_SUCCESSFUL_SIGN_IN = 200;
-    public static final int STATUS_SUCCESSFUL_SIGN_UP = 201;
-    public static final int STATUS_FAILED_SIGN_UP = 400;
-    public static final int STATUS_FAILED_SIGN_IN = 401;
 
     @SerializedName("fullname")
     private String fullName;

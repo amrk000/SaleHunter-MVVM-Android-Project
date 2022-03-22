@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".intro.AppIntro">
+    tools:context=".view.activity.AppIntro">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/appIntro_viewPager"
@@ -22,12 +22,13 @@
         android:id="@+id/appIntro_pageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginBottom="32dp"
         android:background="#00FFFFFF"
         android:clipToPadding="true"
-        app:layout_constraintBottom_toTopOf="@+id/appIntro_button"
+        app:layout_constraintBottom_toBottomOf="@+id/appIntro_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.92"
         app:tabBackground="@drawable/intro_indicator"
         app:tabGravity="center"
         app:tabIndicator="@drawable/intro_indicator"

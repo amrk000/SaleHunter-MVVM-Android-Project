@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="?attr/background"
-    android:padding="40dp"
-    tools:context=".DisconnectedDialog">
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background"
+    android:padding="30dp"
+    tools:context=".view.fragment.dialogs.DisconnectedDialog">
 
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:adjustViewBounds="true"
         android:src="@drawable/disconnected"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,13 +47,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/disconnectedDialogClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_simple"
         android:text="Close"
-        android:textColor="#FFFFFF"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />

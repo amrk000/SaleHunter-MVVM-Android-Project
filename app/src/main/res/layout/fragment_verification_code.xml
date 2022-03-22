@@ -7,7 +7,7 @@
     android:background="?attr/background"
     android:clipToPadding="false"
     android:padding="24dp"
-    tools:context=".accountSign.VerificationCodeFragment">
+    tools:context=".view.fragment.accountSign.VerificationCodeFragment">
 
     <ImageView
         android:id="@+id/imageView3"
