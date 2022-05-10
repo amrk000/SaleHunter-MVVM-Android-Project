@@ -9,7 +9,20 @@
         android:id="@+id/homeFragment"
         android:name="api.software.salehunter.view.fragment.main.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_productPageFragment"
+            app:destination="@id/productPageFragment"
+            app:enterAnim="@anim/lay_on_delayed"
+            app:popExitAnim="@anim/lay_off" />
+    </fragment>
     <fragment
         android:id="@+id/underConstructionFragment2"
         android:name="api.software.salehunter.view.fragment.main.UnderConstructionFragment"
@@ -20,4 +33,22 @@
         android:name="api.software.salehunter.view.fragment.main.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/searchResultsFragment"
+        android:name="api.software.salehunter.view.fragment.main.SearchResultsFragment"
+        android:label="fragment_search_results"
+        tools:layout="@layout/fragment_search_results" >
+        <action
+            android:id="@+id/action_searchResultsFragment_to_productPageFragment"
+            app:destination="@id/productPageFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/productPageFragment"
+        android:name="api.software.salehunter.view.fragment.main.ProductPageFragment"
+        android:label="fragment_product_page"
+        tools:layout="@layout/fragment_product_page" />
 </navigation>

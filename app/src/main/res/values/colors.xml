@@ -8,10 +8,10 @@
 
     <color name="accent">#FF4F04</color>
 
-    <color name="lightModeText">#8C8C8C</color>
+    <color name="lightModeText">#636363</color>
     <color name="lightModeBackground">#FFFFFF</color>
 
-    <color name="darkModeText">#C6C6C6</color>
+    <color name="darkModeText">#C8C8C8</color>
     <color name="darkModeBackground">#1B1A1F</color>
 
     <color name="black">#FF000000</color>

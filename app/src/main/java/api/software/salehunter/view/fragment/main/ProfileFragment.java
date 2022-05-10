@@ -2,6 +2,8 @@ package api.software.salehunter.view.fragment.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,8 +13,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,37 +29,32 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import api.software.salehunter.R;
-import api.software.salehunter.data.Repository;
 import api.software.salehunter.databinding.FragmentProfileBinding;
-import api.software.salehunter.model.ResponseModel;
+import api.software.salehunter.model.BaseResponseModel;
 import api.software.salehunter.model.UserModel;
-import api.software.salehunter.model.UserResponseModel;
 import api.software.salehunter.util.DialogsProvider;
 import api.software.salehunter.util.ImageEncoder;
 import api.software.salehunter.util.TextFieldValidator;
 import api.software.salehunter.util.UserAccountManager;
 import api.software.salehunter.view.activity.MainActivity;
-import api.software.salehunter.view.fragment.dialogs.LoadingDialog;
-import api.software.salehunter.view.fragment.dialogs.MessageDialog;
 import api.software.salehunter.view.fragment.dialogs.EmailVerificationDialog;
-import api.software.salehunter.view.fragment.dialogs.PasswordChangeDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import api.software.salehunter.viewmodel.fragment.main.ProfileViewModel;
 
 
 public class ProfileFragment extends Fragment {
-    FragmentProfileBinding vb;
-    UserModel user;
-    Uri image;
-    boolean picChanged, usernameChanged, emailChanged;
+    private FragmentProfileBinding vb;
+    private ProfileViewModel viewModel;
 
-    ActivityResultLauncher<Intent> imagePicker;
+    private UserModel user;
+    private String token;
 
-    Repository  repository;
-    String token;
+    private Uri image;
+    private ActivityResultLauncher<Intent> imagePicker;
+
+    private boolean picChanged, usernameChanged, emailChanged;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,12 +101,46 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        repository = new Repository();
-        token = UserAccountManager.getToken(getContext(),UserAccountManager.TOKEN_TYPE_BEARER);
-
-        showSaveButton(false);
+        viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         user = UserAccountManager.getUser(getContext());
+        token = UserAccountManager.getToken(getContext(),UserAccountManager.TOKEN_TYPE_BEARER);
+
+        switch (user.getAccountType()){
+            case UserModel.ACCOUNT_TYPE_EMAIL:
+                vb.profileSocialLogo.setVisibility(View.GONE);
+                vb.profileEditSocialProfile.setVisibility(View.GONE);
+                break;
+
+            case UserModel.ACCOUNT_TYPE_GOOGLE:
+                vb.profileEditPic.setVisibility(View.GONE);
+                vb.profileUsernameField.setEnabled(false);
+                vb.profileEmailField.setEnabled(false);
+                vb.profilePasswordField.setEnabled(false);
+                vb.profileSocialLogo.setImageDrawable(getResources().getDrawable(R.drawable.google_auth,getActivity().getTheme()));
+                vb.profileEditSocialProfile.setText("Edit Profile On Google");
+                vb.profileEditSocialProfile.setOnClickListener(button ->{
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://myaccount.google.com/personal-info"));
+                    startActivity(intent);
+                });
+                break;
+
+            case UserModel.ACCOUNT_TYPE_FACEBOOK:
+                vb.profileEditPic.setVisibility(View.GONE);
+                vb.profileUsernameField.setEnabled(false);
+                vb.profileEmailField.setEnabled(false);
+                vb.profilePasswordField.setEnabled(false);
+                vb.profileSocialLogo.setImageDrawable(getResources().getDrawable(R.drawable.facebook_auth,getActivity().getTheme()));
+                vb.profileEditSocialProfile.setText("Edit Profile On Facebook");
+                vb.profileEditSocialProfile.setOnClickListener(button ->{
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://web.facebook.com/settings?tab=account"));
+                    startActivity(intent);
+                });
+                break;
+        }
+
         renderProfileData();
 
         Glide.with(this).load(R.drawable.abstract_bg)
@@ -121,7 +152,6 @@ public class ProfileFragment extends Fragment {
                 .placeholder(R.drawable.profile_placeholder)
                 .circleCrop()
                 .into(vb.profilePic);
-
 
         vb.profileUsernameField.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -178,71 +208,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        vb.profileEditPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                imagePicker.launch(intent);
-            }
+        vb.profileEditPic.setOnClickListener(button -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            imagePicker.launch(intent);
         });
 
-        vb.profilePasswordField.getEditText().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogsProvider.get(getActivity()).passwordChangeDialog();
-            }
-        });
+        vb.profilePasswordField.getEditText().setOnClickListener(button -> DialogsProvider.get(getActivity()).passwordChangeDialog());
 
-        vb.profileSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean validData = true;
-
-                if(vb.profileEmailField.getError()!=null || vb.profileEmailField.getEditText().getText().length()==0){
-                    vb.profileEmailField.requestFocus();
-                    vb.profileEmailField.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(vb.profileUsernameField.getError()!=null || vb.profileUsernameField.getEditText().getText().length()==0){
-                    vb.profileUsernameField.requestFocus();
-                    vb.profileUsernameField.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-
-                if(validData) {
-
-                    if(picChanged) user.setEncodedImage(ImageEncoder.get().encode(getContext(),image));
-
-                    if(usernameChanged) user.setFullName(vb.profileUsernameField.getEditText().getText().toString());
-
-                    if(emailChanged){
-                        DialogsProvider.get(getActivity()).emailVerificationDialog(
-                                user.getEmail(),
-                                "Email Change Security",
-                                "Please enter the pin that we sent to your old email first before saving the new one",
-                                new EmailVerificationDialog.DialogResultListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        user.setEmail(vb.profileEmailField.getEditText().getText().toString());
-                                        publishProfileData(user);
-                                    }
-
-                                    @Override
-                                    public void onCancel() {
-
-                                    }
-                                }
-                        );
-
-                    }
-                    else publishProfileData(user);
-
-                }
-
-            }
+        vb.profileSave.setOnClickListener(button -> {
+            if(isDataValid()) saveProfile();
         });
 
     }
@@ -252,56 +227,93 @@ public class ProfileFragment extends Fragment {
             vb.profileSave.setVisibility(View.VISIBLE);
             vb.profileSave.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.lay_on));
         }
-        else {
-            vb.profileSave.setVisibility(View.GONE);
-            vb.profileSave.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.lay_off));
-        }
+        else vb.profileSave.setVisibility(View.GONE);
     }
 
     void renderProfileData(){
+        picChanged = usernameChanged = emailChanged = false;
         vb.profileUsername.setText(user.getFullName());
         vb.profileUsernameField.getEditText().setText(user.getFullName());
         vb.profileEmailField.getEditText().setText(user.getEmail());
         vb.profilePasswordField.getEditText().setText("00000000");
+        showSaveButton(false);
     }
 
-    void publishProfileData(UserModel userModel){
+    boolean isDataValid(){
+        boolean validData = true;
+
+        if(vb.profileEmailField.getError()!=null || vb.profileEmailField.getEditText().getText().length()==0){
+            vb.profileEmailField.requestFocus();
+            vb.profileEmailField.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        if(vb.profileUsernameField.getError()!=null || vb.profileUsernameField.getEditText().getText().length()==0){
+            vb.profileUsernameField.requestFocus();
+            vb.profileUsernameField.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        return validData;
+    }
+
+    void saveProfile(){
+
+        if(picChanged) user.setEncodedImage(ImageEncoder.get().encode(getContext(),image));
+
+        if(usernameChanged) user.setFullName(vb.profileUsernameField.getEditText().getText().toString());
+
+        if(emailChanged){
+            DialogsProvider.get(getActivity()).emailVerificationDialog(
+                    user.getEmail(),
+                    "Email Change Security",
+                    "Please enter the pin that we sent to your old email first before saving the new one",
+                    new EmailVerificationDialog.DialogResultListener() {
+                        @Override
+                        public void onSuccess() {
+                            user.setEmail(vb.profileEmailField.getEditText().getText().toString());
+                            publishProfileData();
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            Toast.makeText(getContext(), "Email Verification Canceled", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+
+        }
+        else publishProfileData();
+    }
+
+    void publishProfileData(){
         DialogsProvider.get(getActivity()).setLoading(true);
 
-        repository.updateUser(token,userModel, new Callback<UserResponseModel>() {
-            @Override
-            public void onResponse(Call<UserResponseModel> call, Response<UserResponseModel> response) {
-                DialogsProvider.get(getActivity()).setLoading(false);
+        viewModel.updateUser(token,user).observe(getViewLifecycleOwner(), response ->{
+            DialogsProvider.get(getActivity()).setLoading(false);
 
-                switch (response.code()){
-                    case ResponseModel.SUCCESSFUL_OPERATION:
-                        user = response.body().getUser();
-                        renderProfileData();
-                        showSaveButton(false);
-                        ((MainActivity)getActivity()).updateMenuUserData(user);
-                        UserAccountManager.updateUser(getContext(),user);
-                        Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                        break;
+            switch (response.code()){
+                case BaseResponseModel.SUCCESSFUL_OPERATION:
+                    user = response.body().getUser();
+                    renderProfileData();
+                    ((MainActivity)getActivity()).setMenuUserData(user);
+                    UserAccountManager.updateUser(getContext(),user);
+                    Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                    break;
 
-                    case ResponseModel.FAILED_AUTH:
-                        UserAccountManager.signOutForced(getActivity());
+                case BaseResponseModel.FAILED_AUTH:
+                    UserAccountManager.signOut(getActivity(), true);
+                    break;
 
-                        DialogsProvider.get(getActivity()).messageDialog("Session Expired", "Please sign in again");
-                        break;
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    DialogsProvider.get(getActivity()).messageDialog("Saving Failed", "Please check your connection");
+                    break;
 
-                    default:
-                        DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserResponseModel> call, Throwable t) {
-                DialogsProvider.get(getActivity()).setLoading(false);
-
-                DialogsProvider.get(getActivity()).messageDialog("Saving Failed", "Please check your connection");
+                default:
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
             }
         });
-    }
 
+    }
 
 }

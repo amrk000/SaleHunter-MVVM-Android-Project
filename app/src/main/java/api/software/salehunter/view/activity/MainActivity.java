@@ -1,6 +1,7 @@
 package api.software.salehunter.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
@@ -13,34 +14,30 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.facebook.FacebookSdk;
 
+import api.software.salehunter.BuildConfig;
 import api.software.salehunter.R;
-import api.software.salehunter.data.Repository;
 import api.software.salehunter.databinding.ActivityMainBinding;
-import api.software.salehunter.model.ResponseModel;
+import api.software.salehunter.model.BaseResponseModel;
 import api.software.salehunter.model.UserModel;
-import api.software.salehunter.model.UserResponseModel;
 import api.software.salehunter.util.NetworkBroadcastReceiver;
 import api.software.salehunter.util.SharedPrefManager;
 import api.software.salehunter.util.UserAccountManager;
 import api.software.salehunter.view.UnderlayNavigationDrawer;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import api.software.salehunter.viewmodel.activity.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private ActivityMainBinding vb;
+    private MainActivityViewModel viewModel;
     private UnderlayNavigationDrawer underlayNavigationDrawer;
     private NetworkBroadcastReceiver networkBroadcastReceiver;
 
-    private Repository repository;
-
-    public static final String REMEMBER_ME = "rememberMe";
     public static final String JUST_SIGNED_IN = "justSignedIn";
 
     private boolean rememberMe;
@@ -60,13 +57,19 @@ public class MainActivity extends AppCompatActivity {
 
         overridePendingTransition(R.anim.lay_on,R.anim.lay_off);
 
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        navController = Navigation.findNavController(this, R.id.main_FragmentContainer);
+
         firstLaunch = SharedPrefManager.get(this).isFirstLaunch();
+        rememberMe = SharedPrefManager.get(this).isRememberMeChecked();
         signedIn = SharedPrefManager.get(this).isSignedIn();
         token = UserAccountManager.getToken(this, UserAccountManager.TOKEN_TYPE_BEARER);
         user = UserAccountManager.getUser(this);
 
-        rememberMe = getIntent().getBooleanExtra(REMEMBER_ME,true);
         justSignedIn = getIntent().getBooleanExtra(JUST_SIGNED_IN,false);
+
+        FacebookSdk.setClientToken(getApplication().getString(R.string.facebook_app_id));
+        FacebookSdk.sdkInitialize(getApplication());
 
         if(firstLaunch){
             startActivity(new Intent(this, AppIntro.class));
@@ -76,56 +79,47 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, AccountSign.class));
             finish();
         }
+        else if(!(rememberMe || justSignedIn)) UserAccountManager.signOut(this, true);
         else {
 
-            repository = new Repository();
+            //load user name and pic in menu
+            setMenuUserData(user); //From Local Storage
+            if(!justSignedIn) syncUserData(); //From Server
 
-            navController = Navigation.findNavController(this, R.id.main_FragmentContainer);
-
+            //Side Menu
             underlayNavigationDrawer = new UnderlayNavigationDrawer(this, vb.menuFrontView, findViewById(R.id.main_FragmentContainer), vb.menuBackView, vb.menuButton);
+            vb.menu.setOnCheckedChangeListener((radioGroup, i) -> {
 
+                vb.currentFragmentTitle.setText(((RadioButton) findViewById(i)).getText().toString());
+
+                switch (i) {
+
+                    case R.id.menu_home:
+                        navigateToFragment(R.id.homeFragment);
+                        break;
+
+                    case R.id.menu_profile:
+                        navigateToFragment(R.id.profileFragment);
+                        break;
+
+                    case R.id.menu_signout:
+                        UserAccountManager.signOut(MainActivity.this, false);
+                        break;
+
+                    default:
+                        navigateToFragment(R.id.underConstructionFragment2);
+                        break;
+                }
+
+            });
+
+            //Network Checker
             networkBroadcastReceiver = new NetworkBroadcastReceiver(this);
             registerReceiver(networkBroadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
-            vb.menu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                    vb.currentFragmentTitle.setText(((RadioButton) findViewById(i)).getText().toString());
-
-                    switch (i) {
-
-                        case R.id.menu_home:
-                            navigateToFragment(R.id.homeFragment);
-                            break;
-
-                        case R.id.menu_profile:
-                            navigateToFragment(R.id.profileFragment);
-                            break;
-
-                        case R.id.menu_signout:
-                            UserAccountManager.signOut(MainActivity.this);
-                            break;
-
-                        default:
-                            navigateToFragment(R.id.underConstructionFragment2);
-                            break;
-                    }
-
-                }
-            });
-
-            //load user name and pic in menu
-            vb.menuUsername.setText(user.getFullName());
-            Glide.with(this).load(user.getImageLink())
-                    .centerCrop()
-                    .placeholder(R.drawable.profile_placeholder)
-                    .circleCrop()
-                    .into(vb.menuProfilePic);
-
-            if(!justSignedIn) refreshUserData();
-
         }
+
+        vb.appVersion.setText(BuildConfig.VERSION_NAME);
     }
 
     @Override
@@ -139,18 +133,6 @@ public class MainActivity extends AppCompatActivity {
         if(underlayNavigationDrawer.isOpened()) underlayNavigationDrawer.closeMenu();
         else if(vb.menu.getCheckedRadioButtonId() != R.id.menu_home && getSupportFragmentManager().getBackStackEntryCount() == 0) vb.menu.getChildAt(0).performClick();
         else super.onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(!rememberMe) UserAccountManager.signOut(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(!rememberMe) UserAccountManager.signIn(this,token,user);
     }
 
     @Override
@@ -168,43 +150,44 @@ public class MainActivity extends AppCompatActivity {
         },underlayNavigationDrawer.getAnimationDuration());
     }
 
-    public void refreshUserData(){
-        new Handler().postDelayed(()->{
+    public void syncUserData(){
+            if(UserAccountManager.getUser(this).getAccountType() != UserModel.ACCOUNT_TYPE_EMAIL) return;
 
-        repository.getUser(token, new Callback<UserResponseModel>() {
-            @Override
-            public void onResponse(Call<UserResponseModel> call, Response<UserResponseModel> response) {
-
+            viewModel.getUser(token).observe(this, response -> {
                 switch (response.code()){
-                    case ResponseModel.SUCCESSFUL_OPERATION:
+                    case BaseResponseModel.SUCCESSFUL_OPERATION:
                         UserModel user = response.body().getUser();
                         UserAccountManager.updateUser(getApplicationContext(),user);
-                        updateMenuUserData(user);
+                        setMenuUserData(user);
                         break;
 
-                    case ResponseModel.FAILED_AUTH:
-                        UserAccountManager.signOutForced(MainActivity.this);
+                    case BaseResponseModel.FAILED_AUTH:
+                        UserAccountManager.signOut(MainActivity.this, true);
                         break;
+
+                        case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                            //Toast.makeText(this, "Data Sync Failed !", Toast.LENGTH_SHORT).show();
+                            break;
                 }
-
-            }
-
-            @Override
-            public void onFailure(Call<UserResponseModel> call, Throwable t) { t.printStackTrace();}
-        });
-
-    },1000);
-
+            });
     }
 
-    public void updateMenuUserData(UserModel user){
+    public void setMenuUserData(UserModel user){
         vb.menuUsername.setText(user.getFullName());
         Glide.with(this).load(user.getImageLink())
                 .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade(250))
+                .transition(DrawableTransitionOptions.withCrossFade(50))
                 .placeholder(R.drawable.profile_placeholder)
                 .circleCrop()
                 .into(vb.menuProfilePic);
+    }
+
+    public NavController getAppNavController(){ return navController;}
+
+    public void setTitle(String title){
+        vb.currentFragmentTitle.post(()->{
+            vb.currentFragmentTitle.setText(title);
+        });
     }
 
 }

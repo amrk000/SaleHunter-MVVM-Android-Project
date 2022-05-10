@@ -16,7 +16,8 @@ import api.software.salehunter.databinding.ActivityAppIntroBinding;
 import api.software.salehunter.util.SharedPrefManager;
 
 public class AppIntro extends AppCompatActivity {
-    ActivityAppIntroBinding vb;
+    private ActivityAppIntroBinding vb;
+
     boolean end;
 
     @Override
@@ -31,19 +32,13 @@ public class AppIntro extends AppCompatActivity {
         vb.appIntroViewPager.setAdapter(adapter);
         vb.appIntroPageIndicator.setupWithViewPager(vb.appIntroViewPager);
 
-        vb.appIntroSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                endIntro();
-            }
+        vb.appIntroSkip.setOnClickListener(button -> {
+            endIntro();
         });
 
-        vb.appIntroButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        vb.appIntroButton.setOnClickListener(button -> {
             if(end) endIntro();
             else vb.appIntroViewPager.setCurrentItem(vb.appIntroViewPager.getCurrentItem()+1,true);
-            }
         });
 
         vb.appIntroViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

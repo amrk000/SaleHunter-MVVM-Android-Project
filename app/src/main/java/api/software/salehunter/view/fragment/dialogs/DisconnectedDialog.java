@@ -49,12 +49,7 @@ public class DisconnectedDialog extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         setCancelable(false);
 
-        vb.disconnectedDialogClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        vb.disconnectedDialogClose.setOnClickListener(view1 -> dismiss());
 
     }
 }

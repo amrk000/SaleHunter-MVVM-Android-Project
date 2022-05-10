@@ -101,7 +101,7 @@
                     android:backgroundTint="?attr/background"
                     android:fontFamily="@font/raleway_semibold"
                     android:gravity="bottom|center"
-                    android:text="Fav."
+                    android:text="My Fav."
                     android:textAlignment="gravity"
                     android:textAllCaps="false"
                     android:textColor="?attr/textFillColor"
@@ -113,7 +113,7 @@
                     app:iconTint="?attr/textFillColor" />
 
                 <Button
-                    android:id="@+id/home_BarNotifs"
+                    android:id="@+id/home_BarHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -122,12 +122,12 @@
                     android:backgroundTint="?attr/background"
                     android:fontFamily="@font/raleway_semibold"
                     android:gravity="bottom|center"
-                    android:text="Notifs."
+                    android:text="History"
                     android:textAlignment="gravity"
                     android:textAllCaps="false"
                     android:textColor="?attr/textFillColor"
                     android:textSize="11sp"
-                    app:icon="@drawable/navbar_icon_notification"
+                    app:icon="@drawable/menu_icon_history"
                     app:iconGravity="top"
                     app:iconPadding="5dp"
                     app:iconSize="22dp"
@@ -141,11 +141,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
+            android:src="@drawable/navbar_icon_search"
+            android:visibility="visible"
             app:backgroundTint="?attr/colorPrimaryDark"
             app:fabCustomSize="55dp"
             app:layout_anchor="@id/home_BottomAppBar"
-            app:tint="#FFFFFF"
-            android:src="@drawable/navbar_icon_search"/>
+            app:tint="#FFFFFF" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

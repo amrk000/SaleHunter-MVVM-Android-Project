@@ -47,12 +47,7 @@ public class MessageDialog extends BottomSheetDialogFragment {
         vb.messageDialogTitle.setText(titleText);
         vb.messageDialogSubtitle.setText(subTitleText);
 
-        vb.messageDialogClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        vb.messageDialogClose.setOnClickListener(button -> dismiss());
 
     }
 

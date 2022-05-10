@@ -15,4 +15,14 @@
         android:name="api.software.salehunter.view.fragment.main.UnderConstructionFragment"
         android:label="fragment_under_construction"
         tools:layout="@layout/fragment_under_construction" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="api.software.salehunter.view.fragment.main.home.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/favFragment"
+        android:name="api.software.salehunter.view.fragment.main.home.FavFragment"
+        android:label="fragment_fav"
+        tools:layout="@layout/fragment_fav" />
 </navigation>

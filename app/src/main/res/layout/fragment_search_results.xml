@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+    tools:context=".view.fragment.main.SearchResultsFragment">
+
+    <ImageButton
+        android:id="@+id/result_back"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/borderless_ripple"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/result_keyword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/result_keyword"
+        app:srcCompat="@drawable/ic_round_arrow_back_ios_new_24"
+        app:tint="?attr/textFillColor" />
+
+    <ImageButton
+        android:id="@+id/result_filter"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="24dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/borderless_ripple"
+        android:cropToPadding="true"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/result_keyword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/result_keyword"
+        app:srcCompat="@drawable/filter"
+        app:tint="?attr/textFillColor" />
+
+    <TextView
+        android:id="@+id/result_keyword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Keyword"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/result_filter"
+        app:layout_constraintStart_toEndOf="@+id/result_back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/result_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
+        android:fadingEdgeLength="12dp"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        android:requiresFadingEdge="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coordinatorLayout"
+        tools:itemCount="10"
+        tools:listitem="@layout/product_list_item_layout" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_keyword">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/result_map_bottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bottom_sheet_dialog_background"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="40dp"
+            app:behavior_skipCollapsed="true"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="35dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="3dp"
+                android:adjustViewBounds="false"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_round_horizontal_rule_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?attr/textFillColor" />
+
+            <TextView
+                android:id="@+id/result_productMap_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:includeFontPadding="false"
+                android:text="Stock Locations"
+                android:textColor="?attr/textFillColor"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <ProgressBar
+                android:id="@+id/result_mapProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:indeterminate="true"
+                android:indeterminateBehavior="repeat"
+                android:indeterminateTint="@color/lightModeprimary"
+                android:scaleY="5"
+                app:layout_constraintBottom_toTopOf="@+id/result_map"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/result_map"
+                android:layout_width="400dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="25dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                app:layout_constraintBottom_toBottomOf="@+id/result_map_bottomSheet"
+                app:layout_constraintEnd_toEndOf="@+id/result_map_bottomSheet"
+                app:layout_constraintStart_toStartOf="@+id/result_map_bottomSheet"
+                app:layout_constraintTop_toBottomOf="@+id/result_productMap_title" />
+
+            <View
+                android:id="@+id/mapTouchHandler"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/result_map"
+                app:layout_constraintEnd_toEndOf="@+id/result_map"
+                app:layout_constraintStart_toStartOf="@+id/result_map"
+                app:layout_constraintTop_toTopOf="@+id/result_map" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/result_getDirections"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:src="@drawable/ic_baseline_moving_24"
+                app:backgroundTint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:maxImageSize="35dp"
+                app:tint="#FFF"
+                android:visibility="invisible"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/result_mapMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:checked="true"
+                android:thumbTint="?attr/colorPrimary"
+                android:trackTint="#A1000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/result_map" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/result_loadingPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/background"
+        android:foreground="@drawable/splash_bg"
+        android:foregroundTint="#54787878"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/result_loadingPage_scope"
+            android:layout_width="105dp"
+            android:layout_height="105dp"
+            android:src="@drawable/scope"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar4"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:indeterminate="true"
+            android:indeterminateTint="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar5"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:alpha="0.7"
+            android:indeterminate="true"
+            android:indeterminateTint="?attr/colorAccent"
+            android:rotation="-50"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar4"
+            app:layout_constraintEnd_toEndOf="@+id/progressBar4"
+            app:layout_constraintStart_toStartOf="@+id/progressBar4"
+            app:layout_constraintTop_toTopOf="@+id/progressBar4" />
+
+        <TextView
+            android:id="@+id/result_keyword_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Keyword"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/result_loadingPage_scope" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

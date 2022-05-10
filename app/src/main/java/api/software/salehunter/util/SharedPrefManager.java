@@ -15,6 +15,7 @@ public class SharedPrefManager {
 
     // Keys
     private static final String FIRST_LAUNCH = "firstLaunch";
+    private static final String REMEMBER_ME = "rememberMe";
     private static final String SIGNED_IN = "signedIn";
     private static final String TOKEN = "token";
     private static final String USER = "user";
@@ -38,6 +39,16 @@ public class SharedPrefManager {
                 .apply();
     }
 
+    public boolean isRememberMeChecked() {
+        return sharedPreferences.getBoolean(REMEMBER_ME,true);
+    }
+
+    public void setRememberMe(boolean value){
+        sharedPreferences.edit()
+                .putBoolean(REMEMBER_ME,value)
+                .apply();
+    }
+
     public boolean isSignedIn() {
         return sharedPreferences.getBoolean(SIGNED_IN,false);
     }
@@ -46,7 +57,6 @@ public class SharedPrefManager {
         sharedPreferences.edit()
                 .putBoolean(SIGNED_IN,signedIn)
                 .apply();
-
     }
 
     public String getToken() {
@@ -61,6 +71,7 @@ public class SharedPrefManager {
 
     public UserModel getUser() {
         String userJson = sharedPreferences.getString(USER,"");
+        if(userJson.isEmpty()) return new UserModel();
         return new Gson().fromJson(userJson, UserModel.class);
     }
 

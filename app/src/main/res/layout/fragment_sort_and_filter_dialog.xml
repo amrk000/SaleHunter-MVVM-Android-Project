@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/bottom_sheet_dialog_background"
+    tools:context=".view.fragment.dialogs.SortAndFilterDialog">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/sortAndFilterDialog_reset"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_restart_alt_24"
+            app:tint="?attr/textFillColor" />
+
+        <TextView
+            android:id="@+id/sortAndFilterDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/raleway_semibold"
+            android:includeFontPadding="false"
+            android:text="Sort and Filter"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="5dp"
+            android:overScrollMode="always"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:requiresFadingEdge="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/sortAndFilterDialog_applyFilter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sortAndFilterDialogTitle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/ic_baseline_sort_24"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="?attr/colorPrimary"
+                    android:text="Sort By"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/sortAndFilterDialog_sort_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/sortAndFilterDialog_sort_popularity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clickable_text"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:checked="true"
+                        android:includeFontPadding="false"
+                        android:minHeight="38dp"
+                        android:text="Popularity"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/sortAndFilterDialog_sort_priceAsc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clickable_text"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:includeFontPadding="false"
+                        android:minHeight="38dp"
+                        android:text="Price: Low to High"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/sortAndFilterDialog_sort_priceDsc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clickable_text"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:includeFontPadding="false"
+                        android:minHeight="38dp"
+                        android:text="Price: High to Low"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/sortAndFilterDialog_sort_bestDeal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clickable_text"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:includeFontPadding="false"
+                        android:minHeight="38dp"
+                        android:text="Best Deal"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/sortAndFilterDialog_sort_rating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clickable_text"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:includeFontPadding="false"
+                        android:minHeight="38dp"
+                        android:text="Rating"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/sortAndFilterDialog_sort_nearestStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clickable_text"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:includeFontPadding="false"
+                        android:minHeight="38dp"
+                        android:text="Nearest Local Store"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/sortAndFilterDialog_sort_updateDateNewest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clickable_text"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:includeFontPadding="false"
+                        android:minHeight="38dp"
+                        android:text="Updated Recently"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="17sp" />
+
+                </RadioGroup>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="10dp"
+                    android:background="#36808080" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:drawableStart="@drawable/ic_baseline_filter_alt_24"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="?attr/colorPrimary"
+                    android:text="Filter By"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0"
+                        android:includeFontPadding="false"
+                        android:text="Price:"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0"
+                        android:includeFontPadding="false"
+                        android:text="From"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/sortAndFilterDialog_minPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0"
+                        android:background="#2D8E8E8E"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:inputType="numberDecimal"
+                        android:maxEms="5"
+                        android:maxLines="1"
+                        android:minEms="2"
+                        android:paddingStart="3dp"
+                        android:paddingEnd="3dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0"
+                        android:includeFontPadding="false"
+                        android:text="To"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/textFillColor"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/sortAndFilterDialog_maxPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0"
+                        android:background="#2D8E8E8E"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:inputType="numberDecimal"
+                        android:maxEms="5"
+                        android:maxLines="1"
+                        android:minEms="2"
+                        android:paddingStart="3dp"
+                        android:paddingEnd="3dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0"
+                    android:includeFontPadding="false"
+                    android:text="Category:"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/sortAndFilterDialog_category_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    app:chipSpacingHorizontal="8dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/sortAndFilterDialog_chipAllCategories"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:checked="true"
+                        android:text="All Products"
+                        app:checkedIconEnabled="true"
+                        app:checkedIconTint="@color/lightModesecondary" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0"
+                    android:includeFontPadding="false"
+                    android:text="Brand:"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/sortAndFilterDialog_brand_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
+                    app:chipSpacingHorizontal="8dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/sortAndFilterDialog_chipAllBrands"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:checked="true"
+                        android:text="All Products"
+                        app:checkedIconEnabled="true"
+                        app:checkedIconTint="@color/lightModesecondary"/>
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <android.widget.Button
+            android:id="@+id/sortAndFilterDialog_applyFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/raleway_semibold"
+            android:text="Apply"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

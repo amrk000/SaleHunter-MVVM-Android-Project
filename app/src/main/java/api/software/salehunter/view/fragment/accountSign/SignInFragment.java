@@ -1,30 +1,43 @@
 package api.software.salehunter.view.fragment.accountSign;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
-import java.util.regex.Pattern;
+import com.google.gson.Gson;
 
+import api.software.salehunter.data.Repository;
 import api.software.salehunter.databinding.FragmentSignInBinding;
+import api.software.salehunter.model.BaseResponseModel;
+import api.software.salehunter.model.UserModel;
+import api.software.salehunter.util.DialogsProvider;
+import api.software.salehunter.util.SharedPrefManager;
 import api.software.salehunter.util.TextFieldValidator;
+import api.software.salehunter.util.UserAccountManager;
 import api.software.salehunter.view.activity.AccountSign;
 import api.software.salehunter.R;
-import api.software.salehunter.model.SignInModel;
+import api.software.salehunter.view.activity.MainActivity;
+import api.software.salehunter.viewmodel.fragment.accountSign.SignInViewModel;
 
 public class SignInFragment extends Fragment {
     private FragmentSignInBinding vb;
+    private SignInViewModel viewModel;
+    private NavController navController;
 
     public SignInFragment() { }
 
@@ -36,7 +49,8 @@ public class SignInFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        vb = FragmentSignInBinding.inflate(inflater,container,false);
+
+        if(vb==null) vb = FragmentSignInBinding.inflate(inflater,container,false);
         return vb.getRoot();
     }
 
@@ -50,20 +64,21 @@ public class SignInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(((AccountSign)getActivity()).isBackButtonVisible()) {
+        if(((AccountSign) getActivity()).isBackButtonVisible()) {
             ((AccountSign) getActivity()).setTitle("Sign In");
             ((AccountSign) getActivity()).setBackButton(false);
         }
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(viewModel!=null) return;
 
-        NavController navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
+        viewModel = new ViewModelProvider(this).get(SignInViewModel.class);
 
-        if(!((AccountSign)getActivity()).isGoogleServicesAvailable()) vb.signInSocialAuth.setVisibility(View.GONE);
+        if(viewModel.googleServicesNotAvailable()) vb.signInSocialAuth.setVisibility(View.GONE);
 
         vb.signInEmail.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,62 +129,166 @@ public class SignInFragment extends Fragment {
             }
         });
 
-        vb.signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean validData = true;
-
-                if(vb.signInPassword.getError()!=null || vb.signInPassword.getEditText().getText().length()==0){
-                    vb.signInPassword.requestFocus();
-                    vb.signInPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(vb.signInEmail.getError()!=null || vb.signInEmail.getEditText().getText().length()==0){
-                    vb.signInEmail.requestFocus();
-                    vb.signInEmail.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(validData){
-                    SignInModel signInModel = new SignInModel();
-                    signInModel.setEmail(vb.signInEmail.getEditText().getText().toString());
-                    signInModel.setPassword(vb.signInPassword.getEditText().getText().toString());
-                    ((AccountSign)getActivity()).signIn(vb.signInRememberMe.isChecked(), signInModel);
-                }
-
-            }
+        vb.signInButton.setOnClickListener(button -> {
+            if(isDataValid()) signIn();
         });
 
 
-        vb.signInSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_signInFragment_to_signUpFragment);
-            }
+        vb.signInFacebook.setOnClickListener(button -> {
+                facebookAuth();
         });
 
-        vb.signInForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment);
-            }
+        vb.signInGoogle.setOnClickListener(button -> {
+                googleAuth();
         });
 
-        vb.signInFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((AccountSign)getActivity()).facebookAuth();
-            }
+        vb.signInSignUp.setOnClickListener(button -> {
+            navController.navigate(R.id.action_signInFragment_to_signUpFragment);
         });
 
-        vb.signInGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((AccountSign)getActivity()).googleAuth();
-            }
+        vb.signInForgotPassword.setOnClickListener(button -> {
+            navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment);
         });
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) getGoogleAuthResult(data);
+    }
+
+    boolean isDataValid(){
+        boolean validData = true;
+
+        if(vb.signInPassword.getError()!=null || vb.signInPassword.getEditText().getText().length()==0){
+            vb.signInPassword.requestFocus();
+            vb.signInPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        if(vb.signInEmail.getError()!=null || vb.signInEmail.getEditText().getText().length()==0){
+            vb.signInEmail.requestFocus();
+            vb.signInEmail.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        return validData;
+    }
+
+    void signIn(){
+        DialogsProvider.get(getActivity()).setLoading(true);
+
+        viewModel.signIn(vb.signInEmail.getEditText().getText().toString(), vb.signInPassword.getEditText().getText().toString())
+                .observe(getViewLifecycleOwner(), response -> {
+
+                    DialogsProvider.get(getActivity()).setLoading(false);
+
+                    switch (response.code()){
+                        case BaseResponseModel.SUCCESSFUL_OPERATION:
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            intent.putExtra(MainActivity.JUST_SIGNED_IN,true);
+
+                            SharedPrefManager.get(getContext()).setRememberMe(vb.signInRememberMe.isChecked());
+                            UserAccountManager.signIn(getActivity(), intent, response.headers().get(Repository.AUTH_TOKEN_HEADER), response.body().getUser());
+                            break;
+
+                        case BaseResponseModel.FAILED_NOT_FOUND:
+                            DialogsProvider.get(getActivity()).messageDialog("Welcome !", "you don't have an account\nplease sign up first");
+                            break;
+
+                        case BaseResponseModel.FAILED_AUTH:
+                            DialogsProvider.get(getActivity()).messageDialog("Wrong Password", "You can reset password from:\nForgot Passwrod ?");
+                            break;
+
+                        case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                            DialogsProvider.get(getActivity()).messageDialog("Sign In Failed", "Please Check your connection !");
+                            break;
+
+                        default:
+                            DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
+                    }
+
+                });
+
+    }
+
+    void facebookAuth(){
+        DialogsProvider.get(getActivity()).setLoading(true);
+
+        viewModel.facebookAuth(SignInFragment.this).observe(getViewLifecycleOwner(),response -> {
+            DialogsProvider.get(getActivity()).setLoading(false);
+
+            switch (response.code()){
+                case BaseResponseModel.SUCCESSFUL_OPERATION:
+                case BaseResponseModel.SUCCESSFUL_CREATION:
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra(MainActivity.JUST_SIGNED_IN,true);
+
+                    UserModel userModel = new UserModel();
+                    userModel.setId(viewModel.getFacebookSocialAuthModel().getClientId());
+                    userModel.setEmail(viewModel.getFacebookSocialAuthModel().getEmail());
+                    userModel.setFullName(viewModel.getFacebookSocialAuthModel().getFullName());
+                    userModel.setImageUrl(viewModel.getFacebookSocialAuthModel().getImage());
+                    userModel.setAccountType(UserModel.ACCOUNT_TYPE_FACEBOOK);
+
+                    UserAccountManager.signIn(getActivity(), intent, response.headers().get(Repository.AUTH_TOKEN_HEADER), userModel);
+                    break;
+
+                case BaseResponseModel.FAILED_INVALID_DATA:
+                    DialogsProvider.get(getActivity()).messageDialog("Authentication Failed", "please try again later !");
+                    break;
+
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    DialogsProvider.get(getActivity()).messageDialog("Sign In Failed", "Please Check your connection !");
+                    break;
+
+                default:
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
+            }
+
+        });
+    }
+
+    void googleAuth(){
+        DialogsProvider.get(getActivity()).setLoading(true);
+        viewModel.googleAuth(SignInFragment.this);
+    }
+
+    void getGoogleAuthResult(Intent data){
+        viewModel.googleAuthOnActivityResult(data,SignInFragment.this).observe(getViewLifecycleOwner(), response -> {
+            DialogsProvider.get(getActivity()).setLoading(false);
+
+            switch (response.code()){
+                case BaseResponseModel.SUCCESSFUL_OPERATION:
+                case BaseResponseModel.SUCCESSFUL_CREATION:
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra(MainActivity.JUST_SIGNED_IN,true);
+
+                    UserModel userModel = new UserModel();
+                    userModel.setId(viewModel.getGoogleSocialAuthModel().getClientId());
+                    userModel.setEmail(viewModel.getGoogleSocialAuthModel().getEmail());
+                    userModel.setFullName(viewModel.getGoogleSocialAuthModel().getFullName());
+                    userModel.setImageUrl(viewModel.getGoogleSocialAuthModel().getImage());
+                    userModel.setAccountType(UserModel.ACCOUNT_TYPE_GOOGLE);
+
+                    UserAccountManager.signIn(getActivity(), intent, response.headers().get(Repository.AUTH_TOKEN_HEADER), userModel);
+                    break;
+
+                case BaseResponseModel.FAILED_INVALID_DATA:
+                    DialogsProvider.get(getActivity()).messageDialog("Authentication Failed", "please try again later !");
+                    break;
+
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    DialogsProvider.get(getActivity()).messageDialog("Sign In Failed", "Please Check your connection !");
+                    break;
+
+                default:
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
+            }
+
+        });
+    }
+
 
 }

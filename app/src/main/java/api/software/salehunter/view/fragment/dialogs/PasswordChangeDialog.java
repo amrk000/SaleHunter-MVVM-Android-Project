@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,23 +17,19 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import api.software.salehunter.R;
-import api.software.salehunter.data.Repository;
 import api.software.salehunter.databinding.FragmentPasswordChangeDialogBinding;
-import api.software.salehunter.model.ChangePasswordModel;
-import api.software.salehunter.model.ResponseModel;
+import api.software.salehunter.model.BaseResponseModel;
 import api.software.salehunter.util.DialogsProvider;
 import api.software.salehunter.util.TextFieldValidator;
 import api.software.salehunter.util.UserAccountManager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import api.software.salehunter.viewmodel.fragment.dialogs.PasswordChangeDialogViewModel;
 
 
 public class PasswordChangeDialog extends BottomSheetDialogFragment {
     private FragmentPasswordChangeDialogBinding vb;
+    private PasswordChangeDialogViewModel viewModel;
 
-    Repository repository;
-    String token;
+    private String token;
 
     public PasswordChangeDialog() {
         // Required empty public constructor
@@ -62,7 +58,8 @@ public class PasswordChangeDialog extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        repository = new Repository();
+        viewModel = new ViewModelProvider(this).get(PasswordChangeDialogViewModel.class);
+
         token = UserAccountManager.getToken(getContext(),UserAccountManager.TOKEN_TYPE_BEARER);
 
         vb.passwordChangeDialogOldPassword.getEditText().addTextChangedListener(new TextWatcher() {
@@ -142,82 +139,70 @@ public class PasswordChangeDialog extends BottomSheetDialogFragment {
             }
         });
 
-        vb.passwordChangeDialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean validData = true;
-
-                if(vb.passwordChangeDialogNewPasswordConfirm.getError()!=null || vb.passwordChangeDialogNewPasswordConfirm.getEditText().getText().length()==0){
-                    vb.passwordChangeDialogNewPasswordConfirm.requestFocus();
-                    vb.passwordChangeDialogNewPasswordConfirm.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(vb.passwordChangeDialogNewPassword.getError()!=null || vb.passwordChangeDialogNewPassword.getEditText().getText().length()==0){
-                    vb.passwordChangeDialogNewPassword.requestFocus();
-                    vb.passwordChangeDialogNewPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(vb.passwordChangeDialogOldPassword.getError()!=null || vb.passwordChangeDialogOldPassword.getEditText().getText().length()==0){
-                    vb.passwordChangeDialogOldPassword.requestFocus();
-                    vb.passwordChangeDialogOldPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(validData){
-
-                    ChangePasswordModel changePasswordModel = new ChangePasswordModel();
-                    changePasswordModel.setOldPassword(vb.passwordChangeDialogOldPassword.getEditText().getText().toString());
-                    changePasswordModel.setNewPassword(vb.passwordChangeDialogNewPassword.getEditText().getText().toString());
-                    changePasswordModel.setNewPasswordConfirm(vb.passwordChangeDialogNewPasswordConfirm.getEditText().getText().toString());
-
-                    changePassword(changePasswordModel);
-
-                }
-
-            }
+        vb.passwordChangeDialogButton.setOnClickListener(button -> {
+            if(isDataValid()) changePassword();
         });
 
     }
 
+    boolean isDataValid(){
+        boolean validData = true;
 
-    void changePassword(ChangePasswordModel changePasswordModel){
+        if(vb.passwordChangeDialogNewPasswordConfirm.getError()!=null || vb.passwordChangeDialogNewPasswordConfirm.getEditText().getText().length()==0){
+            vb.passwordChangeDialogNewPasswordConfirm.requestFocus();
+            vb.passwordChangeDialogNewPasswordConfirm.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        if(vb.passwordChangeDialogNewPassword.getError()!=null || vb.passwordChangeDialogNewPassword.getEditText().getText().length()==0){
+            vb.passwordChangeDialogNewPassword.requestFocus();
+            vb.passwordChangeDialogNewPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        if(vb.passwordChangeDialogOldPassword.getError()!=null || vb.passwordChangeDialogOldPassword.getEditText().getText().length()==0){
+            vb.passwordChangeDialogOldPassword.requestFocus();
+            vb.passwordChangeDialogOldPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        return validData;
+    }
+
+    void changePassword(){
         DialogsProvider.get(getActivity()).setLoading(true);
 
-        repository.changePassword(token, changePasswordModel, new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                DialogsProvider.get(getActivity()).setLoading(false);
+        viewModel.changePassword(
+                token,
+                vb.passwordChangeDialogOldPassword.getEditText().getText().toString(),
+                vb.passwordChangeDialogNewPassword.getEditText().getText().toString(),
+                vb.passwordChangeDialogNewPasswordConfirm.getEditText().getText().toString()
+        ).observe(getViewLifecycleOwner(), response -> {
 
-                switch (response.code()){
-                    case ResponseModel.SUCCESSFUL_OPERATION:
-                        dismiss();
-                        Toast.makeText(getContext(), "Password Updated", Toast.LENGTH_SHORT).show();
-                        break;
+            DialogsProvider.get(getActivity()).setLoading(false);
 
-                    case ResponseModel.FAILED_AUTH:
-                        dismiss();
-                        UserAccountManager.signOutForced(getActivity());
+            switch (response.code()){
+                case BaseResponseModel.SUCCESSFUL_OPERATION:
+                    dismiss();
+                    Toast.makeText(getContext(), "Password Updated", Toast.LENGTH_SHORT).show();
+                    break;
 
-                        DialogsProvider.get(getActivity()).messageDialog("Invalid Token", "Please sign in again");
-                        break;
+                case BaseResponseModel.FAILED_AUTH:
+                    dismiss();
+                    DialogsProvider.get(getActivity()).messageDialog("Wrong Old Password", "Please try again");
+                    break;
 
-                    default:
-                        dismiss();
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    DialogsProvider.get(getActivity()).messageDialog("Password Change Failed", "Please check your connection");
+                    break;
 
-                        DialogsProvider.get(getActivity()).messageDialog("Wrong old Password", "Please try again");
-                        break;
+                default:
+                    dismiss();
+                    DialogsProvider.get(getActivity()).messageDialog("Wrong old Password", "Please try again");
+                    break;
 
-                }
             }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                DialogsProvider.get(getActivity()).setLoading(false);
-
-                DialogsProvider.get(getActivity()).messageDialog("Password Change Failed", "Please check your connection");
-            }
         });
 
     }

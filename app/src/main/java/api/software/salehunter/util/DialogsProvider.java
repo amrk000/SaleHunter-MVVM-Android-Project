@@ -6,12 +6,17 @@ import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import api.software.salehunter.R;
+import api.software.salehunter.model.SortAndFilterModel;
 import api.software.salehunter.view.fragment.dialogs.DisconnectedDialog;
 import api.software.salehunter.view.fragment.dialogs.EmailVerificationDialog;
 import api.software.salehunter.view.fragment.dialogs.LoadingDialog;
 import api.software.salehunter.view.fragment.dialogs.MessageDialog;
 import api.software.salehunter.view.fragment.dialogs.PasswordChangeDialog;
+import api.software.salehunter.view.fragment.dialogs.SortAndFilterDialog;
 
 public class DialogsProvider {
     private static DialogsProvider instance;
@@ -23,6 +28,7 @@ public class DialogsProvider {
     private MessageDialog messageDialog;
     private EmailVerificationDialog emailVerificationDialog;
     private PasswordChangeDialog passwordChangeDialog;
+    private SortAndFilterDialog sortAndFilterDialog;
 
     public DialogsProvider(){
         loadingDialog = new LoadingDialog();
@@ -30,6 +36,7 @@ public class DialogsProvider {
         messageDialog = new MessageDialog();
         emailVerificationDialog = new EmailVerificationDialog();
         passwordChangeDialog = new PasswordChangeDialog();
+        sortAndFilterDialog = new SortAndFilterDialog();
     }
 
     public static DialogsProvider get(Activity activity){
@@ -40,7 +47,7 @@ public class DialogsProvider {
     }
 
     public void setLoading(boolean loading){
-        if(loading) loadingDialog.show(fragmentManager, loadingDialog.getTag());
+        if(loading && !loadingDialog.isVisible()) loadingDialog.show(fragmentManager, loadingDialog.getTag());
         else if(loadingDialog.isVisible()) loadingDialog.dismiss();
     }
 
@@ -51,23 +58,37 @@ public class DialogsProvider {
 
     public void messageDialog(String title, String subTitle){
         if(messageDialog.isVisible()) messageDialog.dismiss();
-        messageDialog.setMessage(title, subTitle);
-        messageDialog.show(fragmentManager,messageDialog.getTag());
+        else {
+            messageDialog.setMessage(title, subTitle);
+            messageDialog.show(fragmentManager, messageDialog.getTag());
+        }
     }
 
     public void emailVerificationDialog(String email, String title, String subTitle, EmailVerificationDialog.DialogResultListener dialogResultListener){
         if (emailVerificationDialog.isVisible()) emailVerificationDialog.dismiss();
+        else {
+            emailVerificationDialog.setEmail(email);
+            emailVerificationDialog.setMessage(title,subTitle);
+            emailVerificationDialog.setDialogResultListener(dialogResultListener);
 
-        emailVerificationDialog.setEmail(email);
-        emailVerificationDialog.setMessage(title,subTitle);
-        emailVerificationDialog.setDialogResultListener(dialogResultListener);
-
-        emailVerificationDialog.show(fragmentManager, emailVerificationDialog.getTag());
+            emailVerificationDialog.show(fragmentManager, emailVerificationDialog.getTag());
+        }
     }
 
     public void passwordChangeDialog(){
         if (passwordChangeDialog.isVisible()) passwordChangeDialog.dismiss();
-        passwordChangeDialog.show(fragmentManager, passwordChangeDialog.getTag());
+        else passwordChangeDialog.show(fragmentManager, passwordChangeDialog.getTag());
+    }
+
+    public void sortAndFilterDialog(SortAndFilterModel sortAndFilterModel, HashSet<String> categories, HashSet<String> brands, SortAndFilterDialog.DialogResultListener dialogResultListener){
+        if (sortAndFilterDialog.isVisible()) sortAndFilterDialog.dismiss();
+        else {
+            sortAndFilterDialog.setSortAndFilterModel(sortAndFilterModel);
+            sortAndFilterDialog.setDialogResultListener(dialogResultListener);
+            sortAndFilterDialog.setCategories(categories);
+            sortAndFilterDialog.setBrands(brands);
+            sortAndFilterDialog.show(fragmentManager, sortAndFilterDialog.getTag());
+        }
     }
 
 }

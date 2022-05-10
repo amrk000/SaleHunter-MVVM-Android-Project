@@ -60,14 +60,9 @@ public class UnderlayNavigationDrawer {
         menuView.setVisibility(View.INVISIBLE);
 
         if(menuButton!=null){
-            menuButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    if(active) closeMenu();
-                    else openMenu();
-
-                }
+            menuButton.setOnClickListener(view -> {
+                if(active) closeMenu();
+                else openMenu();
             });
         }
 

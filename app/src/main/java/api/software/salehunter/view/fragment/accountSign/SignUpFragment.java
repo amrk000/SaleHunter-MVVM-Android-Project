@@ -1,10 +1,12 @@
 package api.software.salehunter.view.fragment.accountSign;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,16 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 
-import java.util.regex.Pattern;
-
+import api.software.salehunter.data.Repository;
 import api.software.salehunter.databinding.FragmentSignUpBinding;
+import api.software.salehunter.model.BaseResponseModel;
+import api.software.salehunter.util.DialogsProvider;
 import api.software.salehunter.util.TextFieldValidator;
+import api.software.salehunter.util.UserAccountManager;
 import api.software.salehunter.view.activity.AccountSign;
 import api.software.salehunter.R;
-import api.software.salehunter.model.SignUpModel;
+import api.software.salehunter.view.activity.MainActivity;
+import api.software.salehunter.viewmodel.fragment.accountSign.SignUpViewModel;
 
 public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding vb;
+    private SignUpViewModel viewModel;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -59,7 +65,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(!((AccountSign)getActivity()).isGoogleServicesAvailable()) vb.signUpSocialAuth.setVisibility(View.GONE);
+        viewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
 
         vb.signUpUsername.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -164,63 +170,74 @@ public class SignUpFragment extends Fragment {
         });
 
 
-        vb.signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean validData = true;
-
-                if(vb.signUpPasswordConfirm.getError()!=null || vb.signUpPasswordConfirm.getEditText().getText().length()==0){
-                    vb.signUpPasswordConfirm.requestFocus();
-                    vb.signUpPasswordConfirm.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(vb.signUpPassword.getError()!=null || vb.signUpPassword.getEditText().getText().length()==0){
-                    vb.signUpPassword.requestFocus();
-                    vb.signUpPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(vb.signUpEmail.getError()!=null || vb.signUpEmail.getEditText().getText().length()==0){
-                    vb.signUpEmail.requestFocus();
-                    vb.signUpEmail.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(vb.signUpUsername.getError()!=null || vb.signUpUsername.getEditText().getText().length()==0){
-                    vb.signUpUsername.requestFocus();
-                    vb.signUpUsername.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                    validData = false;
-                }
-
-                if(validData){
-                    SignUpModel signUpModel = new SignUpModel();
-                    signUpModel.setFullName(vb.signUpUsername.getEditText().getText().toString());
-                    signUpModel.setEmail(vb.signUpEmail.getEditText().getText().toString());
-                    signUpModel.setPassword(vb.signUpPassword.getEditText().getText().toString());
-                    signUpModel.setPasswordConfirm(vb.signUpPasswordConfirm.getEditText().getText().toString());
-                    signUpModel.setProfileImage("test");
-
-                    ((AccountSign)getActivity()).signUp(signUpModel);
-                }
-
-            }
+        vb.signUpButton.setOnClickListener(button -> {
+                if(isDataValid()) signUp();
         });
+    }
 
-        vb.signUpFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((AccountSign)getActivity()).facebookAuth();
+    boolean isDataValid(){
+        boolean validData = true;
+
+        if(vb.signUpPasswordConfirm.getError()!=null || vb.signUpPasswordConfirm.getEditText().getText().length()==0){
+            vb.signUpPasswordConfirm.requestFocus();
+            vb.signUpPasswordConfirm.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        if(vb.signUpPassword.getError()!=null || vb.signUpPassword.getEditText().getText().length()==0){
+            vb.signUpPassword.requestFocus();
+            vb.signUpPassword.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        if(vb.signUpEmail.getError()!=null || vb.signUpEmail.getEditText().getText().length()==0){
+            vb.signUpEmail.requestFocus();
+            vb.signUpEmail.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        if(vb.signUpUsername.getError()!=null || vb.signUpUsername.getEditText().getText().length()==0){
+            vb.signUpUsername.requestFocus();
+            vb.signUpUsername.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+            validData = false;
+        }
+
+        return validData;
+    }
+
+    void signUp(){
+
+        DialogsProvider.get(getActivity()).setLoading(true);
+        viewModel.signUp(
+                vb.signUpUsername.getEditText().getText().toString(),
+                vb.signUpEmail.getEditText().getText().toString(),
+                vb.signUpPassword.getEditText().getText().toString(),
+                vb.signUpPasswordConfirm.getEditText().getText().toString(),
+                "Empty"
+        ).observe(getViewLifecycleOwner(), response -> {
+            DialogsProvider.get(getActivity()).setLoading(false);
+
+            switch (response.code()){
+                case BaseResponseModel.SUCCESSFUL_CREATION:
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra(MainActivity.JUST_SIGNED_IN,true);
+
+                    UserAccountManager.signIn(getActivity(), intent, response.headers().get(Repository.AUTH_TOKEN_HEADER), response.body().getUser());
+                    break;
+
+                case BaseResponseModel.FAILED_DATA_CONFLICT:
+                    DialogsProvider.get(getActivity()).messageDialog("Welcome back !", "you already have an account with this email\nplease sign in");
+                    break;
+
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    DialogsProvider.get(getActivity()).messageDialog("Sign Up Failed", "Please Check your connection !");
+                    break;
+
+                default:
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
             }
-        });
 
-        vb.signUpGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((AccountSign)getActivity()).googleAuth();
-            }
         });
-
 
     }
 

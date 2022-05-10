@@ -7,7 +7,7 @@
 <div align="center">
   <a href="https://play.google.com/apps/internaltest/4699284989570928734"><img align="left" src="https://user-images.githubusercontent.com/63168118/159510899-c7d62e04-e5ff-4768-92ec-b441d55dbc30.png"/></a>
   
-<a href="https://dl.dropbox.com/s/xl0dzscgsfkry74/Sale%20Hunter%20v0.5.3.apk"><img align="left" src="https://user-images.githubusercontent.com/63168118/159510894-4f760748-336e-4a51-b35a-5e11c89a9936.png"/></a>
+<a href="https://dl.dropbox.com/s/6i0a31ei4732pr9/Sale%20Hunter%20v0.6.4.apk"><img align="left" src="https://user-images.githubusercontent.com/63168118/159510894-4f760748-336e-4a51-b35a-5e11c89a9936.png"/></a>
   <br><br><br><br><br>
 </div>
 
@@ -90,7 +90,33 @@
        <li>Global Account Manager</li>
        <li>Global Text Field Validator</li>
       </ul>
-      
+  </ul>
+  
+  <hr>
+  <li><b>v0.6.4 Pre-Alpha</b></li>
+    <ul>
+      <li>Code Refactor: Fully Converted to MVVM</li>
+      <li>Search Functionality & filtering implementation</li>
+      <li>Search Results Page & Stores Map implementation</li>
+      <li>Product Page implementation</li>
+      <li>Recommended Products implementation</li>
+      <li>Social Media update in Sign In/up & User Profile</li>
+      <li>Navbar & Menu options Changed</li>
+      <li>Product Card/List Design Adjustments</li>
+      <li>Favorites List implementation</li>
+      <li>User History implementation</li>
+      <li>Barcode Scanner Product Detection implementation</li>
+      <li>Bugs Fixed:</li>
+      <ul>
+       <li>user data doesn't load on sign in</li>
+       <li>Sign out crash</li>
+       <li>Sign Up Error 409 instead of user exists message</li>
+       <li>Unchecked Remember Me in Sign in</li>
+       <li>On Activity Resume Dialog Bug Fixed</li>
+       <li>Forced Signout Message Dialog</li>
+       <li>Profile Save Button Still visible when image changed & saved</li>
+       <li>fragment killed on backstack</li>
+      </ul>
   </ul>
   
   </ol>

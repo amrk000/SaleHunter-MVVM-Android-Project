@@ -47,31 +47,29 @@
         app:layout_constraintEnd_toEndOf="@+id/profile_pic"
         app:tint="?attr/colorPrimary" />
 
+    <android.widget.ImageView
+        android:id="@+id/profile_socialLogo"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/facebook_auth"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_pic"
+        app:layout_constraintEnd_toEndOf="@+id/profile_pic" />
+
     <TextView
         android:id="@+id/profile_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/raleway_semibold"
         android:gravity="center"
+        android:includeFontPadding="false"
         android:text="User Name"
         android:textColor="?attr/colorPrimary"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/profile_pic"
         app:layout_constraintStart_toStartOf="@+id/profile_pic"
         app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
-
-    <TextView
-        android:id="@+id/profile_accountType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway_regular"
-        android:gravity="center"
-        android:text="User Account"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/profile_username"
-        app:layout_constraintStart_toStartOf="@+id/profile_username"
-        app:layout_constraintTop_toBottomOf="@+id/profile_username" />
 
     <android.widget.Button
         android:id="@+id/profile_save"
@@ -104,7 +102,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/profile_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_accountType">
+        app:layout_constraintTop_toBottomOf="@+id/profile_username">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -218,6 +216,30 @@
                     android:text="1993201@@"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <android.widget.Button
+                android:id="@+id/profile_edit_socialProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button_simple"
+                android:drawableLeft="@drawable/ic_round_edit_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Edit Profile On Social"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         </LinearLayout>
     </ScrollView>

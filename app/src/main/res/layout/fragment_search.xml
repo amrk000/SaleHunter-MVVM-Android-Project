@@ -86,14 +86,29 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="5dp"
+        android:clipChildren="false"
         android:clipToPadding="false"
-        android:fadingEdge="vertical"
+        android:orientation="vertical"
         android:paddingBottom="100dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:itemCount="10"
+        tools:listitem="@layout/product_card_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
-        tools:listitem="@layout/product_card_layout" />
+ />
+
+    <ProgressBar
+        android:id="@+id/search_loadingRecommended"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="?attr/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

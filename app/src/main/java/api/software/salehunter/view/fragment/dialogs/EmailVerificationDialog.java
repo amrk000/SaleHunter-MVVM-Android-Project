@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,31 +16,23 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import api.software.salehunter.R;
-import api.software.salehunter.data.Repository;
 import api.software.salehunter.databinding.FragmentEmailVerificationDialogBinding;
-import api.software.salehunter.model.EmailVerificationModel;
-import api.software.salehunter.model.ResponseModel;
+import api.software.salehunter.model.BaseResponseModel;
 import api.software.salehunter.util.DialogsProvider;
-import api.software.salehunter.view.fragment.dialogs.LoadingDialog;
-import api.software.salehunter.view.fragment.dialogs.MessageDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import api.software.salehunter.viewmodel.fragment.dialogs.EmailVerificationDialogViewModel;
 
 public class EmailVerificationDialog extends BottomSheetDialogFragment {
     private FragmentEmailVerificationDialogBinding vb;
-    EditText[] code;
-    String email, titleText, subTitleText;
-    EmailVerificationModel emailVerificationModel;
+    private EmailVerificationDialogViewModel viewModel;
 
-    Repository repository;
+    private EditText[] code;
+    private String email, titleText, subTitleText;
 
     DialogResultListener dialogResultListener;
 
@@ -89,14 +81,12 @@ public class EmailVerificationDialog extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        repository = new Repository();
+        viewModel = new ViewModelProvider(this).get(EmailVerificationDialogViewModel.class);
 
         vb.emailVerificationDialogTitle.setText(titleText);
         vb.emailVerificationDialogSubtitle.setText(subTitleText);
 
-        emailVerificationModel = new EmailVerificationModel();
-        emailVerificationModel.setEmail(email);
-        sendEmailVerification(emailVerificationModel);
+        sendEmailVerification();
 
         code = new EditText[6];
         code[0]=vb.verificationDialogCodeNum;
@@ -172,141 +162,113 @@ public class EmailVerificationDialog extends BottomSheetDialogFragment {
 
         }
 
-        vb.verificationDialogCodeResend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resendPinToEmail(emailVerificationModel);
-            }
+        vb.verificationDialogCodeResend.setOnClickListener(button -> resendPinToEmail());
+
+        vb.verificationDialogCodeButton.setOnClickListener(button -> {
+            if(isDataValid()) verifyPin();
         });
 
-        vb.verificationDialogCodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean verify=true;
+    }
 
-                for(EditText block:code){
-                    if(block.getText().toString().isEmpty()){
-                        block.requestFocus();
-                        block.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.missing));
-                        verify=false;
-                        break;
-                    }
-                }
+    boolean isDataValid(){
+        boolean validData = true;
 
-                if(verify) {
+        for(EditText block:code){
+            if(block.getText().toString().isEmpty()){
+                block.requestFocus();
+                block.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fieldmissing));
+                validData=false;
+                break;
+            }
+        }
 
-                    StringBuilder pin = new StringBuilder();
-                    for(EditText digit : code) pin.append(digit.getText().toString());
+        return validData;
+    }
 
-                    verifyPin(pin.toString());
-                }
+    public void sendEmailVerification(){
+
+        viewModel.sendEmailVerification(email).observe(getViewLifecycleOwner(), response ->{
+            switch (response.code()){
+                case BaseResponseModel.SUCCESSFUL_OPERATION:
+                    break;
+
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    dismiss();
+                    DialogsProvider.get(getActivity()).messageDialog("Email Verification Request Failed", "Please Check your connection !");
+                    break;
+
+                default:
+                    dismiss();
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
             }
         });
 
     }
 
-    public void sendEmailVerification(EmailVerificationModel emailVerificationModel){
-        repository.sendEmailVerification(emailVerificationModel, new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+    public void resendPinToEmail(){
 
-                switch (response.code()){
-                    case ResponseModel.SUCCESSFUL_OPERATION:
-                        break;
+        viewModel.sendEmailVerification(email).observe(getViewLifecycleOwner(), response ->{
+            switch (response.code()){
+                case BaseResponseModel.SUCCESSFUL_OPERATION:
 
-                    default:
-                        dismiss();
-                        DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
-                }
+                    Snackbar snackbar = Snackbar.make(vb.verificationDialogCodeSnackbarColayout,"New PIN is on the way! check your inbox.",15000);
+                    snackbar.getView().setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.snackbar,getActivity().getTheme()));
+                    snackbar.setBackgroundTint(getResources().getColor(R.color.lightModesecondary,getActivity().getTheme()));
+                    snackbar.setTextColor(Color.WHITE);
+                    snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
+                    snackbar.show();
+                    break;
 
-            }
+                case BaseResponseModel.FAILED_NOT_FOUND:
+                    DialogsProvider.get(getActivity()).messageDialog("Email isn't registered", "you don't have an account\nplease sign up first");
+                    break;
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                dismiss();
-                DialogsProvider.get(getActivity()).messageDialog("Email Verification Request Failed", "Please Check your connection !");
-            }
-        });
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    DialogsProvider.get(getActivity()).messageDialog("Request Failed", "Please Check your connection !");
+                    break;
 
-    }
-
-    public void resendPinToEmail(EmailVerificationModel emailVerificationModel){
-
-        repository.sendEmailVerification(emailVerificationModel, new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-
-                switch (response.code()){
-                    case ResponseModel.SUCCESSFUL_OPERATION:
-
-                        Snackbar snackbar = Snackbar.make(vb.verificationDialogCodeSnackbarColayout,"New PIN is on the way! check your inbox.",15000);
-                        snackbar.getView().setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.snackbar,getActivity().getTheme()));
-                        snackbar.setBackgroundTint(getResources().getColor(R.color.lightModesecondary,getActivity().getTheme()));
-                        snackbar.setTextColor(Color.WHITE);
-                        snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
-                        snackbar.show();
-                        break;
-
-                    case ResponseModel.FAILED_NOT_FOUND:
-                        DialogsProvider.get(getActivity()).messageDialog("Email isn't registered", "you don't have an account\nplease sign up first");
-                        break;
-
-                    default:
-                        DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                DialogsProvider.get(getActivity()).setLoading(false);
-                DialogsProvider.get(getActivity()).messageDialog("Request Failed", "Please Check your connection !");
+                default:
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
             }
         });
 
     }
 
-    public void verifyPin(String pinToken){
+    void verifyPin(){
         DialogsProvider.get(getActivity()).setLoading(true);
 
-        repository.verifyToken(pinToken, new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                DialogsProvider.get(getActivity()).setLoading(false);
+        StringBuilder pin = new StringBuilder();
+        for(EditText digit : code) pin.append(digit.getText().toString());
 
-                switch (response.code()){
-                    //valid
-                    case 200:
-                        if(dialogResultListener!=null) dialogResultListener.onSuccess();
-                        dismiss();
-                        break;
+        viewModel.verifyToken(pin.toString()).observe(getViewLifecycleOwner(), response ->{
+            DialogsProvider.get(getActivity()).setLoading(false);
 
-                    //expired
-                    case 400:
-                        DialogsProvider.get(getActivity()).messageDialog("Pin is expired", "Please resend pin code again");
-                        break;
+            switch (response.code()){
+                //valid
+                case BaseResponseModel.SUCCESSFUL_OPERATION:
+                    if(dialogResultListener!=null) dialogResultListener.onSuccess();
+                    dismiss();
+                    break;
 
-                    //invalid
-                    case 404:
-                        DialogsProvider.get(getActivity()).messageDialog("Pin is invalid", "Please check it and try again");
-                        break;
+                //expired
+                case BaseResponseModel.FAILED_INVALID_DATA:
+                    DialogsProvider.get(getActivity()).messageDialog("Pin is expired", "Please resend pin code again");
+                    break;
 
-                    default:
-                        if(dialogResultListener!=null) dialogResultListener.onCancel();
-                        DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
-                }
+                //invalid
+                case BaseResponseModel.FAILED_NOT_FOUND:
+                    DialogsProvider.get(getActivity()).messageDialog("Pin is invalid", "Please check it and try again");
+                    break;
 
+                case BaseResponseModel.FAILED_REQUEST_FAILURE:
+                    DialogsProvider.get(getActivity()).messageDialog("Request Error", "Please Check your connection.");
+                    break;
+
+                default:
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
             }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                if(dialogResultListener!=null) dialogResultListener.onCancel();
-                DialogsProvider.get(getActivity()).setLoading(false);
-                DialogsProvider.get(getActivity()).messageDialog("Verification Failed", "Please Check your connection !");
-            }
         });
-
     }
-
 
 }

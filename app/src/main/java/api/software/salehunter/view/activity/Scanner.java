@@ -8,6 +8,7 @@ import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,29 +21,17 @@ import android.util.Size;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.mlkit.vision.barcode.Barcode;
-import com.google.mlkit.vision.barcode.BarcodeScanner;
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
-import com.google.mlkit.vision.barcode.BarcodeScanning;
-import com.google.mlkit.vision.common.InputImage;
-
-import java.util.List;
+import android.widget.Toast;
 
 import api.software.salehunter.R;
 import api.software.salehunter.databinding.ActivityScannerBinding;
+import api.software.salehunter.viewmodel.activity.ScannerViewModel;
 
 public class Scanner extends AppCompatActivity {
     private ActivityScannerBinding vb;
-    private ProcessCameraProvider cameraProvider;
-    private Vibrator vibrator;
-    private MediaPlayer sfx;
-    private boolean scanned = false;
+    private ScannerViewModel viewModel;
+
+    public static final int RESULT_TRY_AGAIN = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,95 +45,94 @@ public class Scanner extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        sfx = MediaPlayer.create(this, R.raw.scanner_sound);
-        sfx.setVolume(0.25f,0.25f);
+        vb.lazer.startAnimation(AnimationUtils.loadAnimation(this,R.anim.scanner_lazer_effect));
 
-        ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+        viewModel = new ViewModelProvider(this).get(ScannerViewModel.class);
 
-        // Camera provider is now guaranteed to be available
-        try { cameraProvider = cameraProviderFuture.get(); } catch (Exception e){e.printStackTrace();}
+        viewModel.bindCameraProvider(this, vb.cameraPreview.getSurfaceProvider());
 
-        Preview preview = new Preview.Builder().build();
-        preview.setSurfaceProvider(vb.cameraPreview.getSurfaceProvider());
+        viewModel.getResult().observe(this, result -> {
+            showDetectingProductLayout(result);
+            lookUpBarcode(result);
+        });
 
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
+        vb.scannerDetectingTryAgain.setOnClickListener(button ->{
+            Intent returnIntent = new Intent();
+            setResult(Scanner.RESULT_TRY_AGAIN, returnIntent);
+            onBackPressed();
+        });
 
-        BarcodeScannerOptions barcodeScannerOptions = new BarcodeScannerOptions.Builder()
-                .setBarcodeFormats(Barcode.FORMAT_EAN_8,Barcode.FORMAT_EAN_13,Barcode.FORMAT_UPC_A,Barcode.FORMAT_UPC_E)
-                .build();
+    }
 
-        BarcodeScanner barcodeScanner = BarcodeScanning.getClient(barcodeScannerOptions);
+    void submitData(String productName){
+        String[] arrayOfWords = productName.split(" ");
 
-        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-                .setTargetResolution(new Size(1920, 1080))
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
-                .build();
+        StringBuilder shortenedName = new StringBuilder();
+        for(int i=0; i< arrayOfWords.length; i++){
+            shortenedName.append(arrayOfWords[i]);
+            if(i<5) shortenedName.append(" ");
+            else break;
+        }
 
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this),new ImageAnalysis.Analyzer(){
-            @Override
-            public void analyze(@NonNull ImageProxy image) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result", shortenedName.toString());
+        setResult(Scanner.RESULT_OK, returnIntent);
+        onBackPressed();
+    }
 
-                Image mediaImage = image.getImage();
+    void showDetectingProductLayout(String barcode){
+        vb.scannerScanningLayout.setVisibility(View.INVISIBLE);
+        vb.scannerDetectingLayout.setVisibility(View.VISIBLE);
+        vb.scannerDetectingLayout.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fragment_in));
+        vb.scannerDetectingBarcode.setText(barcode);
+        vb.scannerDetectingTryAgain.setVisibility(View.GONE);
+    }
 
-                if (mediaImage != null) {
-                    InputImage inputImage = InputImage.fromMediaImage(mediaImage, image.getImageInfo().getRotationDegrees());
+    void productNotDetected(String message){
+        vb.scannerDetectingBarcode.clearAnimation();
+        vb.scannerDetectingImage.clearAnimation();
+        vb.scannerDetectingLoading.setVisibility(View.GONE);
+        vb.scannerDetectingText.setText(message);
+        vb.scannerDetectingText.setTextColor(getResources().getColor(R.color.accent));
+        vb.scannerDetectingTryAgain.setVisibility(View.VISIBLE);
+        vb.scannerDetectingTryAgain.startAnimation(AnimationUtils.loadAnimation(this,R.anim.lay_on));
+    }
 
-                    //process image from buffer
-                    barcodeScanner.process(inputImage)
-                            .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
-                                @Override
-                                public void onSuccess(List<Barcode> barcodes) {
-                                    //on process start successfully
-                                }
+    void lookUpBarcode(String barcode){
+        viewModel.barcodeLookupUpcItemDb(barcode).observe(this, response ->{
+            if(response.code() == 200) {
+                Toast.makeText(this, "1st Lookup", Toast.LENGTH_SHORT).show();
+                viewModel.removeObserverUpcItemDb(this);
 
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    //on process start error
-                                }
+                if(response.body().getItems().size()>0) {
+                    String productName = response.body().getItems().get(0).getProductName();
+                    submitData(productName);
+                } else lookUpBarcodeAlt(barcode);
 
-                            })
-                            .addOnCompleteListener(new OnCompleteListener<List<Barcode>>() {
-                                @Override
-                                public void onComplete(@NonNull Task<List<Barcode>> task) {
-
-                                    //list of all detected barcodes/qr codes
-                                    for (Barcode barcode : task.getResult()) {
-
-                                        String rawValue = barcode.getRawValue();
-
-                                        Intent returnIntent = new Intent();
-                                        returnIntent.putExtra("result", rawValue);
-                                        setResult(Activity.RESULT_OK, returnIntent);
-
-                                        scanned = true;
-                                        sfx.start();
-                                        finish();
-
-                                    }
-                                    image.close();
-                                }
-                            });
-
-                }
-
-            }
+            } else lookUpBarcodeAlt(barcode);
 
         });
 
-        cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis,preview);
+    }
 
-        vb.lazer.startAnimation(AnimationUtils.loadAnimation(this,R.anim.scanner_lazer_effect));
+    void lookUpBarcodeAlt(String barcode){
+        viewModel.barcodeLookupBarcodeMonster(barcode).observe(this, responseAlt ->{
+            if(responseAlt.code() == 200) {
+                Toast.makeText(this, "2nd Lookup", Toast.LENGTH_SHORT).show();
+                viewModel.removeObserverBarcodeMonster(this);
+
+                if(responseAlt.body().getProductName() != null) {
+                    String productName = responseAlt.body().getProductName();
+                    submitData(productName);
+                } else productNotDetected("Product Not Detected");
+
+            } else productNotDetected("You're Disconnected");
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(scanned) vibrator.vibrate(80);
+
     }
 }

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_rowWeight="1"
+    android:layout_margin="5dp"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="?attr/background"
+    app:cardCornerRadius="15dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.37"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/product_list_item_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/zz_havit_stereo_speakers_175" />
+
+        <CheckBox
+            android:id="@+id/product_list_item_favourite"
+            style="0"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/add_favourite_selector"
+            android:backgroundTint="#FF6F6F"
+            android:backgroundTintMode="multiply"
+            android:button="@null"
+            android:checked="false"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/product_list_item_Name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway_semibold"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:minLines="2"
+            android:text="pc purple led small speakers - usb cable"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/product_list_item_brand" />
+
+        <TextView
+            android:id="@+id/product_list_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="0000LE"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_list_item_Name" />
+
+        <TextView
+            android:id="@+id/product_list_item_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:includeFontPadding="false"
+            android:text="Brand"
+            android:textColor="?attr/colorAccent"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@+id/product_list_item_favourite"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/product_list_item_store"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:tintMode="src_atop"
+            app:layout_constraintBottom_toBottomOf="@+id/product_list_item_brand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/product_list_item_brand"
+            app:srcCompat="@drawable/jumia_seeklogo_com_" />
+
+        <ImageView
+            android:id="@+id/product_list_item_rate_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/product_list_item_rate"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/product_list_item_rate"
+            app:srcCompat="@drawable/rate_star_highlighted" />
+
+        <TextView
+            android:id="@+id/product_list_item_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:includeFontPadding="false"
+            android:text="4.2"
+            android:textColor="#FD892F"
+            android:textSize="16dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/product_list_item_price"
+            app:layout_constraintStart_toEndOf="@+id/product_list_item_rate_icon"
+            app:layout_constraintTop_toTopOf="@+id/product_list_item_price" />
+
+        <TextView
+            android:id="@+id/product_list_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif"
+            android:includeFontPadding="false"
+            android:text="25/6/2042"
+            android:textColor="?attr/colorAccent"
+            android:textSize="16sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/product_list_item_price"
+            app:layout_constraintStart_toEndOf="@+id/product_list_item_rate"
+            app:layout_constraintTop_toTopOf="@+id/product_list_item_price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

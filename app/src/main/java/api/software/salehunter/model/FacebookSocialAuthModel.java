@@ -1,20 +1,21 @@
 package api.software.salehunter.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SocialAuthModel {
+public class FacebookSocialAuthModel {
 
     @SerializedName("fullname")
     private String fullName;
 
-    @SerializedName("email")
-    private String email;
+    @Expose
+    private transient String email; //Ignore in serialization
 
-    @SerializedName("client_id")
+    @SerializedName("thirdParty_id")
     private String clientId;
 
-    @SerializedName("access_token")
-    private String accessToken;
+    @SerializedName("profile_img")
+    private String image;
 
 
     public String getFullName() {
@@ -25,14 +26,6 @@ public class SocialAuthModel {
         this.fullName = fullName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getClientId() {
         return clientId;
     }
@@ -41,12 +34,19 @@ public class SocialAuthModel {
         this.clientId = clientId;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getImage() {
+        return image;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setImage(String image) {
+        this.image = image;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

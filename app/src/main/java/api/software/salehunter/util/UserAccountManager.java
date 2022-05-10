@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -21,23 +22,21 @@ import api.software.salehunter.view.activity.MainActivity;
 import api.software.salehunter.view.fragment.dialogs.LoadingDialog;
 
 public final class UserAccountManager {
-
     private static UserModel user;
 
     //Token Type Parameters
     public static final int TOKEN_TYPE_NORMAL = 0;
     public static final int TOKEN_TYPE_BEARER = 1;
+    public static final String FORCED_SIGN_OUT = "forcedSignOut";
 
-    public static void signIn(Activity activity, String token, UserModel user){
+    public static void signIn(Activity activity, Intent intent, String token, UserModel userModel){
+        user = userModel;
         Context context = activity.getApplicationContext();
         //Save User Data
         SharedPrefManager.get(context).setSignedIn(true);
         SharedPrefManager.get(context).setToken(token);
-        SharedPrefManager.get(context).setUser(user);
-    }
+        SharedPrefManager.get(context).setUser(userModel);
 
-    public static void signIn(Activity activity, Intent intent, String token, UserModel user){
-        signIn(activity, token, user);
         //Launch Main Activity
         activity.startActivity(intent);
         activity.onBackPressed();
@@ -68,8 +67,8 @@ public final class UserAccountManager {
         return output;
     }
 
-    public static void signOut(Activity activity){
-        DialogsProvider.get((AppCompatActivity) activity).setLoading(true);
+    public static void signOut(Activity activity, boolean forced){
+        DialogsProvider.get(activity).setLoading(true);
 
         Context context = activity.getApplicationContext();
 
@@ -91,17 +90,14 @@ public final class UserAccountManager {
 
         }
 
-        DialogsProvider.get((AppCompatActivity) activity).setLoading(false);
+        DialogsProvider.get(activity).setLoading(false);
 
         //Launch Account Sign Activity
-        activity.startActivity(new Intent(context, AccountSign.class));
+        Intent intent = new Intent(context, AccountSign.class);
+        intent.putExtra(FORCED_SIGN_OUT,forced);
+        activity.startActivity(intent);
         activity.finish();
     }
 
-    public static void signOutForced(Activity activity){
-        signOut(activity);
-
-        DialogsProvider.get((AppCompatActivity) activity).messageDialog("Session Expired","Please Sign In Again");
-    }
 
 }

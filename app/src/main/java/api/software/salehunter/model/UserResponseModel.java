@@ -2,7 +2,8 @@ package api.software.salehunter.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UserResponseModel extends ResponseModel {
+public class UserResponseModel extends BaseResponseModel {
+
     @SerializedName("user")
     private UserModel user;
 
@@ -13,4 +14,5 @@ public class UserResponseModel extends ResponseModel {
     public void setUser(UserModel user) {
         this.user = user;
     }
+
 }

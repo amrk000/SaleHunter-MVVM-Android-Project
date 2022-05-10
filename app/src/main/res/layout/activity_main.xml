@@ -17,6 +17,17 @@
         app:layout_constraintStart_toStartOf="@+id/menu_backView"
         app:layout_constraintTop_toTopOf="@+id/menu_frontView" />
 
+    <TextView
+        android:id="@+id/appVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="v0.6.4 pre-Alpha"
+        android:textColor="#70FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/menu_backView"
         android:layout_width="0dp"
@@ -72,44 +83,6 @@
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Dashboard"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/menu_reviews"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/clickable_text"
-                android:button="@drawable/menu_item_selector"
-                android:buttonTint="#FFFFFF"
-                android:checked="false"
-                android:drawableLeft="@drawable/menu_icon_star"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/raleway_regular"
-                android:hapticFeedbackEnabled="true"
-                android:includeFontPadding="false"
-                android:paddingLeft="10dp"
-                android:text="Reviews"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/menu_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/clickable_text"
-                android:button="@drawable/menu_item_selector"
-                android:buttonTint="#FFFFFF"
-                android:checked="false"
-                android:drawableLeft="@drawable/menu_icon_history"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/raleway_regular"
-                android:hapticFeedbackEnabled="true"
-                android:includeFontPadding="false"
-                android:paddingLeft="10dp"
-                android:text="History"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
@@ -186,6 +159,25 @@
                 android:includeFontPadding="false"
                 android:paddingLeft="10dp"
                 android:text="Help"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/menu_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/clickable_text"
+                android:button="@drawable/menu_item_selector"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:drawableLeft="@drawable/menu_icon_about"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/raleway_regular"
+                android:hapticFeedbackEnabled="true"
+                android:includeFontPadding="false"
+                android:paddingLeft="10dp"
+                android:text="About"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
