@@ -20,7 +20,6 @@
         <action
             android:id="@+id/action_homeFragment_to_productPageFragment"
             app:destination="@id/productPageFragment"
-            app:enterAnim="@anim/lay_on_delayed"
             app:popExitAnim="@anim/lay_off" />
     </fragment>
     <fragment
@@ -50,5 +49,53 @@
         android:id="@+id/productPageFragment"
         android:name="api.software.salehunter.view.fragment.main.ProductPageFragment"
         android:label="fragment_product_page"
-        tools:layout="@layout/fragment_product_page" />
+        tools:layout="@layout/fragment_product_page" >
+        <action
+            android:id="@+id/action_productPageFragment_to_storePageFragment"
+            app:destination="@id/storePageFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/createStoreFragment"
+        android:name="api.software.salehunter.view.fragment.main.CreateStoreIntroFragment"
+        android:label="fragment_create_store"
+        tools:layout="@layout/fragment_create_store_intro" >
+        <action
+            android:id="@+id/action_createStoreFragment_to_createStoreFragment2"
+            app:destination="@id/createStoreFragment2"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/storePageFragment"
+        android:name="api.software.salehunter.view.fragment.main.StorePageFragment"
+        android:label="fragment_store_page"
+        tools:layout="@layout/fragment_store_page" >
+        <action
+            android:id="@+id/action_storePageFragment_to_productPageFragment"
+            app:destination="@id/productPageFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/createStoreFragment2"
+        android:name="api.software.salehunter.view.fragment.main.CreateStoreFragment"
+        android:label="fragment_create_store"
+        tools:layout="@layout/fragment_create_store" >
+        <action
+            android:id="@+id/action_createStoreFragment2_to_storePageFragment"
+            app:destination="@id/storePageFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/homeFragment" />
+    </fragment>
 </navigation>

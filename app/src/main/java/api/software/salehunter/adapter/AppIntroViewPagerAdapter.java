@@ -15,7 +15,6 @@ public class AppIntroViewPagerAdapter extends PagerAdapter {
 
     Activity context;
 
-
     String[] titles={"Find Products Easily","Cashier in Your Pocket","Hunt The Best Deals","Have a Store ?"};
 
     String[] texts={"Search for any product to get its price in market and location of nearest stores that selling it",
@@ -45,15 +44,15 @@ public class AppIntroViewPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View item = context.getLayoutInflater().inflate(R.layout.app_intro_page,container,false);
+        View item = context.getLayoutInflater().inflate(R.layout.view_pager_page,container,false);
 
-        ImageView imageView = item.findViewById(R.id.intro_page_imageView);
+        ImageView imageView = item.findViewById(R.id.viewpager_page_imageView);
         imageView.setImageDrawable(context.getDrawable(images[position]));
 
-        TextView title = item.findViewById(R.id.intro_page_title);
+        TextView title = item.findViewById(R.id.viewpager_page_title);
         title.setText(titles[position]);
 
-        TextView text = item.findViewById(R.id.intro_page_text);
+        TextView text = item.findViewById(R.id.viewpager_page_text);
         text.setText(texts[position]);
 
         container.addView(item);

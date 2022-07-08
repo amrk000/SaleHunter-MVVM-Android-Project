@@ -39,6 +39,7 @@ public class ProductsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private ItemInteractionListener itemInteractionListener;
 
     private boolean hideFavButton = false;
+    private boolean showDate = false;
 
     public interface LastItemReachedListener {
         void onLastItemReached();
@@ -66,7 +67,7 @@ public class ProductsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     //item view inner class
     public static class DataViewHolder extends RecyclerView.ViewHolder {
 
-        TextView brand, name, price, rate, date;
+        TextView brand, name, price, rate, date, sale;
         ImageView image, store;
         CheckBox favourite;
         ImageView rateIcon;
@@ -83,6 +84,7 @@ public class ProductsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             favourite = view.findViewById(R.id.product_list_item_favourite);
             rateIcon = view.findViewById(R.id.product_list_item_rate_icon);
             date = view.findViewById(R.id.product_list_item_date);
+            sale = view.findViewById(R.id.product_list_item_salePercent);
         }
 
     }
@@ -122,37 +124,28 @@ public class ProductsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.rate.setText(String.valueOf(Data.get(position).getRate()));
             holder.favourite.setChecked(Data.get(position).isFavorite());
             holder.date.setText(dateTimeConvert(Data.get(position).getDate()));
+            holder.sale.setText(Data.get(position).getSalePercent()+"% SALE");
 
             if(hideFavButton) holder.favourite.setVisibility(View.GONE);
-            if(Data.get(position).getBrand().isEmpty()) holder.brand.setVisibility(View.GONE);
-            if(Data.get(position).getRate()==-1){
-                holder.rateIcon.setVisibility(View.GONE);
-                holder.rate.setVisibility(View.GONE);
+            if(Data.get(position).getSalePercent() == 0) holder.sale.setVisibility(View.GONE);
+            if(Data.get(position).getBrand().isEmpty()) holder.brand.setVisibility(View.INVISIBLE);
+
+            if(showDate) holder.date.setVisibility(View.VISIBLE);
+
+            if(Data.get(position).getRate()==0){
+                holder.rate.setVisibility(View.INVISIBLE);
+                holder.rateIcon.setVisibility(View.INVISIBLE);
             }
-            if(Data.get(position).getDate() == null || Data.get(position).getDate().isEmpty()) holder.date.setVisibility(View.GONE);
 
             //Store
-            if(isDarkModeEnabled()) holder.store.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+            //if(isDarkModeEnabled()) holder.store.setImageTintList(ColorStateList.valueOf(Color.WHITE));
 
             if(Data.get(position).getStoreName().isEmpty()) holder.store.setVisibility(View.GONE);
             else {
-                switch (Data.get(position).getStoreName().toLowerCase()) {
-                    case "amazon":
-                        holder.store.setImageDrawable(context.getDrawable(R.drawable.amazon_logo_svg));
-                        break;
-
-                    case "jumia":
-                        holder.store.setImageDrawable(context.getDrawable(R.drawable.jumia_seeklogo_com_));
-                        break;
-
-                    default:
-                        Glide.with(context)
-                                .load(Data.get(position).getStoreLogo())
-                                .centerCrop()
-                                .transition(DrawableTransitionOptions.withCrossFade(250))
-                                .into(holder.store);
-                        break;
-                }
+                Glide.with(context)
+                        .load(Data.get(position).getStoreLogo())
+                        .transition(DrawableTransitionOptions.withCrossFade(250))
+                        .into(holder.store);
             }
 
             //Image
@@ -228,8 +221,10 @@ public class ProductsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public void addProducts(ArrayList<ProductModel> products){
-        Data.addAll(products);
-        notifyItemRangeInserted(getItemCount(), products.size());
+        recyclerView.post(()-> {
+            Data.addAll(products);
+            notifyItemRangeInserted(getItemCount(), products.size());
+        });
     }
 
     public void clearProducts(){
@@ -258,6 +253,10 @@ public class ProductsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setHideFavButton(boolean hide){
         hideFavButton = hide;
+    }
+
+    public void setShowDate(boolean show){
+        showDate = show;
     }
 
     public boolean isDarkModeEnabled() {

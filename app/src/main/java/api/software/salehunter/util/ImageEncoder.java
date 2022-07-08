@@ -25,6 +25,7 @@ public class ImageEncoder {
     private final int imageWidth = 500, imageHeight = 500;
     private final int imageQuality = 100;
     private final Bitmap.CompressFormat imageFormat = Bitmap.CompressFormat.WEBP;
+    private final String metaData = "data:image/webp;base64,";
 
     public static ImageEncoder get(){
         if(instance == null){
@@ -57,7 +58,9 @@ public class ImageEncoder {
 
         bitmap.compress(imageFormat, imageQuality, byteArrayOutputStream);
 
-        return  Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+        String image = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
+
+        return metaData + image;
     }
 
     public String encode(Context context, Uri uri){
@@ -81,7 +84,9 @@ public class ImageEncoder {
 
         bitmap.compress(imageFormat, imageQuality, byteArrayOutputStream);
 
-        return  Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+        String image = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
+
+        return  metaData + image;
     }
 
 

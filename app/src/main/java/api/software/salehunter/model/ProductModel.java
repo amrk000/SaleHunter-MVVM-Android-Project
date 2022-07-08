@@ -9,25 +9,28 @@ public class ProductModel {
     @SerializedName(value = "product_title",alternate = {"title"})
     private String name;
 
-    @SerializedName("product_title_ar")
+    @SerializedName(value = "product_title_ar",alternate = {"title_ar"})
     private String titleArabic;
 
     @SerializedName(value = "product_price",alternate = {"price"})
     private double price;
 
-    @SerializedName("product_rating")
+    @SerializedName(value = "product_rating",alternate = {"rating"})
     private double rate;
 
     @SerializedName("product_sale")
     private double discountedPrice;
 
-    @SerializedName("product_brand")
+    @SerializedName("sale")
+    private int salePercent;
+
+    @SerializedName(value = "product_brand",alternate = {"brand"})
     private String brand;
 
-    @SerializedName("product_category")
+    @SerializedName(value = "product_category",alternate = {"category"})
     private String category;
 
-    @SerializedName("product_category_ar")
+    @SerializedName(value = "product_category_ar",alternate = {"category_ar"})
     private String categoryArabic;
 
     @SerializedName(value = "image_url",alternate = {"image"})
@@ -48,6 +51,12 @@ public class ProductModel {
     @SerializedName("store_logo")
     private String storeLogo;
 
+    @SerializedName("store_latitude")
+    private Double storeLatitude;
+
+    @SerializedName("store_longitude")
+    private Double storeLongitude;
+
     @SerializedName(value = "viewed_at",alternate = {"favourite_date"})
     private String date;
 
@@ -60,7 +69,7 @@ public class ProductModel {
         this.name = "";
         this.titleArabic = "";
         this.price = 0;
-        this.rate = -1;
+        this.rate = 0;
         this.discountedPrice = 0;
         this.brand = "";
         this.category = "";
@@ -122,6 +131,14 @@ public class ProductModel {
         this.discountedPrice = discountedPrice;
     }
 
+    public int getSalePercent() {
+        return salePercent;
+    }
+
+    public void setSalePercent(int salePercent) {
+        this.salePercent = salePercent;
+    }
+
     public String getBrand() {
         return brand;
     }
@@ -147,7 +164,8 @@ public class ProductModel {
     }
 
     public String getImage() {
-        return image;
+        if(image == null) return "";
+        return image.replace("http:","https:");
     }
 
     public void setImage(String image) {
@@ -188,11 +206,27 @@ public class ProductModel {
     }
 
     public String getStoreLogo() {
-        return storeLogo;
+        return storeLogo.replace("http:","https:");
     }
 
     public void setStoreLogo(String storeLogo) {
         this.storeLogo = storeLogo;
+    }
+
+    public Double getStoreLatitude() {
+        return storeLatitude;
+    }
+
+    public void setStoreLatitude(Double storeLatitude) {
+        this.storeLatitude = storeLatitude;
+    }
+
+    public Double getStoreLongitude() {
+        return storeLongitude;
+    }
+
+    public void setStoreLongitude(Double storeLongitude) {
+        this.storeLongitude = storeLongitude;
     }
 
     public String getDate() {

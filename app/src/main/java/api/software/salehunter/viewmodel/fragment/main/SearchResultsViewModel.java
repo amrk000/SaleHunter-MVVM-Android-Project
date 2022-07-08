@@ -106,14 +106,14 @@ public class SearchResultsViewModel extends AndroidViewModel {
                 sortAndFilterModel.getMaxPrice(),
                 sortAndFilterModel.getCategory(),
                 sortAndFilterModel.getBrand(),
-                cursorLastOnlineItem,
+                cursorLastLocalItem,
                 productsCountPerPage);
 
         return localPaginatedProducts;
     }
 
     public void removeObserverLocalLoadedProducts(LifecycleOwner lifecycleOwner){
-        onlinePaginatedProducts.removeObservers(lifecycleOwner);
+        localPaginatedProducts.removeObservers(lifecycleOwner);
     }
 
     public LiveData<Response<BaseResponseModel>> addFavourite(long productId){
@@ -122,6 +122,14 @@ public class SearchResultsViewModel extends AndroidViewModel {
 
     public LiveData<Response<BaseResponseModel>> removeFavourite(long productId){
         return repository.removeFavourite(token,productId);
+    }
+
+    public int getProductsCountPerPage() {
+        return productsCountPerPage;
+    }
+
+    public void setProductsCountPerPage(int productsCountPerPage) {
+        this.productsCountPerPage = productsCountPerPage;
     }
 
     public String getLanguage() {

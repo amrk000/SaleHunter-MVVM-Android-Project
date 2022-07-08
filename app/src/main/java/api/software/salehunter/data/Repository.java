@@ -8,15 +8,19 @@ import api.software.salehunter.data.remote.RetrofitInterface;
 import api.software.salehunter.model.BarcodeMonsterResponseModel;
 import api.software.salehunter.model.ChangePasswordModel;
 import api.software.salehunter.model.BaseResponseModel;
+import api.software.salehunter.model.CreateStoreRequestModel;
+import api.software.salehunter.model.CreateStoreResponseModel;
 import api.software.salehunter.model.EmailVerificationModel;
 import api.software.salehunter.model.FacebookSocialAuthModel;
 import api.software.salehunter.model.ProductPageResponseModel;
+import api.software.salehunter.model.ProductRateModel;
 import api.software.salehunter.model.ProductsResponseModel;
 import api.software.salehunter.model.ResetPasswordModel;
 import api.software.salehunter.model.SignInModel;
 import api.software.salehunter.model.SignUpModel;
 import api.software.salehunter.model.GoogleSocialAuthModel;
 import api.software.salehunter.model.SocialAuthResponseModel;
+import api.software.salehunter.model.StorePageModel;
 import api.software.salehunter.model.UpcItemDbResponseModel;
 import api.software.salehunter.model.UserModel;
 import api.software.salehunter.model.UserResponseModel;
@@ -318,6 +322,23 @@ public class Repository {
         );
     }
 
+    public LiveData<Response<BaseResponseModel>> rateProduct(String token, long productId, ProductRateModel productRateModel){
+        return LiveDataReactiveStreams.fromPublisher(
+                mainClient.create(RetrofitInterface.class)
+                        .rateProduct(token, productId, productRateModel)
+                        .subscribeOn(Schedulers.io())
+                        .onErrorReturn( exception -> {
+                            exception.printStackTrace();
+
+                            if(exception.getClass() == HttpException.class)
+                                return Response.error(((HttpException)exception).code(), ResponseBody.create(null,""));
+
+                            return Response.error(BaseResponseModel.FAILED_REQUEST_FAILURE, ResponseBody.create(null,""));
+                        })
+                        .toFlowable(BackpressureStrategy.LATEST)
+        );
+    }
+
     public LiveData<Response<ProductsResponseModel>> getRecommendedProducts(String token){
         return LiveDataReactiveStreams.fromPublisher(
                 mainClient.create(RetrofitInterface.class)
@@ -370,5 +391,59 @@ public class Repository {
                         .toFlowable(BackpressureStrategy.LATEST)
         );
 
+    }
+
+    public LiveData<Response<ProductsResponseModel>> getOnSaleProducts(String token){
+        return LiveDataReactiveStreams.fromPublisher(
+                mainClient.create(RetrofitInterface.class)
+                        .getOnSaleProducts(token)
+                        .subscribeOn(Schedulers.io())
+                        .onErrorReturn( exception -> {
+                            exception.printStackTrace();
+
+                            if(exception.getClass() == HttpException.class)
+                                return Response.error(((HttpException)exception).code(), ResponseBody.create(null,""));
+
+                            return Response.error(BaseResponseModel.FAILED_REQUEST_FAILURE, ResponseBody.create(null,""));
+                        })
+                        .toFlowable(BackpressureStrategy.LATEST)
+        );
+
+    }
+
+    //Store Calls
+    public LiveData<Response<StorePageModel>> getStore(String token, long storeId, int page){
+        return LiveDataReactiveStreams.fromPublisher(
+                mainClient.create(RetrofitInterface.class)
+                        .getStore(token,storeId,page)
+                        .subscribeOn(Schedulers.io())
+                        .onErrorReturn( exception -> {
+                            exception.printStackTrace();
+
+                            if(exception.getClass() == HttpException.class)
+                                return Response.error(((HttpException)exception).code(), ResponseBody.create(null,""));
+
+                            return Response.error(BaseResponseModel.FAILED_REQUEST_FAILURE, ResponseBody.create(null,""));
+                        })
+                        .toFlowable(BackpressureStrategy.LATEST)
+        );
+
+    }
+
+    public LiveData<Response<CreateStoreResponseModel>> createStore(String token,CreateStoreRequestModel createStoreRequestModel){
+        return LiveDataReactiveStreams.fromPublisher(
+                mainClient.create(RetrofitInterface.class)
+                        .createStore(token,createStoreRequestModel)
+                        .subscribeOn(Schedulers.io())
+                        .onErrorReturn( exception -> {
+                            exception.printStackTrace();
+
+                            if(exception.getClass() == HttpException.class)
+                                return Response.error(((HttpException)exception).code(), ResponseBody.create(null,""));
+
+                            return Response.error(BaseResponseModel.FAILED_REQUEST_FAILURE, ResponseBody.create(null,""));
+                        })
+                        .toFlowable(BackpressureStrategy.LATEST)
+        );
     }
 }

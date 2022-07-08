@@ -82,7 +82,7 @@ public class SignUpFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
 
                 if(editable.toString().length()>0){
-                    if(TextFieldValidator.isValidUsername(editable.toString())) vb.signUpUsername.setError(null);
+                    if(TextFieldValidator.isValidName(editable.toString())) vb.signUpUsername.setError(null);
                     else if(TextFieldValidator.outLengthRange(editable.toString(),TextFieldValidator.USERNAME_MIN,TextFieldValidator.USERNAME_MAX)) vb.signUpUsername.setError("Name is too short !");
                     else vb.signUpUsername.setError("Not valid name");
                 }
@@ -168,7 +168,6 @@ public class SignUpFragment extends Fragment {
 
             }
         });
-
 
         vb.signUpButton.setOnClickListener(button -> {
                 if(isDataValid()) signUp();

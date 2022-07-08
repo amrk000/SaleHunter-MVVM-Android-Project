@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 7.1.3" type="baseline" client="gradle" dependencies="false" name="AGP (7.1.3)" variant="fatal" version="7.1.3">
+
+    <issue
+        id="NotSibling"
+        message="`@+id/account_sign_title` is not a sibling in the same `ConstraintLayout`"
+        errorLine1="                            app:layout_constraintEnd_toStartOf=&quot;@+id/account_sign_title&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_product_page.xml"
+            line="150"
+            column="29"/>
+    </issue>
+
+</issues>

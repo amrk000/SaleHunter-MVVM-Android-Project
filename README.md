@@ -7,7 +7,7 @@
 <div align="center">
   <a href="https://play.google.com/apps/internaltest/4699284989570928734"><img align="left" src="https://user-images.githubusercontent.com/63168118/159510899-c7d62e04-e5ff-4768-92ec-b441d55dbc30.png"/></a>
   
-<a href="https://dl.dropbox.com/s/6i0a31ei4732pr9/Sale%20Hunter%20v0.6.4.apk"><img align="left" src="https://user-images.githubusercontent.com/63168118/159510894-4f760748-336e-4a51-b35a-5e11c89a9936.png"/></a>
+<a href="https://dl.dropbox.com/s/ngpkzr4al8xx6ul/SaleHunter%20v0.7.5%20Pre-Alpha.apk"><img align="left" src="https://user-images.githubusercontent.com/63168118/159510894-4f760748-336e-4a51-b35a-5e11c89a9936.png"/></a>
   <br><br><br><br><br>
 </div>
 
@@ -116,6 +116,40 @@
        <li>Forced Signout Message Dialog</li>
        <li>Profile Save Button Still visible when image changed & saved</li>
        <li>fragment killed on backstack</li>
+      </ul>
+  </ul>
+  
+  <hr>
+  <li><b>v0.7.5 Pre-Alpha</b></li>
+    <ul>
+      <li>Barcode: 4000+ Egyptian Products Support added to Total of 406+ Million Global Product</li>
+      <li>Account Type in Menu & Profile</li>
+      <li>Load Online Stores Logo From Server instead of loading locally</li>
+      <li>Rendering Stores location Marks on map in results & product page</li>
+      <li>Store page implementation</li>
+      <li>Create Store implementation</li>
+      <li>On Sale Page implementation</li>
+      <li>Product Page:</li>
+      <ul>
+       <li>Product Rating implementation</li>
+       <li>Navigation button implementation for local stores</li>
+       <li>back button implementation</li>
+       <li>Sale Percent implementation</li>
+       <li>Product Multi Images Slider implementation</li>
+       <li>Product Description Implementation</li>
+       <li>Share Button changed to share SaleHunter's product page instead of source website URL</li>
+      </ul>
+      <li>Bugs Fixed:</li>
+      <ul>
+       <li>Fixed Visual bug with long category in product card</li>
+       <li>Favourite List Del Icon Scale Bug</li>
+       <li>Searchbar text not showing in light mode</li>
+      </ul>
+      <li>API Response Data handeled:</li>
+      <ul>
+       <li>Cloudinary link returns http:// instead of https:// Causes image load fail</li>
+       <li>Rate returns null instead of 0</li>
+       <li>Convert product_sale from discounted price to percent price</li>
       </ul>
   </ul>
   

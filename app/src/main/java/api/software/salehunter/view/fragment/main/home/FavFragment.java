@@ -1,9 +1,14 @@
 package api.software.salehunter.view.fragment.main.home;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableWrapper;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,11 +123,31 @@ public class FavFragment extends Fragment {
 
                     if(dX>0) {
                         Drawable icon = DrawableCompat.wrap(getContext().getDrawable(R.drawable.delete_icon)).getCurrent();
-                        icon.setBounds(viewHolder.itemView.getLeft() + 60, viewHolder.itemView.getTop() + 100, viewHolder.itemView.getLeft() + 160, viewHolder.itemView.getBottom() - 100);
+                        int leftMargin = 10;
+                        float scale = 1.4f;
+
+                        int left = viewHolder.itemView.getLeft() + leftMargin;
+                        int right = (int) (left + icon.getIntrinsicWidth()*scale);
+
+                        int vcenter = viewHolder.itemView.getTop() + viewHolder.itemView.getHeight()/2;
+                        int top = (int) (vcenter - icon.getIntrinsicHeight()*scale/2);
+                        int bottom = (int) (vcenter + icon.getIntrinsicHeight()*scale/2);
+
+                        icon.setBounds(left, top, right, bottom);
                         icon.draw(c);
                     } else if (dX<0){
                         Drawable icon = DrawableCompat.wrap(getContext().getDrawable(R.drawable.delete_icon)).getCurrent();
-                        icon.setBounds(viewHolder.itemView.getRight() - 160, viewHolder.itemView.getTop() + 100, viewHolder.itemView.getRight() - 60, viewHolder.itemView.getBottom() - 100);
+                        int rightMargin = 10;
+                        float scale = 1.4f;
+
+                        int right = viewHolder.itemView.getRight() - rightMargin;
+                        int left = (int) (right - icon.getIntrinsicWidth()*scale);
+
+                        int vcenter = viewHolder.itemView.getTop() + viewHolder.itemView.getHeight()/2;
+                        int top = (int) (vcenter - icon.getIntrinsicHeight()*scale/2);
+                        int bottom = (int) (vcenter + icon.getIntrinsicHeight()*scale/2);
+
+                        icon.setBounds(left, top, right, bottom);
                         icon.draw(c);
                     }
                 }

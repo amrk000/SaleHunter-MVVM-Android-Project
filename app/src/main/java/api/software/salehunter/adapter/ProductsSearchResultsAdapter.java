@@ -78,7 +78,7 @@ public class ProductsSearchResultsAdapter extends RecyclerView.Adapter<RecyclerV
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView brand, name, price, rate;
+        TextView brand, name, price, rate, sale;
         ImageView image, store;
         CheckBox favourite;
         ImageView rateIcon;
@@ -94,7 +94,7 @@ public class ProductsSearchResultsAdapter extends RecyclerView.Adapter<RecyclerV
             store = view.findViewById(R.id.product_list_item_store);
             favourite = view.findViewById(R.id.product_list_item_favourite);
             rateIcon = view.findViewById(R.id.product_list_item_rate_icon);
-
+            sale = view.findViewById(R.id.product_list_item_salePercent);
         }
 
     }
@@ -179,26 +179,22 @@ public class ProductsSearchResultsAdapter extends RecyclerView.Adapter<RecyclerV
             holder.price.setText(Data.get(position).getPrice()+"LE");
             holder.rate.setText(String.valueOf(Data.get(position).getRate()));
             holder.favourite.setChecked(Data.get(position).isFavorite());
+            holder.sale.setText(Data.get(position).getSalePercent()+"% SALE");
+
+            if(Data.get(position).getSalePercent() == 0) holder.sale.setVisibility(View.GONE);
+
+            if(Data.get(position).getRate()==0){
+                holder.rate.setVisibility(View.INVISIBLE);
+                holder.rateIcon.setVisibility(View.INVISIBLE);
+            }
 
             //Store
-            if(isDarkModeEnabled()) holder.store.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-            switch (Data.get(position).getStoreName().toLowerCase()) {
-                case "amazon":
-                    holder.store.setImageDrawable(context.getDrawable(R.drawable.amazon_logo_svg));
-                    break;
+            //if(isDarkModeEnabled()) holder.store.setImageTintList(ColorStateList.valueOf(Color.WHITE));
 
-                case "jumia":
-                    holder.store.setImageDrawable(context.getDrawable(R.drawable.jumia_seeklogo_com_));
-                    break;
-
-                default:
-                    Glide.with(context)
-                            .load(Data.get(position).getStoreLogo())
-                            .centerCrop()
-                            .transition(DrawableTransitionOptions.withCrossFade(250))
-                            .into(holder.store);
-                    break;
-            }
+            Glide.with(context)
+                    .load(Data.get(position).getStoreLogo())
+                    .transition(DrawableTransitionOptions.withCrossFade(250))
+                    .into(holder.store);
 
             //Image
             Glide.with(context)
@@ -286,14 +282,14 @@ public class ProductsSearchResultsAdapter extends RecyclerView.Adapter<RecyclerV
         if(noResultsFound) return;
 
         recyclerView.post(()->{
-        Data.add(product);
-        notifyItemInserted(getItemCount());
+            Data.add(product);
+            notifyItemInserted(getItemCount());
         });
     }
 
     public void addOnlineProduct(ProductModel product){
         recyclerView.post(()->{
-            onlineRecyclerAdapter.addProduct(product);
+            onlineRecyclerAdapter.addProductNoPost(product);
         });
     }
 
@@ -301,13 +297,15 @@ public class ProductsSearchResultsAdapter extends RecyclerView.Adapter<RecyclerV
     public void addLocalProducts(ArrayList<ProductModel> products){
         if(noResultsFound) return;
 
-        Data.addAll(products);
-        notifyItemRangeInserted(getItemCount(), products.size());
+        recyclerView.post(()-> {
+            Data.addAll(products);
+            notifyItemRangeInserted(getItemCount(), products.size());
+        });
     }
 
     public void addOnlineProducts(ArrayList<ProductModel> products){
         recyclerView.post(()-> {
-            onlineRecyclerAdapter.addProducts(products);
+            onlineRecyclerAdapter.addProductsNoPost(products);
         });
     }
 
@@ -335,7 +333,7 @@ public class ProductsSearchResultsAdapter extends RecyclerView.Adapter<RecyclerV
 
     public void setOnlineProductsLoading(boolean loading){
         recyclerView.post(()-> {
-            onlineRecyclerAdapter.setLoading(loading);
+            onlineRecyclerAdapter.setLoadingNoPost(loading);
         });
     }
 

@@ -11,6 +11,9 @@ public class ProductPageModel {
     @SerializedName("is_favourite")
     private int favorite;
 
+    @SerializedName("user_rating")
+    private int userRating;
+
     @SerializedName("images")
     private ArrayList<ProductImage> images;
 
@@ -18,7 +21,7 @@ public class ProductPageModel {
     private ArrayList<ProductPrice> prices;
 
     @SerializedName("rating")
-    private ProductRating rating;
+    private ProductRating productRating;
 
     @SerializedName("views")
     private ProductViews views;
@@ -27,6 +30,8 @@ public class ProductPageModel {
     private Store store;
 
     public static class MainInfo{
+        private final String WEBSITE_URL = "https://sale-hunter.vercel.app/";
+
         @SerializedName("product_id")
         private long id;
 
@@ -36,8 +41,14 @@ public class ProductPageModel {
         @SerializedName("product_title_ar")
         private String nameArabic;
 
+        @SerializedName("product_description")
+        private String description;
+
+        @SerializedName("product_description_ar")
+        private String descriptionArabic;
+
         @SerializedName("product_sale")
-        private double discountedPrice;
+        private int salePercent;
 
         @SerializedName("product_brand")
         private String brand;
@@ -75,12 +86,28 @@ public class ProductPageModel {
             this.nameArabic = nameArabic;
         }
 
-        public double getDiscountedPrice() {
-            return discountedPrice;
+        public String getDescription() {
+            return description;
         }
 
-        public void setDiscountedPrice(double discountedPrice) {
-            this.discountedPrice = discountedPrice;
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getDescriptionArabic() {
+            return descriptionArabic;
+        }
+
+        public void setDescriptionArabic(String descriptionArabic) {
+            this.descriptionArabic = descriptionArabic;
+        }
+
+        public int getSalePercent() {
+            return salePercent;
+        }
+
+        public void setSalePercent(int salePercent) {
+            this.salePercent = salePercent;
         }
 
         public String getBrand() {
@@ -107,12 +134,16 @@ public class ProductPageModel {
             this.categoryArabic = categoryArabic;
         }
 
-        public String getUrl() {
+        public String getSourceUrl() {
             return url;
         }
 
         public void setUrl(String url) {
             this.url = url;
+        }
+
+        public String getShareableUrl(){
+            return WEBSITE_URL+"pid="+id;
         }
     }
 
@@ -132,7 +163,7 @@ public class ProductPageModel {
         }
 
         public String getImageUrl() {
-            return imageUrl;
+            return imageUrl.replace("http:","https:");
         }
 
         public void setImageUrl(String imageUrl) {
@@ -215,6 +246,12 @@ public class ProductPageModel {
         @SerializedName("store_logo")
         private String storeLogo;
 
+        @SerializedName("store_latitude")
+        private Double storeLatitude;
+
+        @SerializedName("store_longitude")
+        private Double storeLongitude;
+
         public long getStoreId() {
             return storeId;
         }
@@ -240,11 +277,27 @@ public class ProductPageModel {
         }
 
         public String getStoreLogo() {
-            return storeLogo;
+            return storeLogo.replace("http:","https:");
         }
 
         public void setStoreLogo(String storeLogo) {
             this.storeLogo = storeLogo;
+        }
+
+        public Double getStoreLatitude() {
+            return storeLatitude;
+        }
+
+        public void setStoreLatitude(Double storeLatitude) {
+            this.storeLatitude = storeLatitude;
+        }
+
+        public Double getStoreLongitude() {
+            return storeLongitude;
+        }
+
+        public void setStoreLongitude(Double storeLongitude) {
+            this.storeLongitude = storeLongitude;
         }
     }
 
@@ -262,7 +315,7 @@ public class ProductPageModel {
     }
 
     public boolean isFavorite() {
-        return favorite == 1;
+        return favorite != 0;
     }
 
     public ArrayList<ProductImage> getImages() {
@@ -281,12 +334,12 @@ public class ProductPageModel {
         this.prices = prices;
     }
 
-    public ProductRating getRating() {
-        return rating;
+    public ProductRating getProductRating() {
+        return productRating;
     }
 
-    public void setRating(ProductRating rating) {
-        this.rating = rating;
+    public void setProductRating(ProductRating productRating) {
+        this.productRating = productRating;
     }
 
     public Store getStore() {
@@ -303,5 +356,13 @@ public class ProductPageModel {
 
     public void setViews(ProductViews views) {
         this.views = views;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
     }
 }

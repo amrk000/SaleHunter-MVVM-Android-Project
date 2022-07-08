@@ -19,12 +19,15 @@ public class UserModel {
     @SerializedName("last_seen")
     private String lastSeen;
 
-    @SerializedName("accountType")
-    private int accountType;
+    @SerializedName("signedInWith")
+    private int signedInWith;
 
-    public static final int ACCOUNT_TYPE_EMAIL = 0;
-    public static final int ACCOUNT_TYPE_GOOGLE = 1;
-    public static final int ACCOUNT_TYPE_FACEBOOK = 2;
+    @SerializedName("store_id")
+    private int storeId;
+
+    public static final int SIGNED_IN_WITH_EMAIL = 0;
+    public static final int SIGNED_IN_WITH_GOOGLE = 1;
+    public static final int SIGNED_IN_WITH_FACEBOOK = 2;
 
     public UserModel(){
         id = "id";
@@ -32,7 +35,7 @@ public class UserModel {
         email = "email@email.com";
         image = "";
         lastSeen = "";
-        accountType = ACCOUNT_TYPE_EMAIL;
+        signedInWith = SIGNED_IN_WITH_EMAIL;
     }
 
     public String getId() {
@@ -60,8 +63,7 @@ public class UserModel {
     }
 
     public String getImageLink() {
-        if(image.contains("http:")) image = image.replace("http:","https:");
-        return image;
+        return image.replace("http:","https:");
     }
 
     public String getEncodedImage() {
@@ -70,7 +72,7 @@ public class UserModel {
     }
 
     public void setEncodedImage(String image) {
-        this.image = "data:image/webp;base64,"+image;
+        this.image = image;
     }
 
     public void setImageUrl(String imageUrl) {
@@ -85,11 +87,28 @@ public class UserModel {
         this.lastSeen = lastSeen;
     }
 
-    public int getAccountType() {
-        return accountType;
+    public int getSignedInWith() {
+        return signedInWith;
     }
 
-    public void setAccountType(int accountType) {
-        this.accountType = accountType;
+    public void setSignedInWith(int signedInWith) {
+        this.signedInWith = signedInWith;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public boolean hasStore(){
+        return storeId != 0;
+    }
+
+    public String getAccountType(){
+        if (hasStore()) return "Seller Account";
+        else return "User Account";
     }
 }

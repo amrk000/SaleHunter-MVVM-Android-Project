@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 app:contentScrim="?attr/background"
-                app:scrimAnimationDuration="300"
+                app:scrimAnimationDuration="250"
                 app:scrimVisibleHeightTrigger="150dp"
                 app:layout_scrollFlags="scroll|snap|enterAlwaysCollapsed|exitUntilCollapsed"
                 app:toolbarId="@id/product_page_toolbar">
@@ -44,7 +44,50 @@
                         android:layout_height="match_parent"
                         android:cropToPadding="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/zz_havit_stereo_speakers_175" />
+                        android:src="@drawable/zz_havit_stereo_speakers_175"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="invisible"/>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/product_page_images_slider"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="15dp"
+                        android:layoutDirection="inherit"
+                        android:orientation="horizontal"
+                        android:requiresFadingEdge="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/product_page_images_slider_Indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#00FFFFFF"
+                        android:clipToPadding="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:tabBackground="@drawable/intro_indicator"
+                        app:tabGravity="center"
+                        app:tabIndicator="@drawable/intro_indicator"
+                        app:tabIndicatorAnimationDuration="200"
+                        app:tabIndicatorAnimationMode="elastic"
+                        app:tabIndicatorColor="?attr/colorPrimaryDark"
+                        app:tabIndicatorFullWidth="true"
+                        app:tabIndicatorGravity="stretch"
+                        app:tabMaxWidth="20dp"
+                        app:tabMinWidth="20dp"
+                        app:tabRippleColor="@android:color/transparent"
+                        app:tabUnboundedRipple="true" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,7 +112,7 @@
                             android:includeFontPadding="false"
                             android:text="Brand"
                             android:textColor="?attr/colorAccent"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toTopOf="@+id/product_page_title"
                             app:layout_constraintStart_toStartOf="@+id/product_page_title"
                             app:layout_constraintTop_toTopOf="parent"
@@ -80,18 +123,36 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
                             android:ellipsize="end"
                             android:includeFontPadding="false"
+                            android:letterSpacing="-0.01"
                             android:maxLines="1"
                             android:text="IPhone 13 Single SIM With FaceTime - 128GB - Starlight"
                             android:textColor="?attr/textFillColor"
-                            android:textSize="26sp"
+                            android:textSize="24sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/product_page_back"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.75" />
+
+                        <ImageButton
+                            android:id="@+id/product_page_back"
+                            android:layout_width="25dp"
+                            android:layout_height="40dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/borderless_ripple"
+                            android:cropToPadding="true"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="@+id/product_page_title"
+                            app:layout_constraintEnd_toStartOf="@+id/account_sign_title"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/product_page_brand"
+                            app:srcCompat="@drawable/ic_round_arrow_back_ios_new_24"
+                            app:tint="?attr/textFillColor" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -124,18 +185,38 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="15dp">
 
+                    <TextView
+                        android:id="@+id/product_page_salePercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="?attr/colorAccent"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingTop="3dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="3dp"
+                        android:text="20% SALE"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintBottom_toBottomOf="@+id/product_page_price"
+                        app:layout_constraintEnd_toStartOf="@+id/product_page_store"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/product_page_price"
+                        app:layout_constraintTop_toTopOf="@+id/product_page_price" />
+
                     <ImageView
                         android:id="@+id/product_page_store"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
                         android:adjustViewBounds="true"
                         android:cropToPadding="true"
                         android:padding="3dp"
-                        android:scaleType="fitCenter"
+                        android:scaleType="centerInside"
                         app:layout_constraintBottom_toBottomOf="@+id/product_page_price"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/product_page_price"
                         app:layout_constraintTop_toTopOf="@+id/product_page_price"
                         app:srcCompat="@drawable/jumia_seeklogo_com_" />
 
@@ -147,7 +228,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="0000LE"
                         android:textColor="?attr/colorPrimary"
-                        android:textSize="24sp"
+                        android:textSize="28sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/product_page_views" />
@@ -264,7 +345,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/product_page_source_link_section"
+                    android:id="@+id/product_page_actions_section"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
@@ -287,6 +368,27 @@
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/product_page_share_product_button"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.widget.Button
+                        android:id="@+id/product_page_navigate_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/button"
+                        android:drawableStart="@drawable/ic_outline_navigation_24"
+                        android:drawablePadding="10dp"
+                        android:gravity="center|start"
+                        android:includeFontPadding="false"
+                        android:paddingStart="20dp"
+                        android:text="Get Directions to store"
+                        android:textAlignment="gravity"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/product_page_share_product_button"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -302,17 +404,30 @@
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/product_page_open_source_page_button"
+                        android:visibility="visible"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/product_page_open_source_page_button" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <TextView
+                    android:id="@+id/product_page_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:text="text test preview of store description text test preview of store description text test preview of store description text test preview of store description"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="20sp"/>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/product_page_map_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/textView18"
@@ -321,6 +436,7 @@
                         android:layout_marginTop="16dp"
                         android:text="Store Location"
                         android:textSize="24sp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -350,6 +466,7 @@
                         android:layout_marginTop="16dp"
                         android:text="Price Tracker"
                         android:textSize="24sp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -379,6 +496,7 @@
                         android:layout_marginTop="16dp"
                         android:text="Rate Product"
                         android:textSize="24sp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

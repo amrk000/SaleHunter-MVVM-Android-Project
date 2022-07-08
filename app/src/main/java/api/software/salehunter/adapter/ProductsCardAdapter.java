@@ -66,7 +66,7 @@ public class ProductsCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     //item view inner class
     public static class DataViewHolder extends RecyclerView.ViewHolder {
 
-        TextView brand, name, price, rate;
+        TextView brand, name, price, rate, sale;
         ImageView image, store;
         CheckBox favourite;
         ImageView rateIcon;
@@ -82,7 +82,7 @@ public class ProductsCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             store = view.findViewById(R.id.product_card_store);
             favourite = view.findViewById(R.id.product_card_favourite);
             rateIcon = view.findViewById(R.id.product_card_rate_icon);
-
+            sale = view.findViewById(R.id.product_card_salePercent);
         }
 
     }
@@ -136,28 +136,24 @@ public class ProductsCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.price.setText(Data.get(position).getPrice()+"LE");
             holder.rate.setText(String.valueOf(Data.get(position).getRate()));
             holder.favourite.setChecked(Data.get(position).isFavorite());
+            holder.sale.setText(Data.get(position).getSalePercent()+"% SALE");
 
             if(hideFavButton) holder.favourite.setVisibility(View.GONE);
+            if(Data.get(position).getSalePercent() == 0) holder.sale.setVisibility(View.GONE);
+
+            if(Data.get(position).getRate()==0){
+                holder.rate.setVisibility(View.INVISIBLE);
+                holder.rateIcon.setVisibility(View.INVISIBLE);
+            }
 
             //Store
-            if(isDarkModeEnabled()) holder.store.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-            switch (Data.get(position).getStoreName().toLowerCase()) {
-                case "amazon":
-                    holder.store.setImageDrawable(context.getDrawable(R.drawable.amazon_logo_svg));
-                    break;
+            //if(isDarkModeEnabled()) holder.store.setImageTintList(ColorStateList.valueOf(Color.WHITE));
 
-                case "jumia":
-                    holder.store.setImageDrawable(context.getDrawable(R.drawable.jumia_seeklogo_com_));
-                    break;
-
-                default:
-                    Glide.with(context)
-                            .load(Data.get(position).getStoreLogo())
-                            .centerCrop()
-                            .transition(DrawableTransitionOptions.withCrossFade(250))
-                            .into(holder.store);
-                    break;
-            }
+            if(Data.get(position).getStoreLogo()!=null)
+            Glide.with(context)
+                    .load(Data.get(position).getStoreLogo())
+                    .transition(DrawableTransitionOptions.withCrossFade(250))
+                    .into(holder.store);
 
             //Image
             Glide.with(context)
@@ -201,12 +197,30 @@ public class ProductsCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if(noResultsFound) return;
 
         recyclerView.post(()->{
-        Data.add(product);
-        notifyItemInserted(getItemCount());
+            Data.add(product);
+            notifyItemInserted(getItemCount());
         });
     }
 
+    //NoPost for nested recyclerviews adapters
+    public void addProductNoPost(ProductModel product){
+        if(noResultsFound) return;
+
+        Data.add(product);
+        notifyItemInserted(getItemCount());
+    }
+
     public void addProducts(ArrayList<ProductModel> products){
+        if(noResultsFound) return;
+
+        recyclerView.post(()->{
+            Data.addAll(products);
+            notifyItemRangeInserted(getItemCount(), products.size());
+        });
+    }
+
+    //NoPost for nested recyclerviews adapters
+    public void addProductsNoPost(ArrayList<ProductModel> products){
         if(noResultsFound) return;
 
         Data.addAll(products);
@@ -235,6 +249,19 @@ public class ProductsCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         });
 
+    }
+
+    //NoPost for nested recyclerviews adapters
+    public void setLoadingNoPost(boolean loading){
+        if(isLoading() == loading) return;
+
+        if (loading) {
+            Data.add(loadingCardObject);
+            notifyItemInserted(getItemCount());
+        } else {
+            Data.remove(loadingCardObject);
+            notifyItemChanged(getItemCount());
+        }
     }
 
     public void showNoResultsFound(){

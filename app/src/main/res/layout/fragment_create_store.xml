@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+
+    tools:context=".view.fragment.main.CreateStoreFragment" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:clipToPadding="false"
+        android:fadingEdgeLength="15dp"
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:overScrollMode="always">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp">
+
+                <ImageView
+                    android:id="@+id/create_store_pic"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/circle_holder"
+                    android:padding="7dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/store_placeholder" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/create_store_edit_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:backgroundTint="?attr/background"
+                    app:fabCustomSize="42dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/create_store_pic"
+                    app:layout_constraintEnd_toEndOf="@+id/create_store_pic"
+                    app:tint="?attr/colorPrimary" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_pic">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="Store Name"
+                        android:inputType="text"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="Category"
+                        android:inputType="text"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ProgressBar
+                    android:id="@+id/create_store_loadingAddress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="18dp"
+                    android:indeterminate="true"
+                    android:indeterminateBehavior="repeat"
+                    android:indeterminateTint="?attr/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/create_store_address"
+                    app:layout_constraintEnd_toEndOf="@+id/create_store_address"
+                    app:layout_constraintStart_toStartOf="@+id/create_store_address"
+                    app:layout_constraintTop_toTopOf="@+id/create_store_address"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@+id/create_store_findLocation"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_category">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="Address"
+                        android:inputType="textPostalAddress"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/create_store_findLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_square"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_baseline_gps_fixed_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/create_store_address"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/create_store_address"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="true"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_address">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:height="150dp"
+                        android:background="@drawable/input"
+                        android:fadingEdge="vertical"
+                        android:fadingEdgeLength="25dp"
+                        android:gravity="top"
+                        android:hint="Description"
+                        android:inputType="textMultiLine"
+                        android:maxHeight="150dp"
+                        android:minHeight="150dp"
+                        android:minLines="4"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="vertical"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_description">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="Phone (Optional)"
+                        android:inputType="phone"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <CheckBox
+                    android:id="@+id/create_store_hasWhatsapp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Whatsapp Available For This Phone"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_phone" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_hasWhatsapp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="Website Link (Optional)"
+                        android:inputType="textUri"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_website">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="Facebook Username (Optional)"
+                        android:inputType="textUri"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_store_instagram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_facebook">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="Instagram Username (Optional)"
+                        android:inputType="textUri"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <android.widget.Button
+                    android:id="@+id/create_store_CreateButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:fontFamily="@font/raleway_semibold"
+                    android:text="Create Store"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_store_instagram" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,6 +69,7 @@ public class HistoryFragment extends Fragment {
         vb.historyRecyclerVeiw.setLayoutManager(new LinearLayoutManager(getContext()));
         vb.historyRecyclerVeiw.setAdapter(adapter);
         adapter.setHideFavButton(true);
+        adapter.setShowDate(true);
 
         adapter.setItemInteractionListener(new ProductsListAdapter.ItemInteractionListener() {
             @Override

@@ -13,9 +13,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Handler;
@@ -25,6 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
+
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -133,7 +138,7 @@ public class SearchFragment extends Fragment {
         vb.searchBarcodeScan.setOnClickListener(button -> {
             int checker = ActivityCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA);
 
-            if(checker == PackageManager.PERMISSION_GRANTED) barcodeResultLauncher.launch(new Intent(getContext(),Scanner.class));
+            if(checker == PackageManager.PERMISSION_GRANTED) barcodeResultLauncher.launch(new Intent(getActivity(),Scanner.class));
             else cameraPermission.launch(Manifest.permission.CAMERA);
 
         });
@@ -158,6 +163,7 @@ public class SearchFragment extends Fragment {
         });
 
         loadRecommendedProducts();
+
     }
 
     void searchRequest(String keyword){
@@ -187,7 +193,7 @@ public class SearchFragment extends Fragment {
                     break;
 
                 case BaseResponseModel.FAILED_REQUEST_FAILURE:
-                    Toast.makeText(getContext(), "Loading Recommendations Failed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Loading Recommendations Failed", Toast.LENGTH_SHORT).show();
                     break;
 
                 default:

@@ -10,16 +10,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import api.software.salehunter.data.Repository;
 import api.software.salehunter.databinding.FragmentSignInBinding;
@@ -230,7 +226,7 @@ public class SignInFragment extends Fragment {
                     userModel.setEmail(viewModel.getFacebookSocialAuthModel().getEmail());
                     userModel.setFullName(viewModel.getFacebookSocialAuthModel().getFullName());
                     userModel.setImageUrl(viewModel.getFacebookSocialAuthModel().getImage());
-                    userModel.setAccountType(UserModel.ACCOUNT_TYPE_FACEBOOK);
+                    userModel.setSignedInWith(UserModel.SIGNED_IN_WITH_FACEBOOK);
 
                     UserAccountManager.signIn(getActivity(), intent, response.headers().get(Repository.AUTH_TOKEN_HEADER), userModel);
                     break;
@@ -270,7 +266,7 @@ public class SignInFragment extends Fragment {
                     userModel.setEmail(viewModel.getGoogleSocialAuthModel().getEmail());
                     userModel.setFullName(viewModel.getGoogleSocialAuthModel().getFullName());
                     userModel.setImageUrl(viewModel.getGoogleSocialAuthModel().getImage());
-                    userModel.setAccountType(UserModel.ACCOUNT_TYPE_GOOGLE);
+                    userModel.setSignedInWith(UserModel.SIGNED_IN_WITH_GOOGLE);
 
                     UserAccountManager.signIn(getActivity(), intent, response.headers().get(Repository.AUTH_TOKEN_HEADER), userModel);
                     break;

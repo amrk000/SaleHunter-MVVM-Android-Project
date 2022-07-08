@@ -3,15 +3,19 @@ package api.software.salehunter.data.remote;
 import api.software.salehunter.model.BarcodeMonsterResponseModel;
 import api.software.salehunter.model.ChangePasswordModel;
 import api.software.salehunter.model.BaseResponseModel;
+import api.software.salehunter.model.CreateStoreRequestModel;
+import api.software.salehunter.model.CreateStoreResponseModel;
 import api.software.salehunter.model.EmailVerificationModel;
 import api.software.salehunter.model.FacebookSocialAuthModel;
 import api.software.salehunter.model.ProductPageResponseModel;
+import api.software.salehunter.model.ProductRateModel;
 import api.software.salehunter.model.ProductsResponseModel;
 import api.software.salehunter.model.ResetPasswordModel;
 import api.software.salehunter.model.SignInModel;
 import api.software.salehunter.model.SignUpModel;
 import api.software.salehunter.model.GoogleSocialAuthModel;
 import api.software.salehunter.model.SocialAuthResponseModel;
+import api.software.salehunter.model.StorePageModel;
 import api.software.salehunter.model.UpcItemDbResponseModel;
 import api.software.salehunter.model.UserModel;
 import api.software.salehunter.model.UserResponseModel;
@@ -107,6 +111,10 @@ public interface RetrofitInterface {
     Observable<Response<BaseResponseModel>> removeFavourite(@Header("Authorization") String token, @Path("id") long productId);
 
     @Headers({"client: mobile"})
+    @PATCH("products/{id}/rating")
+    Observable<Response<BaseResponseModel>> rateProduct(@Header("Authorization") String token, @Path("id") long productId, @Body ProductRateModel productRateModel);
+
+    @Headers({"client: mobile"})
     @GET("products/recommended")
     Observable<Response<ProductsResponseModel>> getRecommendedProducts(@Header("Authorization") String token);
 
@@ -117,6 +125,19 @@ public interface RetrofitInterface {
     @Headers({"client: mobile"})
     @GET("products/favourites")
     Observable<Response<ProductsResponseModel>> getFavoriteProducts(@Header("Authorization") String token);
+
+    @Headers({"client: mobile"})
+    @GET("products/sales")
+    Observable<Response<ProductsResponseModel>> getOnSaleProducts(@Header("Authorization") String token);
+
+    //Store Calls
+    @Headers({"client: mobile"})
+    @GET("stores/{id}")
+    Observable<Response<StorePageModel>> getStore(@Header("Authorization") String token, @Path("id") long storeId, @Query("page") int page);
+
+    @Headers({"client: mobile"})
+    @POST("stores")
+    Observable<Response<CreateStoreResponseModel>> createStore(@Header("Authorization") String token, @Body CreateStoreRequestModel createStoreRequestModel);
 
     //Other calls
 }

@@ -7,23 +7,33 @@ import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.constraintlayout.motion.widget.MotionScene;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Size;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.google.android.material.shape.RoundedCornerTreatment;
+import com.google.android.material.shape.ShapeAppearanceModel;
+import com.google.android.material.transition.platform.MaterialContainerTransform;
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
+
 import api.software.salehunter.R;
+import api.software.salehunter.data.local.myDataBase;
 import api.software.salehunter.databinding.ActivityScannerBinding;
 import api.software.salehunter.viewmodel.activity.ScannerViewModel;
 
@@ -35,6 +45,7 @@ public class Scanner extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         vb = ActivityScannerBinding.inflate(getLayoutInflater());
         View view = vb.getRoot();
@@ -83,7 +94,6 @@ public class Scanner extends AppCompatActivity {
     void showDetectingProductLayout(String barcode){
         vb.scannerScanningLayout.setVisibility(View.INVISIBLE);
         vb.scannerDetectingLayout.setVisibility(View.VISIBLE);
-        vb.scannerDetectingLayout.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fragment_in));
         vb.scannerDetectingBarcode.setText(barcode);
         vb.scannerDetectingTryAgain.setVisibility(View.GONE);
     }
@@ -99,6 +109,12 @@ public class Scanner extends AppCompatActivity {
     }
 
     void lookUpBarcode(String barcode){
+       String product =  myDataBase.get(this).daoAccess().lookUpProduct(barcode);
+       if(product!=null) submitData(product);
+       else lookUpBarcodeAlt(barcode);
+    }
+
+    void lookUpBarcodeAlt(String barcode){
         viewModel.barcodeLookupUpcItemDb(barcode).observe(this, response ->{
             if(response.code() == 200) {
                 Toast.makeText(this, "1st Lookup", Toast.LENGTH_SHORT).show();
@@ -107,15 +123,14 @@ public class Scanner extends AppCompatActivity {
                 if(response.body().getItems().size()>0) {
                     String productName = response.body().getItems().get(0).getProductName();
                     submitData(productName);
-                } else lookUpBarcodeAlt(barcode);
+                } else lookUpBarcodeAlt2(barcode);
 
-            } else lookUpBarcodeAlt(barcode);
+            } else lookUpBarcodeAlt2(barcode);
 
         });
-
     }
 
-    void lookUpBarcodeAlt(String barcode){
+    void lookUpBarcodeAlt2(String barcode){
         viewModel.barcodeLookupBarcodeMonster(barcode).observe(this, responseAlt ->{
             if(responseAlt.code() == 200) {
                 Toast.makeText(this, "2nd Lookup", Toast.LENGTH_SHORT).show();

@@ -8,10 +8,10 @@
     tools:context=".view.activity.MainActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@drawable/abstract_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:alpha="0.15"
+        android:background="@drawable/abstract_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/menu_backView"
@@ -206,7 +206,7 @@
             android:id="@+id/menu_username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="5dp"
             android:ellipsize="end"
             android:fontFamily="@font/raleway_semibold"
             android:gravity="center"
@@ -217,7 +217,7 @@
             android:textAlignment="center"
             android:textColor="#FFF"
             android:textSize="26sp"
-            app:layout_constraintBottom_toTopOf="@+id/menu"
+            app:layout_constraintBottom_toTopOf="@+id/menu_account_type"
             app:layout_constraintEnd_toEndOf="@+id/menu"
             app:layout_constraintStart_toStartOf="@+id/menu" />
 
@@ -232,6 +232,21 @@
             app:layout_constraintStart_toStartOf="@+id/menu"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile_placeholder" />
+
+        <TextView
+            android:id="@+id/menu_account_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:fontFamily="@font/raleway_light"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="Account Type"
+            android:textColor="#A8FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/menu"
+            app:layout_constraintEnd_toEndOf="@+id/menu_username"
+            app:layout_constraintStart_toStartOf="@+id/menu_username" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

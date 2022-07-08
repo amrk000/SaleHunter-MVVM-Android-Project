@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
         vb.homeBarOnsale.setOnClickListener(button -> {
             index = 1;
             animateFab(button,false);
-            navController.navigate(R.id.underConstructionFragment,null,new NavOptions.Builder().setEnterAnim(R.anim.fragment_in).setExitAnim(R.anim.fragment_out).build());
+            navController.navigate(R.id.onSaleFragment,null,new NavOptions.Builder().setEnterAnim(R.anim.fragment_in).setExitAnim(R.anim.fragment_out).build());
             vb.homeBottomAppBarFab.setImageDrawable(getResources().getDrawable(R.drawable.navbar_icon_onsale, getActivity().getTheme()));
         });
 

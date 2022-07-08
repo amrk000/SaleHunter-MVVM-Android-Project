@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="170dp"
+    android:layout_width="175dp"
     android:layout_height="wrap_content"
     android:layout_rowWeight="1"
     android:layout_margin="5dp"
@@ -10,7 +10,8 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="?attr/background"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="15dp"
+    app:cardElevation="1.5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
         <ImageView
             android:id="@+id/product_card_image"
             android:layout_width="0dp"
-            android:layout_height="130dp"
+            android:layout_height="140dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +33,8 @@
             style="0"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/add_favourite_selector"
             android:backgroundTint="#FF6F6F"
             android:backgroundTintMode="multiply"
@@ -68,25 +69,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="3dp"
             android:fontFamily="sans-serif-medium"
             android:text="0000LE"
             android:textColor="?attr/colorPrimary"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/product_card_Name"
             app:layout_constraintTop_toBottomOf="@+id/product_card_Name" />
 
         <ImageView
             android:id="@+id/product_card_store"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="40dp"
+            android:layout_height="22dp"
             android:layout_marginEnd="8dp"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
             android:padding="2dp"
-            android:scaleType="fitCenter"
-            android:tintMode="src_atop"
+            android:scaleType="centerInside"
+            android:tintMode="src_in"
             app:layout_constraintBottom_toBottomOf="@+id/product_card_brand"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/product_card_brand"
@@ -94,14 +94,17 @@
 
         <TextView
             android:id="@+id/product_card_brand"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:includeFontPadding="false"
+            android:singleLine="true"
             android:text="Brand"
             android:textColor="?attr/colorAccent"
             android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/product_card_store"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_card_image" />
 
@@ -130,6 +133,22 @@
             app:layout_constraintBottom_toBottomOf="@+id/product_card_price"
             app:layout_constraintStart_toEndOf="@+id/product_card_rate_icon"
             app:layout_constraintTop_toBottomOf="@+id/product_card_Name" />
+
+        <TextView
+            android:id="@+id/product_card_salePercent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorAccent"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="3dp"
+            android:text="20% SALE"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/product_card_favourite"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -2,8 +2,6 @@ package api.software.salehunter.view.fragment.main;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -29,7 +27,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import api.software.salehunter.R;
 import api.software.salehunter.databinding.FragmentProfileBinding;
@@ -106,13 +103,13 @@ public class ProfileFragment extends Fragment {
         user = UserAccountManager.getUser(getContext());
         token = UserAccountManager.getToken(getContext(),UserAccountManager.TOKEN_TYPE_BEARER);
 
-        switch (user.getAccountType()){
-            case UserModel.ACCOUNT_TYPE_EMAIL:
+        switch (user.getSignedInWith()){
+            case UserModel.SIGNED_IN_WITH_EMAIL:
                 vb.profileSocialLogo.setVisibility(View.GONE);
                 vb.profileEditSocialProfile.setVisibility(View.GONE);
                 break;
 
-            case UserModel.ACCOUNT_TYPE_GOOGLE:
+            case UserModel.SIGNED_IN_WITH_GOOGLE:
                 vb.profileEditPic.setVisibility(View.GONE);
                 vb.profileUsernameField.setEnabled(false);
                 vb.profileEmailField.setEnabled(false);
@@ -126,7 +123,7 @@ public class ProfileFragment extends Fragment {
                 });
                 break;
 
-            case UserModel.ACCOUNT_TYPE_FACEBOOK:
+            case UserModel.SIGNED_IN_WITH_FACEBOOK:
                 vb.profileEditPic.setVisibility(View.GONE);
                 vb.profileUsernameField.setEnabled(false);
                 vb.profileEmailField.setEnabled(false);
@@ -168,7 +165,7 @@ public class ProfileFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
 
                 if(vb.profileUsernameField.getEditText().getText().length()>0){
-                    if(TextFieldValidator.isValidUsername(editable.toString())) vb.profileUsernameField.setError(null);
+                    if(TextFieldValidator.isValidName(editable.toString())) vb.profileUsernameField.setError(null);
                     else if(TextFieldValidator.outLengthRange(editable.toString(),TextFieldValidator.USERNAME_MIN,TextFieldValidator.USERNAME_MAX)) vb.profileUsernameField.setError("Name is too short !");
                     else vb.profileUsernameField.setError("Not valid name");
                 }
@@ -236,6 +233,7 @@ public class ProfileFragment extends Fragment {
         vb.profileUsernameField.getEditText().setText(user.getFullName());
         vb.profileEmailField.getEditText().setText(user.getEmail());
         vb.profilePasswordField.getEditText().setText("00000000");
+        vb.profileAccountType.setText(user.getAccountType());
         showSaveButton(false);
     }
 
@@ -295,9 +293,11 @@ public class ProfileFragment extends Fragment {
             switch (response.code()){
                 case BaseResponseModel.SUCCESSFUL_OPERATION:
                     user = response.body().getUser();
-                    renderProfileData();
-                    ((MainActivity)getActivity()).setMenuUserData(user);
                     UserAccountManager.updateUser(getContext(),user);
+
+                    renderProfileData();
+                    ((MainActivity)getActivity()).loadUserData(user);
+
                     Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
                     break;
 
@@ -310,7 +310,7 @@ public class ProfileFragment extends Fragment {
                     break;
 
                 default:
-                    DialogsProvider.get(getActivity()).messageDialog("Server Error","Code: "+ response.code());
+                    DialogsProvider.get(getActivity()).messageDialog("Server Error"+response.body().getStatus()+response.body().getMessage(),"Code: "+ response.code());
             }
         });
 

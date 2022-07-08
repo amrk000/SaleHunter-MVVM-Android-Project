@@ -1,6 +1,7 @@
 package api.software.salehunter.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -14,7 +15,6 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -30,6 +30,8 @@ import api.software.salehunter.util.SharedPrefManager;
 import api.software.salehunter.util.UserAccountManager;
 import api.software.salehunter.view.UnderlayNavigationDrawer;
 import api.software.salehunter.viewmodel.activity.MainActivityViewModel;
+
+
 
 public class MainActivity extends AppCompatActivity {
     private NavController navController;
@@ -82,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
         else if(!(rememberMe || justSignedIn)) UserAccountManager.signOut(this, true);
         else {
 
-            //load user name and pic in menu
-            setMenuUserData(user); //From Local Storage
+            loadUserData(null); //From Local Storage
             if(!justSignedIn) syncUserData(); //From Server
 
             //Side Menu
@@ -100,6 +101,20 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.menu_profile:
                         navigateToFragment(R.id.profileFragment);
+                        break;
+
+                    case R.id.menu_mystore:
+                        if(user.hasStore()){
+                            underlayNavigationDrawer.closeMenu();
+                            new Handler().postDelayed(()->{
+
+                                Bundle bundle = new Bundle();
+                                bundle.putLong("storeId", user.getStoreId());
+                                navController.navigate(R.id.storePageFragment,bundle, new NavOptions.Builder().setEnterAnim(R.anim.fragment_in).setExitAnim(R.anim.fragment_out).build());
+
+                            },underlayNavigationDrawer.getAnimationDuration());
+                        }
+                        else navigateToFragment(R.id.createStoreFragment);
                         break;
 
                     case R.id.menu_signout:
@@ -151,14 +166,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void syncUserData(){
-            if(UserAccountManager.getUser(this).getAccountType() != UserModel.ACCOUNT_TYPE_EMAIL) return;
+            if(UserAccountManager.getUser(this).getSignedInWith() != UserModel.SIGNED_IN_WITH_EMAIL) return;
 
             viewModel.getUser(token).observe(this, response -> {
                 switch (response.code()){
                     case BaseResponseModel.SUCCESSFUL_OPERATION:
                         UserModel user = response.body().getUser();
                         UserAccountManager.updateUser(getApplicationContext(),user);
-                        setMenuUserData(user);
+                        loadUserData(user);
                         break;
 
                     case BaseResponseModel.FAILED_AUTH:
@@ -172,14 +187,21 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
-    public void setMenuUserData(UserModel user){
+    public void loadUserData(UserModel userModel){
+        if(userModel!=null) user = userModel;
+        else user = UserAccountManager.getUser(this);
+
         vb.menuUsername.setText(user.getFullName());
+        vb.menuAccountType.setText(user.getAccountType());
         Glide.with(this).load(user.getImageLink())
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade(50))
                 .placeholder(R.drawable.profile_placeholder)
                 .circleCrop()
                 .into(vb.menuProfilePic);
+
+        if(user.hasStore()) vb.menuDashboard.setVisibility(View.VISIBLE);
+        else vb.menuDashboard.setVisibility(View.GONE);
     }
 
     public NavController getAppNavController(){ return navController;}

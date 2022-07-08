@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -65,6 +66,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -299,6 +304,7 @@ public class SearchResultsFragment extends Fragment{
         }
     }
 
+    //ERROR BACKEND CURSOR NAV BY LAST ID MAKES DUPLICATED DATA (Backend Problem)
     void loadResults(){
         setSearching(true);
 
@@ -307,6 +313,7 @@ public class SearchResultsFragment extends Fragment{
 
             switch (response.code()){
                 case BaseResponseModel.SUCCESSFUL_OPERATION:
+                    viewModel.removeObserverInitialLoadedProducts(getViewLifecycleOwner());
 
                     if(response.body().getProducts() == null || response.body().getProducts().isEmpty()) {
                         adapter.showNoOnlineResultsFound();
@@ -314,29 +321,38 @@ public class SearchResultsFragment extends Fragment{
                         return;
                     }
 
-                    viewModel.removeObserverInitialLoadedProducts(getViewLifecycleOwner());
-
                     ArrayList<ProductModel> products = response.body().getProducts();
                     ArrayList<ProductModel> onlineProducts = new ArrayList<>();
                     ArrayList<ProductModel> localProducts = new ArrayList<>();
 
                     for(ProductModel product : products){
                         if(product.getStoreType().equals(ProductModel.ONLINE_STORE)) onlineProducts.add(product);
-                        else localProducts.add(product);
+                        else{
+                            localProducts.add(product);
+                            addProductOnMap(product.getStoreLatitude(), product.getStoreLongitude(), product.getStoreName());
+                        }
 
                         viewModel.addCategory(product.getCategory());
                         viewModel.addBrand(product.getBrand());
                     }
 
                     if(onlineProducts.size()>0){
-                        adapter.addOnlineProducts(onlineProducts);
                         viewModel.setCursorLastOnlineItem(onlineProducts.get(onlineProducts.size()-1).getId());
+                        adapter.addOnlineProducts(onlineProducts);
                     }
                     else adapter.showNoOnlineResultsFound();
 
                     if(localProducts.size()>0){
-                        adapter.addLocalProducts(localProducts);
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                            localProducts.sort(new Comparator<ProductModel>() {
+//                                @Override
+//                                public int compare(ProductModel productModel, ProductModel t1) {
+//                                    return (int) (productModel.getId() - t1.getId());
+//                                }
+//                            });
+//                        }
                         viewModel.setCursorLastLocalItem(localProducts.get(localProducts.size()-1).getId());
+                        adapter.addLocalProducts(localProducts);
                     }
                     else adapter.showNoLocalResultsFound();
 
@@ -357,6 +373,7 @@ public class SearchResultsFragment extends Fragment{
 
     }
 
+    //ERROR BACKEND CURSOR NAV BY LAST ID MAKES DUPLICATED DATA (Backend Problem)
     void loadMoreOnlineProducts(){
         if(endOfOnlineProducts) return;
 
@@ -367,15 +384,24 @@ public class SearchResultsFragment extends Fragment{
             switch (response.code()){
                 case BaseResponseModel.SUCCESSFUL_OPERATION:
                     adapter.setOnlineProductsLoading(false);
+                    viewModel.removeObserverOnlineLoadedProducts(getViewLifecycleOwner());
 
                     if(response.body().getProducts() == null || response.body().getProducts().isEmpty()){
                         endOfOnlineProducts = true;
                         return;
                     }
 
-                    viewModel.removeObserverOnlineLoadedProducts(getViewLifecycleOwner());
-
                     ArrayList<ProductModel> products = response.body().getProducts();
+
+                    //  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        products.sort(new Comparator<ProductModel>() {
+//                            @Override
+//                            public int compare(ProductModel productModel, ProductModel t1) {
+//                                return (int) (productModel.getId() - t1.getId());
+//                            }
+//                        });
+//                    }
+
                     adapter.addOnlineProducts(products);
                     viewModel.setCursorLastOnlineItem(products.get(products.size()-1).getId());
 
@@ -401,6 +427,7 @@ public class SearchResultsFragment extends Fragment{
 
     }
 
+    //ERROR BACKEND CURSOR NAV BY LAST ID MAKES DUPLICATED DATA (Backend Problem)
     void loadMoreLocalProducts(){
         if(endOfLocalProducts) return;
 
@@ -411,21 +438,32 @@ public class SearchResultsFragment extends Fragment{
             switch (response.code()){
                 case BaseResponseModel.SUCCESSFUL_OPERATION:
                     adapter.setLocalProductsLoading(false);
+                    viewModel.removeObserverLocalLoadedProducts(getViewLifecycleOwner());
 
                     if(response.body().getProducts() == null || response.body().getProducts().isEmpty()){
                         endOfLocalProducts = true;
                         return;
                     }
 
-                    viewModel.removeObserverLocalLoadedProducts(getViewLifecycleOwner());
-
                     ArrayList<ProductModel> products = response.body().getProducts();
+
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        products.sort(new Comparator<ProductModel>() {
+//                            @Override
+//                            public int compare(ProductModel productModel, ProductModel t1) {
+//                                return (int) (productModel.getId() - t1.getId());
+//                            }
+//                        });
+//                    }
+
                     adapter.addLocalProducts(products);
                     viewModel.setCursorLastLocalItem(products.get(products.size()-1).getId());
 
                     for(ProductModel product : products){
                         viewModel.addCategory(product.getCategory());
                         viewModel.addBrand(product.getBrand());
+
+                        addProductOnMap(product.getStoreLatitude(), product.getStoreLongitude(), product.getStoreName());
                     }
 
                     break;
@@ -481,7 +519,7 @@ public class SearchResultsFragment extends Fragment{
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(viewModel.getUserLocation())
-                .zoom(googleMap.getCameraPosition().zoom < 16 ? 16:googleMap.getCameraPosition().zoom)
+                .zoom(googleMap.getCameraPosition().zoom < 8 ? 8:googleMap.getCameraPosition().zoom)
                 .build();
 
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),2000,null);
