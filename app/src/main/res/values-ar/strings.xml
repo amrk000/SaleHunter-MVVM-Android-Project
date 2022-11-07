@@ -2,11 +2,14 @@
     <string name="app_name">Sale Hunter</string>
 
     <!-- Facebook Auth-->
-    <string name="facebook_app_id">1050752855727748</string>
+    <string name="facebook_app_id">FACEBOOK_APP_ID</string>
     <string name="fb_login_protocol_scheme">fb1050752855727748</string>
 
     <!-- Google Auth-->
-    <string name="google_backend_id">15802696304-g4u0a3nm6ih53um1s2pm0qesl6lpjdkr.apps.googleusercontent.com</string>
+    <string name="google_backend_id">GOOGLE_BACKEND_ID</string>
+
+    <!-- Google Map -->
+    <string name="google_map_api_key">GOOGLE_MAP_API_KEY</string>
 
     <!-- App Font-->
     <string name="app_font"><![CDATA[@font/droidkufi_regular]]></string>
