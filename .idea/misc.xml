@@ -70,8 +70,11 @@
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/activity_scanner.xml" value="0.5" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/app_intro_page.xml" value="0.33" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/app_intro_page1.xml" value="0.5" />
-        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_create_store.xml" value="0.5318777292576419" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_about.xml" value="0.67" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_create_product.xml" value="0.67" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_create_store.xml" value="0.377710843373494" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_create_store_intro.xml" value="0.2094017094017094" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_dashboard.xml" value="0.33" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_disconnected.xml" value="0.5" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_email_verification_dialog.xml" value="0.5" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/fragment_fav.xml" value="0.24786324786324787" />
@@ -107,6 +110,51 @@
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/layout/view_pager_page.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/menu/product_page_toolbar.xml" value="0.2512820512820513" />
         <entry key="..\:/Users/amrak/Desktop/Sale Hunter Project/Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/drawable/googleplay_icon.xml" value="0.328" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/drawable/ic_round_arrow_back_ios_new_24.xml" value="0.2845" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/drawable/menu_selected_item.xml" value="0.328" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/activity_account_sign.xml" value="0.252991452991453" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/activity_app_intro.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/activity_main.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/activity_scanner.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_about.xml" value="0.47058823529411764" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_create_product.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_create_store.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_create_store_intro.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_dashboard.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_disconnected.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_email_verification_dialog.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_fav.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_forgot_password.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_history.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_home.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_loading_dialog.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_message_dialog.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_on_sale.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_password_change_dialog.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_product_page.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_profile.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_reset_password.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_search.xml" value="0.67" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_search_results.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_settings.xml" value="0.36862244897959184" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_sign_in.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_sign_up.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_sort_and_filter_dialog.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_store_page.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_under_construction.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/fragment_verification_code.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/images_slider_image.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_card_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_card_loading_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_card_no_results_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_list_horizontal_products_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_list_item_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_list_label_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_list_loading_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/product_list_no_results_layout.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/settings_list_item_layout.xml" value="0.67" />
+        <entry key="..\:/Users/amrak/Desktop/Sale Hunter/app/src/main/res/layout/view_pager_page.xml" value="0.29743589743589743" />
       </map>
     </option>
   </component>

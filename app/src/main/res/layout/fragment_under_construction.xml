@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="This Page is\nUnder Construction"
+        android:text="@string/this_page_is_nunder_construction"
         android:textColor="?attr/colorPrimary"
         android:textSize="34sp"
         android:textStyle="bold"

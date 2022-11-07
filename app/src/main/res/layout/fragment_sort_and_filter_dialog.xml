@@ -35,9 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:fontFamily="@font/raleway_semibold"
+            android:textStyle="bold"
             android:includeFontPadding="false"
-            android:text="Sort and Filter"
+            android:text="@string/sort_and_filter"
             android:textColor="?attr/colorPrimary"
             android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
                     android:drawableStart="@drawable/ic_baseline_sort_24"
                     android:drawablePadding="5dp"
                     android:drawableTint="?attr/colorPrimary"
-                    android:text="Sort By"
+                    android:text="@string/sort_by"
                     android:textAlignment="textStart"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="18sp"
@@ -93,7 +93,7 @@
                         android:checked="true"
                         android:includeFontPadding="false"
                         android:minHeight="38dp"
-                        android:text="Popularity"
+                        android:text="@string/popularity"
                         android:textColor="?attr/textFillColor"
                         android:textSize="17sp" />
 
@@ -105,7 +105,7 @@
                         android:buttonTint="?attr/colorPrimary"
                         android:includeFontPadding="false"
                         android:minHeight="38dp"
-                        android:text="Price: Low to High"
+                        android:text="@string/price_low_to_high"
                         android:textColor="?attr/textFillColor"
                         android:textSize="17sp" />
 
@@ -117,7 +117,7 @@
                         android:buttonTint="?attr/colorPrimary"
                         android:includeFontPadding="false"
                         android:minHeight="38dp"
-                        android:text="Price: High to Low"
+                        android:text="@string/price_high_to_low"
                         android:textColor="?attr/textFillColor"
                         android:textSize="17sp" />
 
@@ -129,7 +129,7 @@
                         android:buttonTint="?attr/colorPrimary"
                         android:includeFontPadding="false"
                         android:minHeight="38dp"
-                        android:text="Best Deal"
+                        android:text="@string/best_deal"
                         android:textColor="?attr/textFillColor"
                         android:textSize="17sp" />
 
@@ -141,7 +141,7 @@
                         android:buttonTint="?attr/colorPrimary"
                         android:includeFontPadding="false"
                         android:minHeight="38dp"
-                        android:text="Rating"
+                        android:text="@string/rating"
                         android:textColor="?attr/textFillColor"
                         android:textSize="17sp" />
 
@@ -153,7 +153,7 @@
                         android:buttonTint="?attr/colorPrimary"
                         android:includeFontPadding="false"
                         android:minHeight="38dp"
-                        android:text="Nearest Local Store"
+                        android:text="@string/nearest_local_store"
                         android:textColor="?attr/textFillColor"
                         android:textSize="17sp" />
 
@@ -165,7 +165,7 @@
                         android:buttonTint="?attr/colorPrimary"
                         android:includeFontPadding="false"
                         android:minHeight="38dp"
-                        android:text="Updated Recently"
+                        android:text="@string/updated_recently"
                         android:textColor="?attr/textFillColor"
                         android:textSize="17sp" />
 
@@ -186,7 +186,7 @@
                     android:drawableStart="@drawable/ic_baseline_filter_alt_24"
                     android:drawablePadding="5dp"
                     android:drawableTint="?attr/colorPrimary"
-                    android:text="Filter By"
+                    android:text="@string/filter_by"
                     android:textAlignment="textStart"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="18sp"
@@ -204,7 +204,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="0"
                         android:includeFontPadding="false"
-                        android:text="Price:"
+                        android:text="@string/price"
                         android:textAlignment="textStart"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="20sp" />
@@ -215,7 +215,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="0"
                         android:includeFontPadding="false"
-                        android:text="From"
+                        android:text="@string/from"
                         android:textAlignment="textStart"
                         android:textColor="?attr/textFillColor"
                         android:textSize="20sp" />
@@ -244,7 +244,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="0"
                         android:includeFontPadding="false"
-                        android:text="To"
+                        android:text="@string/to"
                         android:textAlignment="textStart"
                         android:textColor="?attr/textFillColor"
                         android:textSize="20sp" />
@@ -276,7 +276,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_weight="0"
                     android:includeFontPadding="false"
-                    android:text="Category:"
+                    android:text="@string/category"
                     android:textAlignment="textStart"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="20sp" />
@@ -298,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:checkable="true"
                         android:checked="true"
-                        android:text="All Products"
+                        android:text="@string/all_products"
                         app:checkedIconEnabled="true"
                         app:checkedIconTint="@color/lightModesecondary" />
 
@@ -311,7 +311,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_weight="0"
                     android:includeFontPadding="false"
-                    android:text="Brand:"
+                    android:text="@string/brand"
                     android:textAlignment="textStart"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="20sp" />
@@ -334,7 +334,7 @@
                         android:layout_height="wrap_content"
                         android:checkable="true"
                         android:checked="true"
-                        android:text="All Products"
+                        android:text="@string/all_products"
                         app:checkedIconEnabled="true"
                         app:checkedIconTint="@color/lightModesecondary"/>
 
@@ -351,8 +351,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/button"
-            android:fontFamily="@font/raleway_semibold"
-            android:text="Apply"
+            android:textStyle="bold"
+            android:text="@string/apply"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="16sp"

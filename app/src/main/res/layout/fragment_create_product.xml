@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+    tools:context=".view.fragment.main.CreateProductFragment" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/create_product_phaseLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/create_product_phaseProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:progress="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/create_product_phaseDot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_circle_24"
+            app:layout_constraintBottom_toBottomOf="@+id/create_product_phaseProgress"
+            app:layout_constraintStart_toStartOf="@+id/create_product_phaseProgress"
+            app:layout_constraintTop_toTopOf="@+id/create_product_phaseProgress"
+            app:tint="?attr/colorAccent" />
+
+        <ImageView
+            android:id="@+id/create_product_phaseDot2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_circle_24"
+            app:layout_constraintBottom_toBottomOf="@+id/create_product_phaseProgress"
+            app:layout_constraintEnd_toEndOf="@+id/create_product_phaseProgress"
+            app:layout_constraintStart_toStartOf="@+id/create_product_phaseProgress"
+            app:layout_constraintTop_toTopOf="@+id/create_product_phaseProgress"
+            app:tint="?attr/colorAccent" />
+
+        <ImageView
+            android:id="@+id/create_product_phaseDot3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_circle_24"
+            app:layout_constraintBottom_toBottomOf="@+id/create_product_phaseProgress"
+            app:layout_constraintEnd_toEndOf="@+id/create_product_phaseProgress"
+            app:layout_constraintTop_toTopOf="@+id/create_product_phaseProgress"
+            app:tint="?attr/colorAccent" />
+
+        <TextView
+            android:id="@+id/create_product_phaseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/basic_info"
+            android:textColor="?attr/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/create_product_phaseDot"
+            app:layout_constraintStart_toStartOf="@+id/create_product_phaseProgress"
+            app:layout_constraintTop_toBottomOf="@+id/create_product_phaseDot" />
+
+        <TextView
+            android:id="@+id/create_product_phaseTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/product_images"
+            android:textColor="?attr/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/create_product_phaseDot2"
+            app:layout_constraintStart_toStartOf="@+id/create_product_phaseDot2"
+            app:layout_constraintTop_toBottomOf="@+id/create_product_phaseDot" />
+
+        <TextView
+            android:id="@+id/create_product_phaseTitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/meta_data"
+            android:textColor="?attr/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/create_product_phaseProgress"
+            app:layout_constraintStart_toStartOf="@+id/create_product_phaseDot3"
+            app:layout_constraintTop_toBottomOf="@+id/create_product_phaseDot" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/create_product_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fadingEdgeLength="10dp"
+        android:overScrollMode="always"
+        android:requiresFadingEdge="vertical"
+        android:scrollbarSize="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_product_phaseLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/create_product_basicInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/basic_info"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_basicInfoTitle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="@string/product_name"
+                        android:inputType="text"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_name_arabic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="@string/product_name_arabic"
+                        android:inputType="text"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_name_arabic">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="@string/price"
+                        android:inputType="numberDecimal"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:includeFontPadding="false"
+                    android:text="Sale:"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_price" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:includeFontPadding="false"
+                    android:text="Price:"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toEndOf="@+id/create_product_salePercent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_price" />
+
+                <SeekBar
+                    android:id="@+id/create_product_saleSlider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:progressTint="?attr/colorPrimary"
+                    android:thumbTint="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
+                    android:text="0%"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="@+id/create_product_saleSlider"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_saleSlider" />
+
+                <TextView
+                    android:id="@+id/create_product_salePercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
+                    android:text="0%"
+                    android:textColor="?attr/colorAccent"
+                    android:textSize="26sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                    app:layout_constraintStart_toEndOf="@+id/textView16"
+                    app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/create_product_discountedPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
+                    android:text="0"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="26sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                    app:layout_constraintStart_toEndOf="@+id/textView22"
+                    app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
+                    android:text="100%"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/create_product_saleSlider"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_saleSlider" />
+
+                <TextView
+                    android:id="@+id/create_product_productImagesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="50dp"
+                    android:text="Product Images"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_saleSlider" />
+
+                <android.widget.ImageView
+                    android:id="@+id/create_product_image1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:adjustViewBounds="true"
+                    android:clickable="true"
+                    android:cropToPadding="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@drawable/add_product_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_productImagesTitle" />
+
+                <android.widget.ImageView
+                    android:id="@+id/create_product_image2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:adjustViewBounds="true"
+                    android:clickable="true"
+                    android:cropToPadding="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@drawable/add_product_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_image1" />
+
+                <android.widget.ImageView
+                    android:id="@+id/create_product_image3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:adjustViewBounds="true"
+                    android:clickable="true"
+                    android:cropToPadding="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@drawable/add_product_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_image2" />
+
+                <TextView
+                    android:id="@+id/create_product_metaDataTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Meta Data"
+                    android:textColor="?attr/textFillColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_image3" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_metaDataTitle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="@string/category"
+                        android:inputType="text"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_category_arabic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_category">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="@string/category_arabic"
+                        android:inputType="text"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_category_arabic">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"
+                        android:fadingEdge="horizontal"
+                        android:fadingEdgeLength="10dp"
+                        android:hint="@string/brand"
+                        android:inputType="text"
+                        android:maxLength="32"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:singleLine="true"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="true"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_brand">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:height="150dp"
+                        android:background="@drawable/input"
+                        android:fadingEdge="vertical"
+                        android:fadingEdgeLength="25dp"
+                        android:gravity="top"
+                        android:hint="@string/description"
+                        android:inputType="textMultiLine"
+                        android:maxHeight="150dp"
+                        android:minHeight="150dp"
+                        android:minLines="4"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="vertical"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_product_description_arabic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="true"
+                    app:boxBackgroundMode="filled"
+                    app:boxStrokeColor="#008E8E8E"
+                    app:boxStrokeErrorColor="#00FFFFFF"
+                    app:boxStrokeWidth="0dp"
+                    app:errorEnabled="true"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="?attr/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_description">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:height="150dp"
+                        android:background="@drawable/input"
+                        android:fadingEdge="vertical"
+                        android:fadingEdgeLength="25dp"
+                        android:gravity="top"
+                        android:hint="@string/description_arabic"
+                        android:inputType="textMultiLine"
+                        android:maxHeight="150dp"
+                        android:minHeight="150dp"
+                        android:minLines="4"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
+                        android:requiresFadingEdge="vertical"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:textSize="20sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <android.widget.Button
+                    android:id="@+id/create_product_SubmitButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button"
+                    android:textStyle="bold"
+                    android:text="Create Product"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_description_arabic" />
+
+                <android.widget.Button
+                    android:id="@+id/create_product_deleteProduct"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button"
+                    android:backgroundTint="#FF0000"
+                    android:backgroundTintMode="src_atop"
+                    android:textStyle="bold"
+                    android:text="Delete Product"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_product_SubmitButton" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

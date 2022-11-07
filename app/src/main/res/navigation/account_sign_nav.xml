@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="api.software.salehunter.view.fragment.accountSign.SignInFragment"
+        android:name="amrk000.salehunter.view.fragment.accountSign.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -27,12 +27,12 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="api.software.salehunter.view.fragment.accountSign.SignUpFragment"
+        android:name="amrk000.salehunter.view.fragment.accountSign.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="api.software.salehunter.view.fragment.accountSign.ForgotPasswordFragment"
+        android:name="amrk000.salehunter.view.fragment.accountSign.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/verificationCodeFragment"
-        android:name="api.software.salehunter.view.fragment.accountSign.VerificationCodeFragment"
+        android:name="amrk000.salehunter.view.fragment.accountSign.VerificationCodeFragment"
         android:label="fragment_verification_code"
         tools:layout="@layout/fragment_verification_code" >
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="api.software.salehunter.view.fragment.accountSign.ResetPasswordFragment"
+        android:name="amrk000.salehunter.view.fragment.accountSign.ResetPasswordFragment"
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password" >
         <action

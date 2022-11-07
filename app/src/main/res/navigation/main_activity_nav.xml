@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="api.software.salehunter.view.fragment.main.home.HomeFragment"
+        android:name="amrk000.salehunter.view.fragment.main.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -24,17 +24,17 @@
     </fragment>
     <fragment
         android:id="@+id/underConstructionFragment2"
-        android:name="api.software.salehunter.view.fragment.main.UnderConstructionFragment"
+        android:name="amrk000.salehunter.view.fragment.main.UnderConstructionFragment"
         android:label="fragment_under_construction"
         tools:layout="@layout/fragment_under_construction" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="api.software.salehunter.view.fragment.main.ProfileFragment"
+        android:name="amrk000.salehunter.view.fragment.main.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/searchResultsFragment"
-        android:name="api.software.salehunter.view.fragment.main.SearchResultsFragment"
+        android:name="amrk000.salehunter.view.fragment.main.SearchResultsFragment"
         android:label="fragment_search_results"
         tools:layout="@layout/fragment_search_results" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/productPageFragment"
-        android:name="api.software.salehunter.view.fragment.main.ProductPageFragment"
+        android:name="amrk000.salehunter.view.fragment.main.ProductPageFragment"
         android:label="fragment_product_page"
         tools:layout="@layout/fragment_product_page" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/createStoreFragment"
-        android:name="api.software.salehunter.view.fragment.main.CreateStoreIntroFragment"
+        android:name="amrk000.salehunter.view.fragment.main.CreateStoreIntroFragment"
         android:label="fragment_create_store"
         tools:layout="@layout/fragment_create_store_intro" >
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/storePageFragment"
-        android:name="api.software.salehunter.view.fragment.main.StorePageFragment"
+        android:name="amrk000.salehunter.view.fragment.main.StorePageFragment"
         android:label="fragment_store_page"
         tools:layout="@layout/fragment_store_page" >
         <action
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/createStoreFragment2"
-        android:name="api.software.salehunter.view.fragment.main.CreateStoreFragment"
+        android:name="amrk000.salehunter.view.fragment.main.CreateStoreFragment"
         android:label="fragment_create_store"
         tools:layout="@layout/fragment_create_store" >
         <action
@@ -97,5 +97,51 @@
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_createStoreFragment2_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="amrk000.salehunter.view.fragment.main.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="amrk000.salehunter.view.fragment.main.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_createStoreFragment2"
+            app:destination="@id/createStoreFragment2"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_createProductFragment"
+            app:destination="@id/createProductFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/createProductFragment"
+        android:name="amrk000.salehunter.view.fragment.main.CreateProductFragment"
+        android:label="fragment_create_product"
+        tools:layout="@layout/fragment_create_product" >
+        <action
+            android:id="@+id/action_createProductFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="amrk000.salehunter.view.fragment.main.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

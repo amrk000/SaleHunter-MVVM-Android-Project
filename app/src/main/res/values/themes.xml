@@ -15,10 +15,10 @@
         <item name="android:navigationBarColor" tools:targetApi="o_mr1">?attr/background</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
-        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:fontFamily">@string/app_font</item>
 
         <item name="bottomSheetDialogTheme">@style/BottomSheetStyle</item>
-
+        <item name="android:windowAnimationStyle">@style/ThemeChangeAnimation</item>
     </style>
 
     <style name="Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -35,8 +35,13 @@
         <item name="android:navigationBarColor" tools:targetApi="o_mr1">?attr/background</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
-        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:fontFamily">@string/app_font</item>
 
+    </style>
+
+    <style name="ThemeChangeAnimation">
+        <item name="android:windowEnterAnimation">@anim/fragment_in</item>
+        <item name="android:windowExitAnimation">@anim/fragment_out</item>
     </style>
 
     <style name="DialogLayOnAnimation">

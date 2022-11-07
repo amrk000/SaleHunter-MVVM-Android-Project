@@ -8,7 +8,6 @@
 
     tools:context=".view.fragment.main.ProfileFragment">
 
-
     <ImageView
         android:id="@+id/profile_cover"
         android:layout_width="0dp"
@@ -63,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/raleway_semibold"
+        android:textStyle="bold"
         android:gravity="center"
         android:includeFontPadding="false"
         android:text="User Name"
@@ -97,8 +96,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/button"
-        android:fontFamily="@font/raleway_semibold"
-        android:text="Save"
+        android:textStyle="bold"
+        android:text="@string/save"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
@@ -149,7 +148,7 @@
                     android:background="@drawable/input"
                     android:fadingEdge="horizontal"
                     android:fadingEdgeLength="10dp"
-                    android:hint="Name"
+                    android:hint="@string/name"
                     android:inputType="textPersonName"
                     android:maxLength="32"
                     android:paddingLeft="15dp"
@@ -185,7 +184,7 @@
                     android:background="@drawable/input"
                     android:fadingEdge="horizontal"
                     android:fadingEdgeLength="10dp"
-                    android:hint="E-mail"
+                    android:hint="@string/e_mail"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="15dp"
                     android:paddingTop="15dp"
@@ -223,7 +222,7 @@
                     android:fadingEdge="horizontal"
                     android:fadingEdgeLength="10dp"
                     android:focusable="false"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingLeft="15dp"
                     android:paddingTop="15dp"
@@ -251,7 +250,7 @@
                 android:includeFontPadding="false"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:text="Edit Profile On Social"
+                android:text="@string/edit_profile_on_social"
                 android:textAllCaps="false"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"

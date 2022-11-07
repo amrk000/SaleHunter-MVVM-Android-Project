@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="languages">
+        <item>@string/auto</item>
+        <item>@string/english</item>
+        <item>@string/arabic</item>
+    </string-array>
+</resources>

@@ -6,11 +6,11 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "api.software.salehunter"
+        applicationId "amrk000.salehunter"
         minSdk 23
         targetSdk 32
-        versionCode 8
-        versionName "0.7.5 Pre-Alpha"
+        versionCode 10
+        versionName "0.9.6 Pre-Alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -113,7 +113,7 @@ dependencies {
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
     //Google Maps
-    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-maps:18.0.1'
     implementation 'com.google.android.gms:play-services-location:20.0.0'
 
     //Hello Charts
