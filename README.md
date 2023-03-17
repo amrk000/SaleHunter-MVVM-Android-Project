@@ -40,7 +40,7 @@ price tracker, store location, and user rate action.</li>
   </div>    
 <td>
 
-<td width="auto">
+<td width="40%">
 <div align="center"><video src="https://user-images.githubusercontent.com/63168118/200121706-cf2e9ab1-2084-409d-a71c-8c7c4c3bb2bc.mp4"></div>
 </td>
         
